@@ -1,4 +1,4 @@
-package utente;
+package main.java.gestioneAccount.utente;
 
 public class UtenteBean {
 

@@ -1,4 +1,4 @@
-package areaRiservata;
+package main.java.gestioneAccount.areaRiservata;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,14 +10,14 @@ import javax.sql.DataSource;
 
 import java.io.IOException;
 
-import utente.UtenteBean;
-import utente.UtenteDAO;
+import main.java.gestioneAccount.utente.UtenteDAO;
+import main.java.gestioneAccount.utente.UtenteBean;
 
 //@WebServlet("/UserProfileServlet")
 public class profili_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private UtenteDAOD utenti;
+    private UtenteDAO utenti;
 
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);

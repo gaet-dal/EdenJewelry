@@ -1,4 +1,4 @@
-package utente;
+package main.java.gestioneProdotti.prodotto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -9,43 +9,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.logger.Logger;
+import java.util.logging.Logger;
 
-public class UtenteDAO {
+public class ProdottoDAO {
     private static DataSource ds;
 
-    Logger logger = Logger.getLogger(UtenteDAO  .class.getName());
+    Logger logger = Logger.getLogger(ProdottoDAO.class.getName());
 
-    private static final String TABLE_NAME = "UTENTE";
+    private static final String TABLE_NAME = "PRODOTTO";
 
-    public UtenteDAO(DataSource ds) {
+    public ProdottoDAO(DataSource ds) {
         this.ds = ds;
 
         if(ds == null) {
-            logger.info("DataSource utente nullo")
+            logger.info("DataSource prodotto nullo");
         } else {
-            logger.info("DataSource utente istanziato correttamente")
+            logger.info("DataSource prodotto istanziato correttamente");
         }
     }
 
-    public synchronized boolean doSave(UtenteBean utente) throws SQLException{
+    public synchronized boolean doSave(ProdottoBean prodotto) throws SQLException{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         int result = 0;
 
         String insertSQL = "INSERT INTO " + TABLE_NAME
-                + " (email, nome, cognome, password, tipo) VALUES (?, ?, ?, ?, ?)";
+                + " (nome, prezzo, quantità, categoria, immagine) VALUES (?, ?, ?, ?, ?)";
 
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
-            preparedStatement.setString(1, utente.getEmail);
-            preparedStatement.setString(2, utente.getNome);
-            preparedStatement.setString(3, utente.getCognome);
-            preparedStatement.setString(4, utente.getPassword);
-            preparedStatement.setString(5, utente.getTipo);
+            preparedStatement.setString(1, prodotto.getNome());
+            preparedStatement.setFloat(2, prodotto.getPrezzo());
+            preparedStatement.setInt(3, prodotto.getQuantità());
+            preparedStatement.setString(4, prodotto.getCategoria());
+            preparedStatement.setString(5, prodotto.getImmagine());
 
             result = preparedStatement.executeUpdate();
         }  finally {
@@ -55,19 +55,19 @@ public class UtenteDAO {
         return result != 0;
     }
 
-    public synchronized boolean doDelete(String email){
+    public synchronized boolean doDelete(String nome) throws SQLException{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         int result = 0;
 
-        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE email = ?";
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE nome = ?";
 
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
 
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, nome);
 
             result = preparedStatement.executeUpdate();
         } finally {
@@ -77,13 +77,13 @@ public class UtenteDAO {
         return result != 0;
     }
 
-    public synchronized List<UtenteBean> doRetrieveAll() {
+    public synchronized List<ProdottoBean> doRetrieveAll() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        List<UtenteBean> utenti = new ArrayList<UtenteBean>();
+        List<ProdottoBean> prodotti = new ArrayList<ProdottoBean>();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME "ORDER BY email ASC";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY nome ASC";
 
         try {
             connection = ds.getConnection();
@@ -92,42 +92,42 @@ public class UtenteDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                UtenteBean bean = new UtenteBean();
+                ProdottoBean bean = new ProdottoBean();
 
                 bean.setNome(rs.getString("nome"));
-                bean.setEmail(rs.getString("email"));
-                bean.setCognome(rs.getString("cognome"));
-                bean.setPassword(rs.getString("password"));
-                bean.setTipo(rs.getString("tipo"));
+                bean.setPrezzo(rs.getFloat("prezzo"));
+                bean.setQuantità(rs.getInt("quantità"));
+                bean.setCategoria(rs.getString("categoria"));
+                bean.setImmagine(rs.getString("immagine"));
 
-                utenti.add(bean);
+                prodotti.add(bean);
             }
             rs.close();
 
         } finally {
             closeResources(preparedStatement, connection);
         }
-        return utenti;
+        return prodotti;
     }
 
-    public synchronized UtenteBean doRetrieveByEmail(String email) throws SQLException {
+    public synchronized ProdottoBean doRetrieveByNome(String nome) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        UtenteBean bean = new UtenteBean();
+        ProdottoBean bean = new ProdottoBean();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ?";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome = ?";
 
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, nome);
             ResultSet rs = preparedStatement.executeQuery();
 
             bean.setNome(rs.getString("nome"));
-            bean.setEmail(rs.getString("email"));
-            bean.setCognome(rs.getString("cognome"));
-            bean.setPassword(rs.getString("password"));
-            bean.setTipo(rs.getString("tipo"));
+            bean.setPrezzo(rs.getFloat("prezzo"));
+            bean.setQuantità(rs.getInt("quantità"));
+            bean.setCategoria(rs.getString("password"));
+            bean.setImmagine(rs.getString("immagine"));
 
             rs.close();
 
@@ -143,7 +143,7 @@ public class UtenteDAO {
                 try {
                     resource.close();
                 } catch (Exception e) {
-                    logger.warning("Errore nella chiusura delle risorse")
+                    logger.warning("Errore nella chiusura delle risorse");
                 }
             }
         }
