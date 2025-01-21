@@ -1,11 +1,13 @@
 package main.java.gestioneOrdini.ordini;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import main.java.gestioneAccount.utente.UtenteBean;
 import main.java.gestioneAccount.utente.UtenteDAO;
 import main.java.gestioneProdotti.prodotto.ProdottoBean;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -112,7 +114,14 @@ public class OrdineDAO {
                 bean.setTotale(rs.getFloat("totale"));
                 bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
                 bean.setIndirizzo(rs.getString("indirizzo"));
-                bean.setString(rs.getString ("prodotti"));
+
+                String listaDB = rs.getString("prodotti");
+
+                Gson gson = new Gson();
+                Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
+                List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
+
+                bean.setProdotti(listaProdotti); //abbiamo recuperto la lista dei prosotti e fatto il parse ad oggetto gson;
 
                 ordini.add(bean);
             }
@@ -144,7 +153,13 @@ public class OrdineDAO {
             bean.setTotale(rs.getFloat("totale"));
             bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
             bean.setIndirizzo(rs.getString("indirizzo"));
-            bean.setProdotti((List<ProdottoBean>) rs.getArray("prodotti"));
+            String listaDB = rs.getString("prodotti");
+
+            Gson gson = new Gson();
+            Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
+            List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
+
+            bean.setProdotti(listaProdotti);
 
             rs.close();
 
@@ -153,6 +168,46 @@ public class OrdineDAO {
         }
         return bean;
     }
+
+    //ricerca tramite email:
+    //restituisce tutti gli ordini fatti da un utete specifico
+    public synchronized List <OrdineBean> doRetrieveByEmail(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        OrdineBean bean = new OrdineBean();
+        List ris= new ArrayList(); //utilizziamo per salvare tutti gli ordini fatti da un certo utente;
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+
+
+            bean.setIdOrdine(rs.getInt("id ordine"));
+            bean.setTotale(rs.getFloat("totale"));
+            bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
+            bean.setIndirizzo(rs.getString("indirizzo"));
+            String listaDB = rs.getString("prodotti");
+
+            Gson gson = new Gson();
+            Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
+            List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
+
+            bean.setProdotti(listaProdotti);
+
+            ris.add(bean); //aggiungiamo il bean alla lista;
+
+            rs.close();
+
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+        return ris;
+    }
+
 
     private void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {
