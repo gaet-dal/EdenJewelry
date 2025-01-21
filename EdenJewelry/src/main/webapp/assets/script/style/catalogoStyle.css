@@ -1,0 +1,130 @@
+body {
+    font-family: "Merienda", serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e8d8f1;
+}
+
+.background-image {
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    background-color: #7a5266;
+    color: white;
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+header img {
+    height: 70px;
+}
+
+header .icons {
+    display: flex;
+    gap: 15px;
+}
+
+.search-bar {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width: 70%;
+    height: 25px;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    opacity: 0.9;
+    transition: opacity 1s ease;
+}
+
+.search-bar input:hover{
+    opacity: 0.5;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+.section {
+    width: 45%;
+}
+.section h2 {
+    /*writing-mode: vertical-rl;
+    text-orientation: upright;*/
+    font-size: 1.5em;
+    margin: 0;
+    color: #333;
+}
+.section .boxBasic {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+
+}
+
+.section .box {
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.2); /* Sfondo trasparente */
+    backdrop-filter: blur(10px); /* Sfocatura per l'effetto vetro */
+    -webkit-backdrop-filter: blur(10px); /* Supporto per Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.product {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease;
+}
+
+.product:hover{
+    opacity: 0.5;
+}
+
+.product img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.product p {
+    margin: 10px 0;
+}
+
+.expand {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.expand a {
+    color: #7a5266;
+    text-decoration: none;
+    font-weight: bold;
+}
