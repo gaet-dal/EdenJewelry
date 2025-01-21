@@ -26,7 +26,7 @@ public class WishlistDAO {
 
     private static final String TABLE_NAME = "WISHLIST";
 
-    public WishlistDAO(DataSource ds) {
+    public synchronized WishlistDAO(DataSource ds) {
         this.ds = ds;
 
         if(ds == null) {
@@ -36,7 +36,7 @@ public class WishlistDAO {
         }
     }
 
-    public boolean doSave(WishlistBean wishlist) throws SQLException {
+    public synchronized boolean doSave(WishlistBean wishlist) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -65,7 +65,7 @@ public class WishlistDAO {
         return result != 0;
     }
 
-    public boolean doDelete(String email) throws SQLException {
+    public synchronized boolean doDelete(String email) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -87,7 +87,7 @@ public class WishlistDAO {
         return result != 0;
     }
 
-    public List<WishlistBean> doRetrieveAll() throws SQLException {
+    public synchronized List<WishlistBean> doRetrieveAll() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -128,7 +128,7 @@ public class WishlistDAO {
         return wishlists;
     }
 
-    public WishlistBean doRetrieveByEmail(String email) throws SQLException {
+    public synchronized WishlistBean doRetrieveByEmail(String email) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         WishlistBean bean = new WishlistBean();
