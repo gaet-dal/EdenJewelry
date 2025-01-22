@@ -3,14 +3,14 @@ package main.java.gestioneProdotti.prodotto;
 public class ProdottoBean{
     private String nome;
     private float prezzo;
-    private int quantità;
+    private int quantita;
     private String categoria;
     private String immagine;
 
     public ProdottoBean(){
         nome = null;
         prezzo = 0.0f;
-        quantità = 0;
+        quantita = 0;
         categoria = null;
     }
 
@@ -30,12 +30,12 @@ public class ProdottoBean{
         this.prezzo = prezzo;
     }
 
-    public int getQuantità() {
-        return quantità;
+    public int getQuantita() {
+        return quantita;
     }
 
-    public void setQuantità(int quantità) {
-        this.quantità = quantità;
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
     }
 
     public String getCategoria() {

@@ -26,7 +26,7 @@ public class profili_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
-        utenti = new UtenteDAOD(ds);
+        utenti = new UtenteDAO(ds);
 
         HttpSession session = request.getSession(false);
         UtenteBean utente = (UtenteBean) session.getAttribute("utente");

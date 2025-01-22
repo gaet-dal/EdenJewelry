@@ -52,7 +52,8 @@ public class UtenteDAO {
             closeResources(preparedStatement, connection);
         }
 
-        return result != 0;
+        return result != 0; //se la registarazione delle righe va a buon fine, il numero è maggiore di zero e da true;
+                            //altrimenti false;
     }
 
     public synchronized boolean doDelete(String email){
