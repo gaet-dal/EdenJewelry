@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 public class HashingAlgoritm {
 
     //metodo per effettuare l'hash delle password;
-    private String toHash(String password) {
+    public String toHash(String password) {
         String hashString=null;
 
         try {
