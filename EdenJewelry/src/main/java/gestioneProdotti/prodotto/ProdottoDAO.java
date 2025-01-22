@@ -43,7 +43,7 @@ public class ProdottoDAO {
 
             preparedStatement.setString(1, prodotto.getNome());
             preparedStatement.setFloat(2, prodotto.getPrezzo());
-            preparedStatement.setInt(3, prodotto.getQuantità());
+            preparedStatement.setInt(3, prodotto.getQuantita());
             preparedStatement.setString(4, prodotto.getCategoria());
             preparedStatement.setString(5, prodotto.getImmagine());
 
@@ -96,7 +96,7 @@ public class ProdottoDAO {
 
                 bean.setNome(rs.getString("nome"));
                 bean.setPrezzo(rs.getFloat("prezzo"));
-                bean.setQuantità(rs.getInt("quantità"));
+                bean.setQuantita(rs.getInt("quantità"));
                 bean.setCategoria(rs.getString("categoria"));
                 bean.setImmagine(rs.getString("immagine"));
 
@@ -125,7 +125,7 @@ public class ProdottoDAO {
 
             bean.setNome(rs.getString("nome"));
             bean.setPrezzo(rs.getFloat("prezzo"));
-            bean.setQuantità(rs.getInt("quantità"));
+            bean.setQuantita(rs.getInt("quantità"));
             bean.setCategoria(rs.getString("password"));
             bean.setImmagine(rs.getString("immagine"));
 
