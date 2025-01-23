@@ -83,10 +83,4 @@
         <url-pattern>/CatalogoVenditoreServlet</url-pattern>
     </servlet-mapping>
 
-
-
-
-
-
-
 </web-app>

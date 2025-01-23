@@ -51,13 +51,22 @@
     </div>
 </div>
 
+<!-- Mostra messaggio di errore di login, se presente -->
+<%-- Controlla se è stato impostato un messaggio di errore di login --%>
+<% if (request.getAttribute("login-error") != null) { %>
+<div class="alert alert-danger" role="alert">
+    <%= request.getAttribute("login-error") %>
+</div>
+<% } %>
+
+<!--form per il login -->
 <div class="login-container">
     <div class="login-box">
-        <form action="<%= request.getContextPath() %>/login" method="post">
+        <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Accedi ora!</button>
-            <p>Non sei registrato? <a href="<%= request.getContextPath() %>/register">Clicca qui!</a></p>
+            <p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
         </form>
         <%
             // messaggi di errore o successo
@@ -78,9 +87,6 @@
     <%= request.getAttribute("login-error") %>
 </div>
 <% } %>
-
-<!-- Link per la registrazione -->
-<p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
 </body>
 </html>
 
