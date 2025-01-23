@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import main.java.gestioneProdotti.carrello.Carrello;
 import main.java.utilities.HashingAlgoritm;
 
 public class LoginServlet extends HttpServlet {
@@ -53,8 +54,13 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
 
         if(b!=null){
             //se l'utente non è null, allora c'è corrispondeza e creiamo la sessione per l'utente;
-            request.getSession().setAttribute("utente", b);
+            HttpSession session=request.getSession();
+            session.setAttribute("utente", b);
             //una volta verificato l'utente, bisogna reindirizzarlo verso la sua area utente;
+
+            //creiamo anche il carrello;
+            Carrello cart=new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
+            session.setAttribute("carrello", cart);
 
         }
         else{
