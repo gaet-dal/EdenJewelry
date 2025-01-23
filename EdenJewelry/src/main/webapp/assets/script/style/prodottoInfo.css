@@ -15,23 +15,29 @@ body {
     pointer-events: none;
 }
 
-.header {
+header {
     background-color: #7a5266;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ombra per separare visivamente l'header */
 }
 
-.header img {
-    height: 50px;
+header img {
+    height: 60px; /* Altezza uniforme del logo */
 }
 
-.menu-icon {
-    font-size: 24px;
-    color: #fff;
+header .icons {
+    display: flex;
+    gap: 15px; /* Spaziatura uniforme tra le icone */
 }
 
+.icons span {
+    font-size: 20px; /* dimensione testo delle icone */
+    cursor: pointer; /* icone sono interattive */
+}
 
 .container {
     position: absolute;
@@ -42,14 +48,15 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 90%;
-    max-width: 600px;
+    max-width: 55%;
+    height: 65%;
     padding: 20px;
     text-align: center;
 }
 
 .product-image img {
-    width: 150px;
-    margin-bottom: 20px;
+    width: 290px;
+    margin-bottom: -40px;
     justify-content: left;
 }
 
@@ -88,7 +95,7 @@ body {
 }
 
 .product-info {
-    margin-top: 20px;
+    margin-top: 9%;
     text-align: left;
 }
 
@@ -121,11 +128,11 @@ body {
 
 .product-details {
     text-align: left;
-    flex-grow: 1; /* Occupa lo spazio rimanente */
-    display: flex; /* Attiva flexbox */
-    flex-direction: column; /* Organizza i figli verticalmente */
-    justify-content: center; /* Centra verticalmente tutto il contenuto rispetto all'immagine */
-    gap: 5px; /* Spazio tra gli elementi  */
+    flex-grow: 1; /* occupa lo spazio rimanente */
+    display: flex; /* attiva flexbox */
+    flex-direction: column; /* organizza i figli verticalmente */
+    justify-content: center; /* centra verticalmente tutto il contenuto rispetto all'immagine */
+    gap: 5px; /* spazio tra gli elementi  */
 }
 
 .product-details-text {
