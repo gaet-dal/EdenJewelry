@@ -44,6 +44,7 @@ public class CatalogoUtenteServlet extends HttpServlet {
 
         //mandiamo in stampa su una jsp;
         if(catalogo!=null){
+            request.setAttribute("catalogo", catalogo);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/.jsp"); //dobbiamo mandare sulla home;
             dispatcher.forward(request, response);
         }

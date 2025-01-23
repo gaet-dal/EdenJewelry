@@ -1,6 +1,6 @@
-package main.java.gestioneProdotti.catalogo;
+package main.java.gestioneProdotti.wishlist;
 
-import main.java.gestioneProdotti.prodotto.ProdottoBean;
+import main.java.gestioneAccount.utente.UtenteBean;
 import main.java.gestioneProdotti.prodotto.ProdottoDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -9,13 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CatalogoVenditoreServlet extends HttpServlet {
+//servlet che si occupa di stampare la wishlist;
+public class WishlistServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     //usiamo questa servlet per gestire la richiesta di un utente di poter effettuare il login al sito e, in base ai dati inseriti,
@@ -26,26 +26,28 @@ public class CatalogoVenditoreServlet extends HttpServlet {
 
     }
 
-    private ProdottoDAO prodottoDAO;
+    private WishlistDAO wishlistDAO;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
         DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
-        prodottoDAO=new ProdottoDAO(ds); //otteniamo collegamento alla tabella PRODOTTO;
+        wishlistDAO=new WishlistDAO(ds); //otteniamo il collegamento alla wishlist;
+        HttpSession session=request.getSession();
+        UtenteBean utente = (UtenteBean) session.getAttribute("utente");
 
-        //poichè dobbiamo solo mostrare il carrello, recuperiamo tutti i prodotti e mandiamoli in stampa su una jsp;
-        List<ProdottoBean> catalogo= new ArrayList<ProdottoBean>();
-
+        WishlistBean wishlist=null;
         try {
-            catalogo=prodottoDAO.doRetrieveAll();
+            wishlist = wishlistDAO.doRetrieveByEmail(utente.getEmail());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        //mandiamo in stampa su una jsp;
-        if(catalogo!=null){
-            request.setAttribute("catalogo", catalogo);
+        if(wishlist!=null && utente.getEmail()!=null){
+            //reindirizziamo alla jsp della wishlist;
+            request.setAttribute("wishlist", wishlist); //settiamo la wishlist sulla request;
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/.jsp"); //dobbiamo mandare sulla home;
             dispatcher.forward(request, response);
         }
+
+
     }
 }
