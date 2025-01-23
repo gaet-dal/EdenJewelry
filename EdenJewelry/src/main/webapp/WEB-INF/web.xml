@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app>
-    <title>Empress_Game</title>
+    <title>EdenJewelry</title>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
@@ -16,11 +16,71 @@
     <!-- AreaRiservata servlet -->
     <servlet>
         <servlet-name>AreaRiservataServlet</servlet-name>
-        <servlet-class>areaRiservata.AreaRiservataServlet</servlet-class>
+        <servlet-class>main.java.gestioneAccount.areaRiservata.AreaRiservataServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AreaRiservataServlet</servlet-name>
         <url-pattern>/AreaRiservataServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Login servlet -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>main.java.gestioneAccount.autenticazione.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Registrazione servlet -->
+    <servlet>
+        <servlet-name>RegistrazioneServlet</servlet-name>
+        <servlet-class>main.java.gestioneAccount.registrazione.RegistrazioneServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegistrazioneServlet</servlet-name>
+        <url-pattern>/RegistrazioneServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Carrello servlet -->
+    <servlet>
+        <servlet-name>CarrelloServlet</servlet-name>
+        <servlet-class>main.java.gestioneProdotti.carrello.CarrelloServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CarrelloServlet</servlet-name>
+        <url-pattern>/CarrelloServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Wishlist servlet -->
+    <servlet>
+        <servlet-name>WishlistServlet</servlet-name>
+        <servlet-class>main.java.gestioneProdotti.wishlist.WishlistServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WishlistServlet</servlet-name>
+        <url-pattern>/WishlistServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Catalogo utente servlet -->
+    <servlet>
+        <servlet-name>CatalogoUtenteServlet</servlet-name>
+        <servlet-class>main.java.gestioneProdotti.catalogo.CatalogoUtenteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CatalogoUtenteServlet</servlet-name>
+        <url-pattern>/CatalogoUtenteServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Catalogo venditore servlet -->
+    <servlet>
+        <servlet-name>CatalogoVenditoreServlet</servlet-name>
+        <servlet-class>main.java.gestioneProdotti.catalogo.CatalogoVenditoreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CatalogoVenditoreServlet</servlet-name>
+        <url-pattern>/CatalogoVenditoreServlet</url-pattern>
     </servlet-mapping>
 
 
