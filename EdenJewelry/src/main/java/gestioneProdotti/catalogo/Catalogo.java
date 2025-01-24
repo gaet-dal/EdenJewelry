@@ -10,14 +10,15 @@ import java.sql.SQLException;
 
 //classe che permette la gestione dei prodotti nel catalogo;
 public class Catalogo{
-    //i prodotti sono salvati all'interno della tavella PRODOTTO.
+    //i prodotti sono salvati all'interno della tabella PRODOTTO.
     //catalogo si occupa della gestione dei prodotti
 
 
    //metodo per aggiungere prodotto al oggetto catalogo;
     public boolean addProduct(ProdottoBean prodotto,  ProdottoDAO prodottoDAO) throws SQLException {
         //poichè ci viene passato direttamente il ProdottoBean
-        //ci occupiamo di valutare solo se tutti i dati inseriti sono corretti e di inserirlo nel db;
+        //ci occupiamo di valutare solo se t
+        // utti i dati inseriti sono corretti e di inserirlo nel db;
 
         boolean validazione=checkProduct(prodotto); //verifichiamo se i dati del prodotto sono corretti;
         boolean ris=false;

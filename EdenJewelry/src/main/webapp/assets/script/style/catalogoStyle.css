@@ -22,16 +22,32 @@ header {
     align-items: center;
     /*justify-content: space-between;*/
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 5px 20px;
 }
 
 header img {
-    height: 70px;
+    height: 60px; /* Altezza uniforme del logo */
 }
 
 header .icons {
     display: flex;
-    gap: 15px;
+    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
+    margin-top: 5px; /* per allineare le icone all'immagine del logo */
+}
+
+.icons img {
+    height: 40px;
+    cursor: pointer;
+}
+
+.icons p{
+    padding-right: 30px;
+    color: black;
+}
+
+.icons img:hover {
+    opacity: 65%;
+    height: 45px;
 }
 
 .search-bar {

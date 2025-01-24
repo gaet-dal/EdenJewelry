@@ -1,0 +1,195 @@
+body {
+    font-family: "Merienda", serif;
+    background-color: #e7d7f2;
+    margin: 0;
+    padding: 0;
+}
+
+.background-image {
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    background-color: #7a5266;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ombra per separare visivamente l'header */
+}
+
+header img {
+    height: 60px; /* Altezza uniforme del logo */
+}
+
+header .icons {
+    display: flex;
+    margin-top: 5px; /* per allineare le icone all'immagine del logo */
+    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
+}
+
+.icons img {
+    height: 40px;
+    cursor: pointer;
+}
+
+.icons p{
+    padding-right: 30px;
+    color: black;
+}
+
+.icons img:hover {
+    opacity: 65%;
+    height: 45px;
+}
+
+.container1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d7b3e5;
+   /* background: white; */
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 55%;
+    height: 65%;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.2); /* background trasparente */
+    backdrop-filter: blur(10px); /* sfocatura effetto vetro */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* background: white; */
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 55%;
+    height: 65%;
+    padding: 20px;
+    text-align: center;
+}
+
+.product-image img {
+    width: 290px;
+    margin-bottom: -40px;
+    justify-content: left;
+}
+
+.product-title {
+    font-size: 29px;
+    color: #d8a1e8; /*prima era #4a4a4a;*/
+    text-shadow: 2px 2px rgba(255, 255, 255, 0.85);
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 20px;
+    color: #d8a1e8;
+    margin-bottom: 20px;
+}
+
+.button {
+    font-family: "Merienda", serif;
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    width: 80%;
+}
+
+.wishlist {
+    background: rgba(232, 161, 207, 0.6); /* background trasparente */
+    backdrop-filter: blur(10px); /* sfocatura effetto vetro */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(232, 161, 182, 0.6);
+}
+
+.wishlist1 {
+    background-color: #d8a1e8; /*216, 161, 232 IN RGBA*/
+}
+
+.cart {
+    background: rgba(216, 161, 232, 0.6); /* background trasparente */
+    backdrop-filter: blur(10px); /* sfocatura effetto vetro */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(195, 161, 232, 0.6);
+}
+
+.cart1 {
+    background-color: #b896e8;
+}
+
+.product-info {
+    margin-top: 9%;
+    text-align: left;
+}
+
+.product-info-item {
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.product-info-item button {
+    font-family: "Merienda", serif;
+    background: none;
+    border: none;
+    color: #d8a1e8;
+    font-size: 19px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.product-info-item p{
+    background: none;
+    border: none;
+    color: #d8a1e8;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    margin-left: 3%;
+}
+
+.product-details {
+    text-align: left;
+    flex-grow: 1; /* occupa lo spazio rimanente */
+    display: flex; /* attiva flexbox */
+    flex-direction: column; /* organizza i figli verticalmente */
+    justify-content: center; /* centra verticalmente tutto il contenuto rispetto all'immagine */
+    gap: 5px; /* spazio tra gli elementi  */
+}
+
+.product-details-text {
+    padding-left: 10%;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+
