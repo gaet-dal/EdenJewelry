@@ -31,12 +31,23 @@ header img {
 
 header .icons {
     display: flex;
-    gap: 15px; /* Spaziatura uniforme tra le icone */
+    margin-top: 5px; /* per allineare le icone all'immagine del logo */
+    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
 }
 
-.icons span {
-    font-size: 20px; /* dimensione testo delle icone */
-    cursor: pointer; /* icone sono interattive */
+.icons img {
+    height: 40px;
+    cursor: pointer;
+}
+
+.icons p{
+    padding-right: 30px;
+    color: black;
+}
+
+.icons img:hover {
+    opacity: 65%;
+    height: 45px;
 }
 
 .container {
