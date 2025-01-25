@@ -64,7 +64,7 @@ header .icons {
 .cart-container {
     display: flex;
     flex-direction: column;
-    min-width: 40%;
+    min-width: 50%;
     max-width: 50%;
     margin: 20px auto;
     /*background-color: #f8f4fa;*/
@@ -90,7 +90,7 @@ header .icons {
 }
 
 .item img {
-    height: 90px;
+    height: 130px;
     border-radius: 5px;
 }
 
