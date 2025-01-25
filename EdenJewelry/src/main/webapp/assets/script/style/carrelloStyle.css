@@ -1,0 +1,148 @@
+body {
+    font-family: "Merienda", serif;
+    background-color: #e5d3e9;
+    margin: 0;
+    padding: 0;
+}
+
+body button{
+    font-family: "Merienda", serif;
+}
+
+.background-image {
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    background-color: #7a5266;
+    color: white;
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    justify-content: space-between;
+    padding: 5px 20px;
+}
+
+header img {
+    height: 60px; /* Altezza uniforme del logo */
+}
+
+header .icons {
+    display: flex;
+    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
+    margin-top: 5px; /* per allineare le icone all'immagine del logo */
+}
+
+.icons img {
+    height: 40px;
+    cursor: pointer;
+}
+
+.icons p{
+    padding-right: 30px;
+    color: black;
+}
+
+.icons img:hover {
+    opacity: 65%;
+    height: 45px;
+}
+
+.center-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; /* per gestire l'altezza della pagina */
+}
+
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 40%;
+    max-width: 50%;
+    margin: 20px auto;
+    /*background-color: #f8f4fa;*/
+    background: rgba(255, 255, 255, 0.2); /* Sfondo trasparente */
+    backdrop-filter: blur(10px); /* Sfocatura per l'effetto vetro */
+    -webkit-backdrop-filter: blur(10px); /* Supporto per Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item img {
+    height: 90px;
+    border-radius: 5px;
+}
+
+.item-info {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.item-info h4 {
+    margin: 0;
+    font-size: 19px;
+}
+
+.item-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.remove-button {
+    background-color: #d3b0d3;
+    border: none;
+    border-radius: 15px;
+    padding: 6px 11px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.total {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.checkout-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #d3b0d3;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.checkout-button:hover {
+    background-color: #b391b3;
+}
