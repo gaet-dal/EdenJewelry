@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi prodotto</title>
+    <link rel="stylesheet" href="style/aggiungiProdottoStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<img src="images/apple.png" alt="Eden" class="background-image">
+<header>
+    <img src="images/logo1.png" alt="Eden Jewelry">
+    <div class="icons">
+        <img src="images/user-icon.png">
+        <p>Profilo</p>
+        <img src="images/wishlist-icon.png">
+        <p>Wishlist</p>
+        <img src="images/cart-icon.png">
+        <p>Carrello</p>
+    </div>
+</header>
+<div class="container">
+    <h1>Aggiungi prodotto:</h1>
+    <form>
+        <div class="left-box">
+        <div>
+            <label for="name">Nome:</label><br>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="collection">Collezione:</label><br>
+            <input type="text" id="collection" name="collection">
+        </div>
+            <div>
+                <label for="price">Prezzo:</label><br>
+                <input type="number" id="price" name="price" step="0.01">
+            </div>
+        </div>
+        <div class="right-box">
+        <div>
+            <label for="description">Descrizione:</label>
+            <textarea id="description" name="description" rows="3"></textarea>
+        </div>
+        <div>
+            <label for="composition">Composizione:</label>
+            <textarea id="composition" name="composition" rows="3"></textarea>
+        </div>
+        </div>
+        <button type="submit">Conferma aggiunta</button>
+    </form>
+</div>
+</body>
+</html>
