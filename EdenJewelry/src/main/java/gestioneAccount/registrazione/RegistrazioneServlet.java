@@ -4,6 +4,7 @@ import main.java.gestioneAccount.utente.UtenteBean;
 import main.java.gestioneAccount.utente.UtenteDAO;
 import main.java.utilities.HashingAlgoritm;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,6 +57,8 @@ public class RegistrazioneServlet extends HttpServlet {
                 else{
                     //registrazione non andata a buon fine;
                     request.setAttribute("register-error", "registrazione non andata a buon fine");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+                    dispatcher.forward(request, response);
                 }
 
 
@@ -65,13 +68,22 @@ public class RegistrazioneServlet extends HttpServlet {
 
         }
         else if (n==false){
-            request.setAttribute("register-error", "il nome deve contenere solo lettere dell'alfabeto");
+            request.setAttribute("nome-error", "il nome deve contenere solo lettere dell'alfabeto");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+            dispatcher.forward(request, response);
+
+
         }
         else if (c==false){
-            request.setAttribute("register-error", "il cognome deve contenere solo lettere dell'alfabeto");
+            request.setAttribute("cognome-error", "il cognome deve contenere solo lettere dell'alfabeto");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+            dispatcher.forward(request, response);
         }
         else if (e==false){
-            request.setAttribute("register-error", "l'email non valida");
+            request.setAttribute("email-error", "l'email non valida");
+            //mandiamo gli errori sulla jsp;
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+            dispatcher.forward(request, response);
         }
 
 
