@@ -57,8 +57,7 @@ public class RegistrazioneServlet extends HttpServlet {
                 else{
                     //registrazione non andata a buon fine;
                     request.setAttribute("register-error", "registrazione non andata a buon fine");
-                    //inviamo gli errori sulla pagina di registrazione
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
                     dispatcher.forward(request, response);
                 }
 
@@ -68,22 +67,22 @@ public class RegistrazioneServlet extends HttpServlet {
             }
 
         }
-        //creiamo degli errori specifici per ogni valore che potrebbe presentare degli errori.
-        //in questo modo notificheremo l'utente subito e in maniera chiara, di dove è presente lerrore e come correggerlo
-        //allo stesso tempo, cerchiamo di mantenere un certo livello di sicurezza per i parametri in input;
         else if (n==false){
             request.setAttribute("nome-error", "il nome deve contenere solo lettere dell'alfabeto");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
             dispatcher.forward(request, response);
+
+
         }
         else if (c==false){
             request.setAttribute("cognome-error", "il cognome deve contenere solo lettere dell'alfabeto");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
             dispatcher.forward(request, response);
         }
         else if (e==false){
             request.setAttribute("email-error", "l'email non valida");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
+            //mandiamo gli errori sulla jsp;
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
             dispatcher.forward(request, response);
         }
 

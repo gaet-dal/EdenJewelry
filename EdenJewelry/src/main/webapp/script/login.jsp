@@ -17,8 +17,9 @@
         if("user".equals(tipo)){
             response.sendRedirect("ProfiloUtente.jsp");
         }
-        else
+        else if("seller".equals(tipo))
             response.sendRedirect("ProfiloVenditore.jsp");
+
 
 
     }
@@ -60,13 +61,13 @@
 <% } %>
 
 <!--form per il login -->
-<div class="login-container"> <!-- questi sono i nomi che diamo dal css-->
+<div class="login-container">
     <div class="login-box">
         <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Accedi ora!</button>
-            <p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/registrazione.jsp">Registrati qui </a></p>
+            <p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
         </form>
         <%
             // messaggi di errore o successo
