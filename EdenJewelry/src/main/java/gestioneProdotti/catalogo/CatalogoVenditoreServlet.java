@@ -3,6 +3,7 @@ package main.java.gestioneProdotti.catalogo;
 import main.java.gestioneAccount.utente.UtenteBean;
 import main.java.gestioneProdotti.prodotto.ProdottoBean;
 import main.java.gestioneProdotti.prodotto.ProdottoDAO;
+import main.java.gestioneProdotti.catalogo.Catalogo;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -53,6 +54,18 @@ public class CatalogoVenditoreServlet extends HttpServlet {
             catalogo=prodottoDAO.doRetrieveAll();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+
+        String query = request.getParameter("query");
+        if(query != null){
+            Catalogo cat = new Catalogo(ds);
+            ProdottoBean bean = new ProdottoBean();
+            bean.setNome("query");
+            try {
+                cat.removeProduct(bean);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         //mandiamo in stampa su una jsp;

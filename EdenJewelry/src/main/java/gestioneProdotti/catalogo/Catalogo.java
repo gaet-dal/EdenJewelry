@@ -10,12 +10,19 @@ import java.sql.SQLException;
 
 //classe che permette la gestione dei prodotti nel catalogo;
 public class Catalogo{
+    ProdottoDAO dao;
+
+    public Catalogo(DataSource ds){
+        this.dao = new ProdottoDAO(ds);
+    }
+
+
     //i prodotti sono salvati all'interno della tabella PRODOTTO.
     //catalogo si occupa della gestione dei prodotti
 
 
    //metodo per aggiungere prodotto al oggetto catalogo;
-    public boolean addProduct(ProdottoBean prodotto,  ProdottoDAO prodottoDAO) throws SQLException {
+    public boolean addProduct(ProdottoBean prodotto) throws SQLException {
         //poichè ci viene passato direttamente il ProdottoBean
         //ci occupiamo di valutare solo se t
         // utti i dati inseriti sono corretti e di inserirlo nel db;
@@ -23,17 +30,17 @@ public class Catalogo{
         boolean validazione=checkProduct(prodotto); //verifichiamo se i dati del prodotto sono corretti;
         boolean ris=false;
         if(validazione==true){
-            ris=prodottoDAO.doSave(prodotto);
+            ris=dao.doSave(prodotto);
         }
 
         return ris;
     }
 
     //metodo per rimuovere un prodotto dal catalogo
-    public boolean removeProduct(ProdottoBean prodotto, ProdottoDAO prodottoDAO) throws SQLException {
+    public boolean removeProduct(ProdottoBean prodotto) throws SQLException {
 
         String nome= prodotto.getNome();
-        boolean ris=prodottoDAO.doDelete(nome);
+        boolean ris=dao.doDelete(nome);
         return ris;
     }
 
