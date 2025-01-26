@@ -17,8 +17,9 @@
         if("user".equals(tipo)){
             response.sendRedirect("ProfiloUtente.jsp");
         }
-        else
+        else if("seller".equals(tipo))
             response.sendRedirect("ProfiloVenditore.jsp");
+
 
 
     }

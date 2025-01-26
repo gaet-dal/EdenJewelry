@@ -40,6 +40,14 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        String action = request.getParameter("action");//recuperiamo il parametro action daalla request;
+        //se corrisponde al logout, allora eseguiamo il metodo;
+
+        // Controlla se l'azione richiesta è "logout"
+        if ("logout".equals(action)) {
+            logout();
+        }
+
         //
         String hashing=hash.toHash(password); //effettuaiamo l'hasing della password;
 

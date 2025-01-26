@@ -5,6 +5,30 @@
   Time: 11:51
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="main.java.gestioneAccount.utente.UtenteBean" %>
+<jsp:useBean id="utente" class="main.java.gestioneAccount.utente.UtenteBean" scope="session"/>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+
+<%
+    // Controlla se l'utente è già loggato
+    if (utente != null && utente.getEmail() != null && !utente.getEmail().isEmpty()) {
+        String tipo = utente.getTipo(); //recuperiamo il ripo dell'utente
+        String nome = utente.getNome();
+    }
+    else {
+        response.sendRedirect("login.jsp"); //se non è loggato, si reindirizza al login;
+
+      /*  if("user".equals(tipo)){
+            response.sendRedirect("ProfiloUtente.jsp");
+        }
+        else
+            response.sendRedirect("ProfiloVenditore.jsp");
+        */
+
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -37,17 +61,33 @@
                     <span class="menu-icon">&#128100;</span>
                 </div>
                 <div class="profile-info">
-                    <h3><%= session.getAttribute("username") != null ? session.getAttribute("username") : "Nome Utente" %></h3>
+                    <!--recupera il nome del utente dalla sessione e lo stampa-->
+                    <h3><%= session.getAttribute("nome") != null ? session.getAttribute("nome") : "Nome Utente" %></h3>
                     <a href="<%= request.getContextPath() %>/profile" class="profile-link">Visualizza profilo &#8594;</a>
                 </div>
             </div>
         </div>
 
-        <button class="profile-button" onclick="location.href='<%= request.getContextPath() %>/orders'">I miei ordini</button>
-        <button class="profile-button" onclick="location.href='<%= request.getContextPath() %>/wishlist'">Wishlist &#9825;</button>
+        <!--creare dei bottoni per visualizzare wishlist e ordini-->
+
+        <form action="${pageContext.request.contextPath}/WishlistServlet" method="post">
+            <input type="hidden" name="email" value="<%= utente.getEmail() %>">
+            <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+        </form>
+
+        <!-- correggere la servet a cui collegare gli ordini-->
+        <form action="${pageContext.request.contextPath}/Ordini" method="post">
+            <input type="hidden" name="email" value="<%= utente.getEmail() %>">
+            <button name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+        </form>
+
         <p class="logout">
-            <a href="<%= request.getContextPath() %>/logout" class="logout-link">Log out &#8594;</a>
+            <!--non dobbiamo passare alcun parametro--->
+            <!--semplicemente viene invalidata la sessione quando l'utente clicca su logout-->
+            <!--diamo il valore logout alla action, in modo da poter richiamare solo lo specifico metodo nella servlet del login--->
+            <a href="<%= request.getContextPath() %>/LoginServlet?action=logout" class="logout-link">Log out &#8594;</a>
         </p>
+
     </div>
 </div>
 </body>

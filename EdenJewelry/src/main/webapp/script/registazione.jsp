@@ -40,10 +40,13 @@
             <% } %>
 
             <!--può essere gestito tramite un menù a discesa con 2 opzioni-->
-            <input type="text" name="tipo" placeholder="Tipo" required>
+            <select id="tipo" name="tipo">
+                <option value="user">Utente</option>
+                <option value="seller">Venditore</option>
+            </select>
 
             <input type="password" name="password" placeholder="Password" required>
-            <!--controlliamo se si è generato un errore sul formato della stringa del nome-->
+
 
             <button type="submit">Registrati ora!</button>
             <% if (request.getAttribute("register-error") != null) { %>
