@@ -4,7 +4,6 @@ import main.java.gestioneAccount.utente.UtenteBean;
 import main.java.gestioneAccount.utente.UtenteDAO;
 import main.java.utilities.HashingAlgoritm;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,9 +56,6 @@ public class RegistrazioneServlet extends HttpServlet {
                 else{
                     //registrazione non andata a buon fine;
                     request.setAttribute("register-error", "registrazione non andata a buon fine");
-                    //inviamo gli errori sulla pagina di registrazione
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
-                    dispatcher.forward(request, response);
                 }
 
 
@@ -68,23 +64,14 @@ public class RegistrazioneServlet extends HttpServlet {
             }
 
         }
-        //creiamo degli errori specifici per ogni valore che potrebbe presentare degli errori.
-        //in questo modo notificheremo l'utente subito e in maniera chiara, di dove è presente lerrore e come correggerlo
-        //allo stesso tempo, cerchiamo di mantenere un certo livello di sicurezza per i parametri in input;
         else if (n==false){
-            request.setAttribute("nome-error", "il nome deve contenere solo lettere dell'alfabeto");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
-            dispatcher.forward(request, response);
+            request.setAttribute("register-error", "il nome deve contenere solo lettere dell'alfabeto");
         }
         else if (c==false){
-            request.setAttribute("cognome-error", "il cognome deve contenere solo lettere dell'alfabeto");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
-            dispatcher.forward(request, response);
+            request.setAttribute("register-error", "il cognome deve contenere solo lettere dell'alfabeto");
         }
         else if (e==false){
-            request.setAttribute("email-error", "l'email non valida");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/registrazione.jsp");
-            dispatcher.forward(request, response);
+            request.setAttribute("register-error", "l'email non valida");
         }
 
 
