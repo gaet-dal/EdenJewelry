@@ -26,7 +26,7 @@ public class WishlistDAO {
 
     private static final String TABLE_NAME = "WISHLIST";
 
-    public synchronized WishlistDAO(DataSource ds) {
+    public WishlistDAO(DataSource ds) {
         this.ds = ds;
 
         if(ds == null) {

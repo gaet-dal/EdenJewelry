@@ -5,11 +5,14 @@
   Time: 17:03
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="main.java.gestioneAccount.utente.UtenteBean" %>
-<jsp:useBean id="utente" class="main.java.gestioneAccount.utente.UtenteBean" scope="session"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="main.java.gestioneProdotti.prodotto.ProdottoBean"%>
 <%@ page import="java.util.List" %>
+<%@ page import="javax.sql.DataSource" %>
+<%@ page import="javax.xml.crypto.Data" %>
+<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoDAO" %>
+<%@ page import="main.java.gestioneProdotti.homepage.SimpleSearch" %>
 
 <html>
 <head>
@@ -22,16 +25,20 @@
 
   <!--  form invia una richiesta alla servlet con un parametro gameSearch per cercare giochi per nome. -->
   <!-- Una volta trovati i giochi corrispondenti, viene mostrato un elenco con ciascun gioco e un pulsante "Elimina" accanto ad ogni voce -->
-  <form id="delete_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
-    <input type="text" name="gameSearch" placeholder="Cerca gioco per nome">
+  <form id="delete_form" action="${pageContext.request.contextPath}/PLACEHOLDER" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
+    <input type="text" name="query" placeholder="Cerca prodotto per nome">
     <button name="submitAction" type="submit" value="Cerca">cerca</button>
   </form>
   <ul>
     <!-- Mostra l'elenco dei giochi trovati per la ricerca -->
     <%
-      List<Game_bean> games = (List<Game_bean>) request.getAttribute("games");
-      if (games != null && !games.isEmpty()) {
-        for (Game_bean game : games) {
+      DataSource ds = (DataSource) application.getAttribute("MyDataSource");
+
+      ProdottoDAO prodottoDAO = new ProdottoDAO(ds);
+      List<ProdottoBean>  prodotti = prodottoDAO.doRetrieveAll();
+
+      SimpleSearch simple = new SimpleSearch();
+      ProdottoBean prod = simple.search("")
     %>
     <li>
       <p>Nome: <%= game.get_nome() %></p>

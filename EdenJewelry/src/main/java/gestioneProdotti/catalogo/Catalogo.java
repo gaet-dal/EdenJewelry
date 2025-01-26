@@ -10,12 +10,19 @@ import java.sql.SQLException;
 
 //classe che permette la gestione dei prodotti nel catalogo;
 public class Catalogo{
+    ProdottoDAO dao;
+
+    public Catalogo(DataSource ds){
+        this.dao = new ProdottoDAO(ds);
+    }
+
+
     //i prodotti sono salvati all'interno della tabella PRODOTTO.
     //catalogo si occupa della gestione dei prodotti
 
 
    //metodo per aggiungere prodotto al oggetto catalogo;
-    public boolean addProduct(ProdottoBean prodotto,  ProdottoDAO prodottoDAO) throws SQLException {
+    public boolean addProduct(ProdottoBean prodotto) throws SQLException {
         //poichè ci viene passato direttamente il ProdottoBean
         //ci occupiamo di valutare solo se t
         // utti i dati inseriti sono corretti e di inserirlo nel db;
@@ -23,20 +30,17 @@ public class Catalogo{
         boolean validazione=checkProduct(prodotto); //verifichiamo se i dati del prodotto sono corretti;
         boolean ris=false;
         if(validazione==true){
-            ris=prodottoDAO.doSave(prodotto);
+            ris=dao.doSave(prodotto);
         }
 
-        if(ris == true){
-            return true; //il salvataggio del prodotto è andato a buon fine
-        }
-        else return false;
+        return ris;
     }
 
     //metodo per rimuovere un prodotto dal catalogo
-    public boolean removeProduct(ProdottoBean prodotto, ProdottoDAO prodottoDAO) throws SQLException {
+    public boolean removeProduct(ProdottoBean prodotto) throws SQLException {
 
         String nome= prodotto.getNome();
-        boolean ris=prodottoDAO.doDelete(nome);
+        boolean ris=dao.doDelete(nome);
         return ris;
     }
 
@@ -85,20 +89,19 @@ public class Catalogo{
             if(quantita>0 ){
                 q= true;
             }
-            else q=false; //se non corrisponde ad una delle 3 categorie, allora restituiamo false;
+            //se non corrisponde ad una delle 3 categorie, allora restituiamo false;
 
 
         boolean p=false;
         if(prezzo >0 && prezzo<=9999){
             p= true;
-        }
-        else p=false;
+        };
 
 
         //se è presente anche solo un campo con degli errori, bisogna indicarli;
         //dobbiamo pensare un momento a come deve essere restituito l'errore. Se sulla sessione o altro
        boolean ris=false;
-        if(n==true && c==true && q==true && p==true){
+        if(n && c && q && p){
             ris= true; //se tutti i campi sono corretti, possiamo diree che tutti i dati sono corretti;
         }
 
