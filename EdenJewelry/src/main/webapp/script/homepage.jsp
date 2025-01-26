@@ -25,7 +25,7 @@
 </header>
 
 <div class="search-bar">
-    <input type="text" placeholder="Cerca">
+        <input type="text" placeholder="Cerca">
 </div>
 
 <div class="container">
