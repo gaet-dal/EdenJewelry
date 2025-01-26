@@ -2,6 +2,7 @@ package main.java.gestioneOrdini.ordini;
 
 import main.java.gestioneProdotti.prodotto.ProdottoBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrdineBean {
@@ -19,7 +20,7 @@ public class OrdineBean {
         metodoPagamento=null;
         indirizzo=null;
         totale=0;
-        prodotti=null; //assegniamo la lista di prodotti che recuperiamo
+        prodotti= new ArrayList<ProdottoBean>(); //assegniamo la lista di prodotti che recuperiamo
 
     }
 

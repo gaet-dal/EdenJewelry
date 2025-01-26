@@ -26,10 +26,7 @@ public class Catalogo{
             ris=prodottoDAO.doSave(prodotto);
         }
 
-        if(ris == true){
-            return true; //il salvataggio del prodotto è andato a buon fine
-        }
-        else return false;
+        return ris;
     }
 
     //metodo per rimuovere un prodotto dal catalogo
@@ -85,20 +82,19 @@ public class Catalogo{
             if(quantita>0 ){
                 q= true;
             }
-            else q=false; //se non corrisponde ad una delle 3 categorie, allora restituiamo false;
+            //se non corrisponde ad una delle 3 categorie, allora restituiamo false;
 
 
         boolean p=false;
         if(prezzo >0 && prezzo<=9999){
             p= true;
-        }
-        else p=false;
+        };
 
 
         //se è presente anche solo un campo con degli errori, bisogna indicarli;
         //dobbiamo pensare un momento a come deve essere restituito l'errore. Se sulla sessione o altro
        boolean ris=false;
-        if(n==true && c==true && q==true && p==true){
+        if(n && c && q && p){
             ris= true; //se tutti i campi sono corretti, possiamo diree che tutti i dati sono corretti;
         }
 

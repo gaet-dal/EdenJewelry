@@ -66,4 +66,8 @@ public class Carrello {
     public String getEmail() {
         return email;
     }
+
+    public boolean isEmpty() {
+        return prodotti.isEmpty();
+    }
 }
