@@ -1,4 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="prodotti" class="main.java.gestioneProdotti.prodotto.ProdottoDAO" scope="page"/>
+<%@ page import="javax.sql.DataSource" %>
+<%@ page import="javax.servlet.http.HttpServlet" %>
+<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoDAO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoBean" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.SQLException" %>
+
+<!%
+    DataSource ds=(DataSource) application.getAttribute("MyDataSource"); //recuperiamo il ds;
+    ProdottoDAO prodottoDAO= new ProdottoDAO(ds); //otteniamo un collegamento al db;
+
+    //l'aggiunta dei prodotti la facciamo da AggiungiProdotto.jsp;
+    List <ProdottoBean> prodotti;
+    try {
+
+         prodotti= prodottoDAO.doRetrieveAll(); //ricerhiamo i prodotti nel database e li mandiamo in stampa;
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+
+
+%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -29,61 +54,28 @@
 </div>
 
 <div class="container">
-    <div class="section">
-        <h2>NOVITÀ</h2>
-        <div class="box">
-            <div class="products">
-                <%-- ciclo per generare dinamicamente i prodotti novità --%>
-                <%
-                    String[][] novita = {
-                            {"collanaCuore.png", "Collana Cuore", "23,00"},
-                            {"collanaPiuma.png", "Collana Piuma", "17,00"},
-                            {"collanaZirconi.png", "Collana Zirconi", "21,00"},
-                            {"collanaElizabeth.png", "Collana Elizabeth", "34,00"}
-                    };
-
-                    for (String[] prodotto : novita) {
-                %>
-                <div class="product">
-                    <img src="images/products/<%= prodotto[0] %>" alt="<%= prodotto[1] %>">
-                    <p><%= prodotto[1] %></p>
-                    <p>€<%= prodotto[2] %></p>
-                </div>
-                <% } %>
-            </div>
-            <div class="expand">
-                <a href="#">Mostra Altro</a>
-            </div>
-        </div>
-    </div>
 
     <div class="section">
         <h2>CATALOGO</h2>
         <div class="box">
             <div class="products">
-                <%-- ciclo per generare dinamicamente i prodotti del catalogo --%>
-                <%
-                    String[][] catalogo = {
-                            {"collana_ariel.jpg", "Collana Ariel", "45,00"},
-                            {"collana_cuore_bianco.jpg", "Collana cuore bianco", "25,00"},
-                            {"collana_kate.jpg", "Collana Kate", "25,00"},
-                            {"collana_mary.jpg", "Collana Mary", "27,00"}
-                    };
-
-                    for (String[] prodotto : catalogo) {
-                %>
+                <% if (prodotti != null && !prodotti.isEmpty()) { %>
+                <% for (ProdottoBean prodotto : prodotti) { %>
                 <div class="product">
-                    <img src="images/products/<%= prodotto[0] %>" alt="<%= prodotto[1] %>">
-                    <p><%= prodotto[1] %></p>
-                    <p>€<%= prodotto[2] %></p>
+                    <!--PER GIGI: controllare come far recuperare l'immagine--->
+                    <img src="images/products/<%= prodotto.getImmagine() %>" alt="<%= prodotto.getNome() %>">
+                    <p><%= prodotto.getNome() %></p>
+                    <p>€<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
                 </div>
                 <% } %>
-            </div>
-            <div class="expand">
-                <a href="#">Mostra Altro</a>
+                <% } else { %>
+                <p>Nessun prodotto disponibile nel catalogo.</p>
+                <% } %>
             </div>
         </div>
     </div>
 </div>
+</div>
+
 </body>
 </html>
