@@ -3,7 +3,7 @@
 <web-app>
     <title>EdenJewelry</title>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>homepage.jsp</welcome-file>
     </welcome-file-list>
 
     <resource-ref>

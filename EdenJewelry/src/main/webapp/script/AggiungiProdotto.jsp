@@ -29,14 +29,14 @@
       <input type="text" name="prezzo" placeholder="Prezzo">
       <input type="number" name="quantita" placeholder="Quantità disponibile">
 
-      <select id="categoria" type="text" name="categoria">
+      <select id="categoria" type="text" name="Categoria">
         <option value="collane">collane</option>
         <option value="bracciali">bracciali</option>
         <option value="orecchini">orecchini</option>
       </select>
 
       <!--PER GAETANO:  correggere come prendere l'immagine-->
-      <input type="file" name="immagine" placeholder="immagine" required accept="images/*"> <!-- Campo per caricare l'immagine del gioco -->
+      <input type="file" name="immagine" placeholder="Immagine" required accept="images/*"> <!-- Campo per caricare l'immagine del gioco -->
 
       <button id="agg_button" name="submitAction" type="submit"  value="Aggiungi">Conferma aggiunta prodotto</button> <!-- Pulsante per aggiungere un nuovo gioco -->
     </form>

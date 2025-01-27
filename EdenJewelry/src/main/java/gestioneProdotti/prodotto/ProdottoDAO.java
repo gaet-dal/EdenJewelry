@@ -148,4 +148,17 @@ public class ProdottoDAO {
             }
         }
     }
+
+    public boolean isEmpty() throws SQLException {
+        String sql = "SELECT COUNT(*) AS total FROM prodotti";
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                int count = rs.getInt("total");
+                return count == 0; // True se non ci sono prodotti, altrimenti False
+            }
+        }
+        return true; // Valore predefinito se qualcosa va storto
+    }
 }
