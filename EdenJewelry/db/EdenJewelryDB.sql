@@ -1,8 +1,8 @@
 CREATE SCHEMA EdenJewelryDB;
-USE EdenJewelry;
+USE EdenJewelryDB;
 
 CREATE TABLE UTENTE (
-    email varchar(20) NOT NULL,
+    email varchar(50) NOT NULL,
     nome varchar(15) NOT NULL,
     cognome varchar(15) NOT NULL,
     password varchar(200) NOT NULL,

@@ -24,7 +24,7 @@
 
   <!-- Form per Aggiungere un prodotto -->
   <div class="form-group">
-    <form id="add_form" action="${pageContext.request.contextPath}/CatalogoVenditoreServlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+    <form id="add_form" action="${pageContext.request.contextPath}/CatalogoVenditoreServlet" method="post">
       <input type="text" name="nome" placeholder="Nome del prodotto">
       <input type="text" name="prezzo" placeholder="Prezzo">
       <input type="number" name="quantita" placeholder="Quantità disponibile">
