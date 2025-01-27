@@ -85,7 +85,15 @@ header .icons {
 }
 
 .order-card strong {
-    font-size: 20px;
+    font-size: 21px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(232, 161, 207, 0.2); /* background trasparente */
+    backdrop-filter: blur(10px); /* sfocatura effetto vetro */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(232, 161, 182, 0.15);
 }
 
 .order-card a{
