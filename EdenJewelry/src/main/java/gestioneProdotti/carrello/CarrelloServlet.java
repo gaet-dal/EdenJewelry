@@ -1,7 +1,6 @@
 package main.java.gestioneProdotti.carrello;
 
 import main.java.gestioneProdotti.prodotto.ProdottoBean;
-import sun.plugin.dom.core.Element;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;

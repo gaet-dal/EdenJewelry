@@ -29,7 +29,7 @@ public class Catalogo{
 
         boolean validazione=checkProduct(prodotto); //verifichiamo se i dati del prodotto sono corretti;
         boolean ris=false;
-        if(validazione==true){
+        if(validazione){
             ris=dao.doSave(prodotto);
         }
 

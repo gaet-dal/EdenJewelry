@@ -22,7 +22,7 @@ public class AreaUtenteServlet extends HttpServlet{
             response.sendRedirect("/LoginServlet");
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/AreaUtente.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/profiloUtente.jsp");
         dispatcher.forward(request, response);
     }
 }

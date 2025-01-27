@@ -24,6 +24,21 @@ public class RicercaProdottoServlet extends HttpServlet {
         DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
         prodotti = new ProdottoDAO(ds);
 
+        String action = request.getParameter("submitAction");
+
+        // if MOMENTANEO, da rivedere dopo aver risolto la jsp corrispondente
+        /*
+        if(action.equals("delete")){
+            String query = request.getParameter("query");
+            SimpleSearch simple = new SimpleSearch();
+            simple.search("query", prodotti);
+            request.setAttribute("resultQuery", simple.search(query, prodotti));
+
+            RequestDispatcher rd = request.getRequestDispatcher(request.getContextPath()+"/RimozioneProdotto.jsp");
+            rd.forward(request, response);
+        }
+         */
+
         String query = request.getParameter("query");
         String category = request.getParameter("category");
         Strategy strat;

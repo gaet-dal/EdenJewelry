@@ -23,7 +23,7 @@ public class AreaVenditoreServlet extends HttpServlet{
         } else if (bean.getTipo().equals("user"))
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Non hai un profilo da venditore");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath() + "/AreaVenditore.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath() + "/ProfiloVenditore.jsp");
         dispatcher.forward(request, response);
     }
 }
