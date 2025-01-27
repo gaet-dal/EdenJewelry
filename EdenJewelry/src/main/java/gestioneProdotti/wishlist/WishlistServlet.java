@@ -1,6 +1,7 @@
 package main.java.gestioneProdotti.wishlist;
 
 import main.java.gestioneAccount.utente.UtenteBean;
+import main.java.gestioneProdotti.prodotto.ProdottoBean;
 import main.java.gestioneProdotti.prodotto.ProdottoDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -26,11 +27,12 @@ public class WishlistServlet extends HttpServlet {
 
     }
 
-    private WishlistDAO wishlistDAO;
+
+    DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
+    private WishlistDAO wishlistDAO =new WishlistDAO(ds); //otteniamo il collegamento alla wishlist;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
-        DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
-        wishlistDAO=new WishlistDAO(ds); //otteniamo il collegamento alla wishlist;
+
         HttpSession session=request.getSession();
         UtenteBean utente = (UtenteBean) session.getAttribute("utente");
 
@@ -50,4 +52,50 @@ public class WishlistServlet extends HttpServlet {
 
 
     }
+
+    //inserire nel file i metodi di aggiunta e rimozione dalla wishlist;
+
+    public boolean AggiungiWishlist(String nome, String email) {
+        //usiamo il nome del prodotto (chiave primaria) per recuoerare tuttu i suoi dati dal db;
+        ProdottoDAO prodottoDAO=new ProdottoDAO(ds);
+        ProdottoBean prodotto=null;
+        try {
+            prodotto = prodottoDAO.doRetrieveByNome(nome);
+        } catch (SQLException e) {
+            //il prodotto non esiste
+            return false;
+        }
+
+        WishlistDAO wishlistDAO = new WishlistDAO(ds);
+        boolean aggiungi=false;
+        try {
+            WishlistBean wishlist = wishlistDAO.doRetrieveByEmail(email);
+            wishlist.addProdotto(prodotto);
+           aggiungi= wishlistDAO.doSave(wishlist);
+        } catch (SQLException e) {
+            return false;
+        }
+
+        return aggiungi; //restituiiamo l'esito dell'operazione doSave;
+    }
+
+    public boolean removeWishlist(String nome, String email) throws SQLException {
+        WishlistDAO wishlistDAO = new WishlistDAO(ds);
+        boolean rimuovi=false;
+
+        //recuperiamo la lista salvata nel db e manteniamola in un oggetto WishlistBean;
+
+        WishlistBean wishlist = wishlistDAO.doRetrieveByEmail(email);
+
+
+        wishlist.removeProdotto(nome); //eliminiamo il prodotto dalla lista che abbiamo salvato localmente;
+
+        //risalvimao la lista nel db;
+        //la lista va a sovrascrivere quella già presente nel db;
+        boolean aggiungi= wishlistDAO.doSave(wishlist);
+
+
+        return aggiungi;
+    }
+
 }
