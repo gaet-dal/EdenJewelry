@@ -12,6 +12,7 @@ public class ProdottoBean{
         prezzo = 0.0f;
         quantita = 0;
         categoria = null;
+        immagine = null;
     }
 
     public String getNome() {

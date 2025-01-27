@@ -15,14 +15,15 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Logger;
 
 public class CatalogoVenditoreServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     //usiamo questa servlet per gestire la richiesta di un utente di poter effettuare il login al sito e, in base ai dati inseriti,
     //restituaiamo una visione di questo consona al suo tipo (cioè seller o user);
+
+    private static Logger logger = Logger.getLogger(CatalogoVenditoreServlet.class.getName());
 
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
@@ -33,7 +34,7 @@ public class CatalogoVenditoreServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
-        prodottoDAO=new ProdottoDAO(ds); //otteniamo collegamento alla tabella PRODOTTO;
+        Catalogo cat = new Catalogo(ds);
 
         HttpSession session=request.getSession();
         UtenteBean utente= (UtenteBean) session.getAttribute("utente"); //recuperare l'utente dalla sessione;
@@ -42,37 +43,57 @@ public class CatalogoVenditoreServlet extends HttpServlet {
         //se è venditore, permettiamo di effettuare aggiunte e rimozioni dal catalogo;
 
         String tipo= utente.getTipo();
-        if("seller".equals(tipo)){
-            //se è venditore, recuperiamo il valore dell'azzione che vuole effettuare il venditore e reindirizziamo ai metodi specifici;
-
+        if("user".equals(tipo)){
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Non puoi accedere alle funzionalità del venditore");
         }
 
-        //poichè dobbiamo solo mostrare il carrello, recuperiamo tutti i prodotti e mandiamoli in stampa su una jsp;
-        List<ProdottoBean> catalogo= new ArrayList<ProdottoBean>();
+       String action = request.getParameter("submitAction");
 
-        try {
-            catalogo=prodottoDAO.doRetrieveAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        if(action.equals("Aggiungi")){
+            String nome = request.getParameter("nome");
+            float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+            int quantità = Integer.parseInt(request.getParameter("quantità"));
+            String categoria = request.getParameter("categoria");
+            //molto probabilmente questa parte del codice va modificata
+            String immagine = request.getParameter("immagine");
 
-        String query = request.getParameter("query");
-        if(query != null){
-            Catalogo cat = new Catalogo(ds);
             ProdottoBean bean = new ProdottoBean();
-            bean.setNome("query");
+            bean.setNome(nome);
+            bean.setPrezzo(prezzo);
+            bean.setQuantita(quantità);
+            bean.setCategoria(categoria);
+            bean.setImmagine(immagine);
+
             try {
-                cat.removeProduct(bean);
+                if(cat.addProduct(bean))
+                    logger.info("Aggiunta prodotto riuscita");
+                else
+                    logger.info("Aggiunta prodotto non riuscita");
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                logger.warning("Errore durante il salvataggio del prodotto nel database");
+                e.printStackTrace();
+            }
+        } else if (action.equals("Elimina")) {
+            String nome = request.getParameter("id");
+            ProdottoBean bean = new ProdottoBean();
+            bean.setNome(nome);
+
+            try{
+                if(cat.removeProduct(bean))
+                    logger.info("Rimozione prodotto riuscita");
+                else
+                    logger.info("Rimozione prodotto non riuscita");
+            } catch (SQLException e) {
+                logger.warning("Errore durante la rimozione del prodotto dal database");
+                e.printStackTrace();
             }
         }
 
-        //mandiamo in stampa su una jsp;
-        if(catalogo!=null){
-            request.setAttribute("catalogo", catalogo);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/.jsp"); //dobbiamo mandare sulla home;
-            dispatcher.forward(request, response);
-        }
+        RequestDispatcher rd = request.getRequestDispatcher(getServletContext().getContextPath()+"/homepage.jsp");
+        rd.forward(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
 }

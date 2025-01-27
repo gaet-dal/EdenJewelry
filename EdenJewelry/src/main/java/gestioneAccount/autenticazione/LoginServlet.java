@@ -1,6 +1,5 @@
 package main.java.gestioneAccount.autenticazione;
 
-import com.sun.deploy.net.HttpRequest;
 import main.java.gestioneAccount.utente.UtenteBean;
 import main.java.gestioneAccount.utente.UtenteDAO;
 

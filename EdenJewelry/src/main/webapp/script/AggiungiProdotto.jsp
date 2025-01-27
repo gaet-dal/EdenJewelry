@@ -24,12 +24,12 @@
 
   <!-- Form per Aggiungere un prodotto -->
   <div class="form-group">
-    <form id="add_form" action="${pageContext.request.contextPath}/AggiungiGioco?action=aggiunta" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+    <form id="add_form" action="${pageContext.request.contextPath}/CatalogoVenditoreServlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
       <input type="text" name="nome" placeholder="Nome del prodotto">
       <input type="text" name="prezzo" placeholder="Prezzo">
       <input type="number" name="quantita" placeholder="Quantità disponibile">
 
-      <select id="categoria" type="text" name="Categoria">
+      <select id="categoria" type="text" name="categoria">
         <option value="collane">collane</option>
         <option value="bracciali">bracciali</option>
         <option value="orecchini">orecchini</option>

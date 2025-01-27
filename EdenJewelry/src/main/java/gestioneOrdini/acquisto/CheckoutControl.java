@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class CheckoutControl {
     private static Logger logger = Logger.getLogger(CheckoutControl.class.getName());
 
-    public boolean checkIndirizzo(String indirizzo) {
+    private static boolean checkIndirizzo(String indirizzo) {
         if (indirizzo == null || indirizzo.equals(""))
             return false;
 
@@ -36,7 +36,7 @@ public class CheckoutControl {
         return ris;
     }
 
-    public boolean checkMetodoPagamento(String metodoPagamento){
+    private static boolean checkMetodoPagamento(String metodoPagamento){
         if (metodoPagamento == null || metodoPagamento.equals(""))
             return false;
 
@@ -50,7 +50,7 @@ public class CheckoutControl {
         }
     }
 
-    public boolean checkout(Carrello carrello, String metodoPagamento, String indirizzo, String email, OrdineDAO dao){
+    public static boolean checkout(Carrello carrello, String metodoPagamento, String indirizzo, String email, OrdineDAO dao){
         // I dati non sono validi, non si può proseguire con il checkout
         if (!checkIndirizzo(indirizzo) || checkMetodoPagamento(metodoPagamento) || carrello.isEmpty())
             return false;

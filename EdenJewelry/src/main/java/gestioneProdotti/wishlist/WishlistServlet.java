@@ -35,7 +35,13 @@ public class WishlistServlet extends HttpServlet {
 
         HttpSession session=request.getSession();
         UtenteBean utente = (UtenteBean) session.getAttribute("utente");
+        String email=request.getParameter("email");
 
+        //questa variabile sta nella jsp della wishlist;
+        String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto su cui è stato indicato che si vuole effettuare l'eliminazione
+
+        String action = request.getParameter("WishlistAction"); // Recupera il valore del pulsante
+        /*
         WishlistBean wishlist=null;
         try {
             wishlist = wishlistDAO.doRetrieveByEmail(utente.getEmail());
@@ -46,10 +52,33 @@ public class WishlistServlet extends HttpServlet {
         if(wishlist!=null && utente.getEmail()!=null){
             //reindirizziamo alla jsp della wishlist;
             request.setAttribute("wishlist", wishlist); //settiamo la wishlist sulla request;
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/.jsp"); //dobbiamo mandare sulla home;
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare il risultato sulla wishlist; ;
             dispatcher.forward(request, response);
         }
+        */
 
+        boolean ris=false;
+        if(action.equals("rimuovi")){
+
+            try {
+                ris= removeWishlist(nome, email);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(ris==true){
+                //se l'operazione è andata a buonfine, allora reidirizziamo sulla jsp;
+                //il recuperò della wishlist verrà effettuato direttamente da quest'ultima;
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare sulla home;
+                dispatcher.forward(request, response);
+            }
+            else {
+                request.setAttribute("wishlistremove-error", "rimozione non andata a buonfine");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare sulla home;
+                dispatcher.forward(request, response);
+            }
+
+        }
 
     }
 

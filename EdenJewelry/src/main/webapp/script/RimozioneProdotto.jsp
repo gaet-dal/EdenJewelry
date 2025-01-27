@@ -13,6 +13,8 @@
 <%@ page import="javax.xml.crypto.Data" %>
 <%@ page import="main.java.gestioneProdotti.prodotto.ProdottoDAO" %>
 <%@ page import="main.java.gestioneProdotti.homepage.SimpleSearch" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.ArrayList" %>
 
 <html>
 <head>
@@ -25,25 +27,24 @@
 
   <!--  form invia una richiesta alla servlet con un parametro gameSearch per cercare giochi per nome. -->
   <!-- Una volta trovati i giochi corrispondenti, viene mostrato un elenco con ciascun gioco e un pulsante "Elimina" accanto ad ogni voce -->
-  <form id="delete_form" action="${pageContext.request.contextPath}/PLACEHOLDER" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
+  <form id="delete_form" action="${pageContext.request.contextPath}/RicercaProdottoServlet" method="post">
     <input type="text" name="query" placeholder="Cerca prodotto per nome">
-    <button name="submitAction" type="submit" value="Cerca">cerca</button>
+    <button name="submitAction" type="submit" value="delete">cerca</button>
   </form>
   <ul>
     <!-- Mostra l'elenco dei giochi trovati per la ricerca -->
     <%
-      DataSource ds = (DataSource) application.getAttribute("MyDataSource");
+      wait(50000);
+      List<ProdottoBean> list = (List<ProdottoBean>) request.getAttribute("resultQuery");
 
-      ProdottoDAO prodottoDAO = new ProdottoDAO(ds);
-      List<ProdottoBean>  prodotti = prodottoDAO.doRetrieveAll();
-
-      SimpleSearch simple = new SimpleSearch();
-      ProdottoBean prod = simple.search("")
+      Iterator<ProdottoBean> it = list.iterator();
+      while (it.hasNext()){
+        ProdottoBean bean = it.next();
     %>
     <li>
-      <p>Nome: <%= game.get_nome() %></p>
-      <form action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" style="display:inline;">
-        <input type="hidden" name="id" value="<%= game.get_id_gioco() %>">
+      <p>Nome: <%= bean.getNome() %></p>
+      <form action="${pageContext.request.contextPath}/CatalogoVenditoreServlet" method="post" style="display:inline;">
+        <input type="hidden" name="id" value="<%= bean.getNome() %>">
         <!-- Quando si preme il pulsante "Elimina" accanto a un gioco nell'elenco,
         il valore di submitAction sarà impostato automaticamente a delete,
         il che indica alla servlet di procedere con l'eliminazione del gioco corrispondente -->
@@ -53,7 +54,6 @@
     </li>
     <%
         }
-      }
     %>
   </ul>
 </div>
