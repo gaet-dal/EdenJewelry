@@ -71,8 +71,6 @@
 
   <div class="wishlist-container">
     <h1>La tua Lista Desideri</h1>
-
-
     <%-- Controlla se la wishlist è vuota --%>
     <% if (wishlist == null || wishlist.getProdotti() == null || wishlist.getProdotti().isEmpty()) { %>
     <p>La tua lista desideri è vuota.</p>
@@ -84,17 +82,14 @@
         <img src="<%= contextPath %>/images/products/<%= prodotto.getImmagine() %>" alt="<%= prodotto.getNome() %>">
         <p><strong><%= prodotto.getNome() %></strong></p>
         <p>€<%= prodotto.getPrezzo() %></p>
-
         <%-- Creiamo un form per inviare alla servlet la gestione dell'eliminazione del prodotto --%>
         <form action="<%= contextPath %>/WishlistServlet" method="post">
           <input type="hidden" name="prodottoId" value="<%= prodotto.getNome() %>">
-
           <%-- Controlliamo se ci sono degli errori nell'eliminazione di un prodotto dalla wishlist --%>
           <% if (request.getAttribute("wishlistremove-error") != null) { %>
           <%-- Se l'errore è presente, viene mostrato sotto il campo --%>
           <div class="wishlistremove-message"><%= request.getAttribute("wishlistremove-error") %></div>
           <% } %>
-
           <%-- Dalla servlet, recuperiamo questa variabile per distinguere le varie operazioni --%>
           <button type="submit" name="WishlistAction" value="rimuovi">Rimuovi</button>
         </form>
