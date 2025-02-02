@@ -47,12 +47,12 @@ public class CatalogoVenditoreServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Non puoi accedere alle funzionalità del venditore");
         }
 
-       String action = request.getParameter("submitAction");
+       String ac = request.getParameter("submitAction");
 
-        if(action.equals("Aggiungi")){
+        if(ac.equals("Aggiungi")){
             String nome = request.getParameter("nome");
             float prezzo = Float.parseFloat(request.getParameter("prezzo"));
-            int quantità = Integer.parseInt(request.getParameter("quantità"));
+            int quantità = Integer.parseInt(request.getParameter("quantita"));
             String categoria = request.getParameter("categoria");
             //molto probabilmente questa parte del codice va modificata
             String immagine = request.getParameter("immagine");
@@ -73,7 +73,7 @@ public class CatalogoVenditoreServlet extends HttpServlet {
                 logger.warning("Errore durante il salvataggio del prodotto nel database");
                 e.printStackTrace();
             }
-        } else if (action.equals("Elimina")) {
+        } else if (ac.equals("Elimina")) {
             String nome = request.getParameter("id");
             ProdottoBean bean = new ProdottoBean();
             bean.setNome(nome);
