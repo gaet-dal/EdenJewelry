@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="prodotti" class="main.java.gestioneProdotti.prodotto.ProdottoDAO" scope="page"/>
+<jsp:useBean id="prodotti" class="main.java.dataManagement.dao.ProdottoDAO" scope="page"/>
 <%@ page import="javax.sql.DataSource" %>
 <%@ page import="javax.servlet.http.HttpServlet" %>
-<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoDAO" %>
+<%@ page import="main.java.dataManagement.dao.ProdottoDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoBean" %>
+<%@ page import="main.java.dataManagement.bean.ProdottoBean" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
 

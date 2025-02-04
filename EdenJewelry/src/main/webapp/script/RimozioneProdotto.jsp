@@ -7,12 +7,12 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoBean"%>
+<%@ page import="main.java.dataManagement.bean.ProdottoBean"%>
 <%@ page import="java.util.List" %>
 <%@ page import="javax.sql.DataSource" %>
 <%@ page import="javax.xml.crypto.Data" %>
-<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoDAO" %>
-<%@ page import="main.java.gestioneProdotti.homepage.SimpleSearch" %>
+<%@ page import="main.java.dataManagement.dao.ProdottoDAO" %>
+<%@ page import="main.java.application.gestioneCatalogo.SimpleSearch" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.ArrayList" %>
 

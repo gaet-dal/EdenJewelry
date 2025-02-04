@@ -26,7 +26,7 @@
     <!-- Login servlet -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>main.java.gestioneAccount.autenticazione.LoginServlet</servlet-class>
+        <servlet-class>main.java.presentation.areaRiservata.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -36,7 +36,7 @@
     <!-- Registrazione servlet -->
     <servlet>
         <servlet-name>RegistrazioneServlet</servlet-name>
-        <servlet-class>main.java.gestioneAccount.registrazione.RegistrazioneServlet</servlet-class>
+        <servlet-class>main.java.presentation.areaRiservata.RegistrazioneServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegistrazioneServlet</servlet-name>
@@ -46,7 +46,7 @@
     <!-- Carrello servlet -->
     <servlet>
         <servlet-name>CarrelloServlet</servlet-name>
-        <servlet-class>main.java.gestioneProdotti.carrello.CarrelloServlet</servlet-class>
+        <servlet-class>main.java.presentation.acquisti.CarrelloServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CarrelloServlet</servlet-name>
@@ -56,7 +56,7 @@
     <!-- Wishlist servlet -->
     <servlet>
         <servlet-name>WishlistServlet</servlet-name>
-        <servlet-class>main.java.gestioneProdotti.wishlist.WishlistServlet</servlet-class>
+        <servlet-class>main.java.presentation.acquisti.WishlistServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WishlistServlet</servlet-name>
@@ -76,7 +76,7 @@
     <!-- Catalogo venditore servlet -->
     <servlet>
         <servlet-name>CatalogoVenditoreServlet</servlet-name>
-        <servlet-class>main.java.gestioneProdotti.catalogo.CatalogoVenditoreServlet</servlet-class>
+        <servlet-class>main.java.presentation.home.CatalogoVenditoreServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CatalogoVenditoreServlet</servlet-name>

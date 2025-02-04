@@ -5,16 +5,16 @@
   Time: 09:28
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="main.java.gestioneAccount.utente.UtenteBean" %>
-<jsp:useBean id="utente" class="main.java.gestioneAccount.utente.UtenteBean" scope="session"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="main.java.dataManagement.bean.UtenteBean" %>
+<jsp:useBean id="utente" class="main.java.dataManagement.bean.UtenteBean" scope="session"/>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="javax.sql.DataSource" %>
 
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="main.java.gestioneProdotti.wishlist.WishlistDAO" %>
-<%@ page import="main.java.gestioneProdotti.wishlist.WishlistBean" %>
-<%@ page import="main.java.gestioneProdotti.prodotto.ProdottoBean" %>
+<%@ page import="main.java.dataManagement.dao.WishlistDAO" %>
+<%@ page import="main.java.dataManagement.bean.WishlistBean" %>
+<%@ page import="main.java.dataManagement.bean.ProdottoBean" %>
 
 
 <%!
