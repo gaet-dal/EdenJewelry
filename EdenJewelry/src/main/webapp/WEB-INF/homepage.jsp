@@ -33,7 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style/catalogoStyle.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/main/webapp/assets/style/catalogoStyle.css" type="text/css">
 </head>
 <body>
 <img src="images/apple.png" alt="Eden" class="background-image">

@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class WishlistBean {
+    private int idWishlist;
     private String email;
-    private List<ProdottoBean> prodotti;
+
 
     public WishlistBean() {
+        idWishlist = 0;
         email = null;
-        prodotti = new ArrayList<ProdottoBean>();
+
     }
 
     public String getEmail() {
@@ -20,18 +22,11 @@ public class WishlistBean {
         this.email = email;
     }
 
-    public List<ProdottoBean> getProdotti() {
-        return prodotti;
+    public int getIdWishlist() {
+        return idWishlist;
     }
 
-    public void addProdotto(ProdottoBean p){
-        prodotti.add(p);
-    }
-
-    public void removeProdotto(String nome){
-        ProdottoBean p= new ProdottoBean();
-        p.setNome(nome);
-
-        prodotti.remove(p);
+    public void setIdWishlist(int idWishlist) {
+        this.idWishlist = idWishlist;
     }
 }

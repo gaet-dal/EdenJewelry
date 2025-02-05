@@ -42,11 +42,7 @@ public class OrdineDAO {
         int result = 0;
 
         String insertSQL = "INSERT INTO " + TABLE_NAME
-                + " (idOrdine, email, totale, metodoPagamento, indirizzo, prodotti) VALUES (?, ?, ?, ?, ?, ?)";
-
-        Gson gson = new Gson();
-
-        String listaProdotti = gson.toJson(ordine.getProdotti()); //il parsing da oggetto ad oggettoJson (String);
+                + " (numeroOrdine, email, totale, metodoPagamento, indirizzo) VALUES (?, ?, ?, ?, ?)";
 
         try{
             connection = ds.getConnection();
@@ -57,7 +53,7 @@ public class OrdineDAO {
             preparedStatement.setFloat(3, ordine.getTotale());
             preparedStatement.setString(4, ordine.getMetodoPagamento());
             preparedStatement.setString(5, ordine.getIndirizzo());
-            preparedStatement.setString(6, listaProdotti);
+
 
             result = preparedStatement.executeUpdate();
         }  finally {
@@ -73,7 +69,7 @@ public class OrdineDAO {
 
         int result = 0;
 
-        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE idOrdine = ?";
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE numeroOrdine = ?";
 
         try{
             connection = ds.getConnection();
@@ -108,19 +104,11 @@ public class OrdineDAO {
             while (rs.next()) {
                 OrdineBean bean = new OrdineBean();
 
-                bean.setIdOrdine(rs.getInt("idOrdine"));
+                bean.setIdOrdine(rs.getInt("numeroOrdine"));
                 bean.setEmail(rs.getString("email"));
                 bean.setTotale(rs.getFloat("totale"));
                 bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
                 bean.setIndirizzo(rs.getString("indirizzo"));
-
-                String listaDB = rs.getString("prodotti");
-
-                Gson gson = new Gson();
-                Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
-                List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
-
-                bean.setProdotti(listaProdotti); //abbiamo recuperto la lista dei prosotti e fatto il parse ad oggetto gson;
 
                 ordini.add(bean);
             }
@@ -134,7 +122,8 @@ public class OrdineDAO {
         return ordini;
     }
 
-    public synchronized OrdineBean doRetrieveById(int idOrdine) throws SQLException {
+
+    public synchronized OrdineBean doRetrieveByNumeroOrdine(int numeroOrdine) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         OrdineBean bean = new OrdineBean();
@@ -144,7 +133,7 @@ public class OrdineDAO {
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setInt(1, idOrdine);
+            preparedStatement.setInt(1, numeroOrdine);
             ResultSet rs = preparedStatement.executeQuery();
 
 
@@ -152,13 +141,6 @@ public class OrdineDAO {
             bean.setTotale(rs.getFloat("totale"));
             bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
             bean.setIndirizzo(rs.getString("indirizzo"));
-            String listaDB = rs.getString("prodotti");
-
-            Gson gson = new Gson();
-            Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
-            List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
-
-            bean.setProdotti(listaProdotti);
 
             rs.close();
 
@@ -168,44 +150,7 @@ public class OrdineDAO {
         return bean;
     }
 
-    //ricerca tramite email:
-    //restituisce tutti gli ordini fatti da un utete specifico
-    public synchronized List <OrdineBean> doRetrieveByEmail(String email) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        OrdineBean bean = new OrdineBean();
-        List ris= new ArrayList(); //utilizziamo per salvare tutti gli ordini fatti da un certo utente;
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
-
-        try {
-            connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, email);
-            ResultSet rs = preparedStatement.executeQuery();
-
-
-            bean.setIdOrdine(rs.getInt("id ordine"));
-            bean.setTotale(rs.getFloat("totale"));
-            bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
-            bean.setIndirizzo(rs.getString("indirizzo"));
-            String listaDB = rs.getString("prodotti");
-
-            Gson gson = new Gson();
-            Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
-            List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
-
-            bean.setProdotti(listaProdotti);
-
-            ris.add(bean); //aggiungiamo il bean alla lista;
-
-            rs.close();
-
-        } finally {
-            closeResources(preparedStatement, connection);
-        }
-        return ris;
-    }
 
 
     private void closeResources(AutoCloseable... resources) {

@@ -7,7 +7,7 @@
     </welcome-file-list>
 
     <resource-ref>
-        <description>JNDI reference to a data source</description>
+        <description>JNDI reference a data source</description>
         <res-ref-name>jdbc/MyDataSource</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>

@@ -10,7 +10,7 @@ public class OrdineBean {
     private float totale;
     private String metodoPagamento;
     private String indirizzo;
-    private List<ProdottoBean> prodotti;
+
 
     public OrdineBean(){
         idOrdine = 0;
@@ -18,7 +18,6 @@ public class OrdineBean {
         metodoPagamento=null;
         indirizzo=null;
         totale=0;
-        prodotti= new ArrayList<ProdottoBean>(); //assegniamo la lista di prodotti che recuperiamo
 
     }
 
@@ -60,22 +59,6 @@ public class OrdineBean {
 
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
-    }
-
-    public List <ProdottoBean> getProdotti() {
-        return prodotti;
-    }
-
-    public void setProdotti(List<ProdottoBean> prodotti) {
-        this.prodotti = prodotti;
-    }
-
-    public void addProdotti(ProdottoBean prodotto) {
-        prodotti.add(prodotto);
-    }
-
-    public void removeProdotti(ProdottoBean prodotto) {
-        prodotti.remove(prodotto);
     }
 
 }

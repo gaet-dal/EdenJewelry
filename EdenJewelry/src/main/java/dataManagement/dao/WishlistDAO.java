@@ -1,7 +1,6 @@
 package main.java.dataManagement.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 import main.java.dataManagement.bean.ProdottoBean;
 import main.java.dataManagement.bean.WishlistBean;
 
@@ -45,17 +44,13 @@ public class WishlistDAO {
         String insertSQL = "INSERT INTO " + TABLE_NAME
                 + " (email, prodotti) VALUES (?, ?)";
 
-        Gson gson = new Gson();
-        String listaProdotti;
-
-        listaProdotti = gson.toJson(wishlist.getProdotti());
-
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
+            preparedStatement.setInt(1, wishlist.getIdWishlist());
             preparedStatement.setString(1, wishlist.getEmail());
-            preparedStatement.setString(2, listaProdotti);
+
 
             result = preparedStatement.executeUpdate();
         }  finally {
@@ -106,17 +101,9 @@ public class WishlistDAO {
             while (rs.next()) {
                 WishlistBean bean = new WishlistBean();
 
+                bean.setIdWishlist(rs.getInt("idWishlist"));
                 bean.setEmail(rs.getString("email"));
-                String listaDB = rs.getString("prodotti");
 
-                Gson gson = new Gson();
-                Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
-                List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
-
-                Iterator<ProdottoBean> it = listaProdotti.iterator();
-                while (it.hasNext()) {
-                    bean.addProdotto(it.next());
-                }
 
                 wishlists.add(bean);
             }
@@ -144,16 +131,7 @@ public class WishlistDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             bean.setEmail(rs.getString("email"));
-            String listaDB = rs.getString("prodotti");
 
-            Gson gson = new Gson();
-            Type collectionType = new TypeToken<List<ProdottoBean>>(){}.getType();
-            List<ProdottoBean> listaProdotti = gson.fromJson(listaDB, collectionType);
-
-            Iterator<ProdottoBean> it = listaProdotti.iterator();
-            while (it.hasNext()) {
-                bean.addProdotto(it.next());
-            }
             rs.close();
         } finally {
             closeResources(preparedStatement, connection);
