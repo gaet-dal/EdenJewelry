@@ -1,6 +1,5 @@
 package main.java.application.gestioneCatalogo;
 
-import main.java.gestioneProdotti.homepage.Strategy;
 import main.java.dataManagement.bean.ProdottoBean;
 import main.java.dataManagement.dao.ProdottoDAO;
 
@@ -12,17 +11,20 @@ import java.util.logging.Logger;
 
 /**
  * @author Gaetano D'Alessio
- * Implementazione banale dell'interfaccia Strategy.
- * Semplicemente, cerca la presenza della stringa in un nome di prodotto
- * recuperato dal database.
- * @see Strategy
+ * Classe che gestisce la ricerca di prodotti nel catalogo,
+ * fornendo una parola chiave. Quest’ultima, viene confrontata
+ * con i nomi dei prodotti. Vengono restituiti tutti i prodotti
+ * del catalogo che presentano una corrispondenza (cioè, la stringa
+ * in input corrisponde ad una porzione di nome di uno o più prodotti).
+ * Se la stringa categoria è presente, la ricerca viene effettuata in
+ * un sottoinsieme più piccolo.
  */
 
-public class SimpleSearch implements Strategy{
-    private static Logger logger;
+public class Ricerca{
+    private static Logger logger = Logger.getLogger(Ricerca.class.getName());
 
-    @Override
-    public List<ProdottoBean> search(String query, ProdottoDAO prodotti) {
+
+    public List<ProdottoBean> search(String query, String cat,ProdottoDAO prodotti) {
         List<ProdottoBean> l1;
         List<ProdottoBean> l2 = new ArrayList<ProdottoBean>();
 
@@ -39,8 +41,11 @@ public class SimpleSearch implements Strategy{
         while(iterator.hasNext()) {
             ProdottoBean prodotto = iterator.next();
 
-            if(prodotto.getNome().toLowerCase().contains(query.toLowerCase()))
-                l2.add(prodotto);
+            if(prodotto.getNome().toLowerCase().contains(query.toLowerCase())) {
+                if(prodotto.getCategoria().equalsIgnoreCase(cat) || cat ==null) {
+                    l2.add(prodotto);
+                }
+            }
         }
 
         return l2;
