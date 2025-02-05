@@ -1,5 +1,6 @@
 package main.java.presentation.areaRiservata;
 
+import main.java.application.gestioneAccount.GestioneAutenticazione;
 import main.java.dataManagement.bean.UtenteBean;
 import main.java.dataManagement.dao.UtenteDAO;
 
@@ -34,6 +35,7 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
         //stabiliamo una connessione con il db, per mezzo del dao instanziato;
         DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
         utenti=new UtenteDAO(ds);
+        GestioneAutenticazione gest = new GestioneAutenticazione();
         HashingAlgoritm hash=new HashingAlgoritm(); //creiamo un oggetto per poter usare il metodo per effettuare l'hashing della password;
         //acquisiamo in ingresso i parametri dell'utente e valutiamo le se credenziali sono corrette;
         String email = request.getParameter("email");
@@ -44,17 +46,18 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
 
         // Controlla se l'azione richiesta è "logout"
         if ("logout".equals(action)) {
-            logout();
+           HttpSession session = request.getSession();
+            gest.logout(session);
         }
 
         //
         String hashing=hash.toHash(password); //effettuaiamo l'hasing della password;
 
         //chiamiamo il metodo login per valitare se c'è corrispondenza tra le credenziali date in put e quelle nel db;
-        UtenteBean b=new UtenteBean();
+        UtenteBean b;
 
         try {
-            b=login(email, hashing);
+            b=gest.login(email, hashing, utenti);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,38 +78,5 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
             //bisogn richiedere all'utente di reiserire le credenziali;
         }
 
-    }
-
-    //adesso implementiamo i metodi di login e di logout;
-
-    //dobbiamo passare al metodo l'hash della password inserita dall'utente, poichè non sono salvate in chiaro nel db;
-    //il metodo login effettua una ricerca nel db della mail fornita dall'utente.
-    //poi, confronta la password data in input con quella presente nel db;
-    //se c'è corrispondenza, allora le credenziali sono corrette e viiene restituito l'oggetto UtenteBean. Altrimenti, restituisce null;
-    public UtenteBean login(String email, String hashing) throws SQLException {
-
-        //ricerchiamo l'email inserita dall'utente, tramite i metodo esposti nel dao corrispondente;
-        UtenteBean b=new UtenteBean(); //
-        b=utenti.doRetrieveByEmail(email);
-
-        String p=b.getPassword(); //recuperiamo la password associata all'utente nel db;
-
-        if(p.equals(hashing)){ //se la password inserita dall'utente al login corrisponde alla password associata alla sua email nel db, bisogna permettere l'accesso;
-            return b;
-        }
-        return null; //se le credenziali non corrispondono, viene restituito null;
-    }
-
-    public boolean logout(){
-
-        HttpServletRequest request = null;
-        HttpSession session = request.getSession(false); // Recupera la sessione, non creare se non esiste
-
-        if (session != null) {
-            session.invalidate(); // Invalida la sessione se esiste
-            return true;
-        }
-
-        return false; //se la invalidazione non viene eseguita
     }
 }

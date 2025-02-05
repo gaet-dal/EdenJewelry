@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class AreaVenditoreServlet extends HttpServlet{
+public class AreaRiservataServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -20,8 +20,10 @@ public class AreaVenditoreServlet extends HttpServlet{
 
         if (bean == null) {
             response.sendRedirect("/LoginServlet");
-        } else if (bean.getTipo().equals("user"))
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Non hai un profilo da venditore");
+        } else if (bean.getTipo().equals("user")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/profiloUtente.jsp");
+            dispatcher.forward(request, response);
+        }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath() + "/ProfiloVenditore.jsp");
         dispatcher.forward(request, response);

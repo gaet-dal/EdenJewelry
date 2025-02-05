@@ -1,6 +1,6 @@
 package main.java.presentation.areaRiservata;
 
-import main.java.application.gestioneAccount.gestioneRegistrazione;
+import main.java.application.gestioneAccount.GestioneRegistrazione;
 import main.java.dataManagement.bean.UtenteBean;
 import main.java.dataManagement.dao.UtenteDAO;
 import main.java.utilities.HashingAlgoritm;
@@ -37,7 +37,7 @@ public class RegistrazioneServlet extends HttpServlet {
         String password = request.getParameter("password");
         String tipo=request.getParameter("tipo");
 
-        gestioneRegistrazione gest=new gestioneRegistrazione();
+        GestioneRegistrazione gest=new GestioneRegistrazione();
         boolean n=gest.checkNomeCognome(nome);
         boolean c= gest.checkNomeCognome(cognome);
         boolean e= gest.checkEmail(email);
@@ -48,7 +48,7 @@ public class RegistrazioneServlet extends HttpServlet {
             String hashing= hash.toHash(password); //effettuiamo l'hash della password;
 
             try {
-                boolean RisultatoRegistrazione= register(nome, cognome, email, hashing, tipo);
+                boolean RisultatoRegistrazione= gest.register(nome, cognome, email, hashing, tipo, utenti);
 
                 if(RisultatoRegistrazione==true){
                     //la registazione è andata a buon fine;
@@ -72,8 +72,6 @@ public class RegistrazioneServlet extends HttpServlet {
             request.setAttribute("nome-error", "il nome deve contenere solo lettere dell'alfabeto");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
             dispatcher.forward(request, response);
-
-
         }
         else if (c==false){
             request.setAttribute("cognome-error", "il cognome deve contenere solo lettere dell'alfabeto");
@@ -86,29 +84,5 @@ public class RegistrazioneServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
             dispatcher.forward(request, response);
         }
-
-
-
-
-
-    }
-
-    public boolean register(String nome, String cognome, String email, String hashing, String tipo) throws SQLException {
-        DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
-        utenti=new UtenteDAO(ds);
-
-        //creiamo un UtenteBean in cui inserire i parametri presi dall'utente ed inserirli nel db;
-
-        UtenteBean utentebean=new UtenteBean();
-
-        utentebean.setNome(nome);
-        utentebean.setCognome(cognome);
-        utentebean.setEmail(email);
-        utentebean.setPassword(hashing); //salviamo l'hash della password per motivi di sicurezza;
-        utentebean.setTipo(tipo);
-
-        boolean RisultatoRegistrazione= utenti.doSave(utentebean); //salviamo il nuovo utente nel db
-
-    return RisultatoRegistrazione;
     }
 }

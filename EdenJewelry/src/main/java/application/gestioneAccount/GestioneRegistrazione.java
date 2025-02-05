@@ -1,6 +1,12 @@
 package main.java.application.gestioneAccount;
 
-public class gestioneRegistrazione {
+import main.java.dataManagement.bean.UtenteBean;
+import main.java.dataManagement.dao.UtenteDAO;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
+public class GestioneRegistrazione {
 
     //metodo che controlla se il parametro in ingresso contiene solo lettere (quindi rappresenta o un nome o un cognome)
     public boolean checkNomeCognome (String x) {
@@ -45,6 +51,22 @@ public class gestioneRegistrazione {
         }
 
         return false; //dopo aver valutato tutta la stringa, se non c'è la chicciola, ritorniamo false per indicare che non è una mail valida;
+    }
+
+    public boolean register(String nome, String cognome, String email, String hashing, String tipo, UtenteDAO utenti) throws SQLException {
+        //creiamo un UtenteBean in cui inserire i parametri presi dall'utente ed inserirli nel db;
+
+        UtenteBean utentebean=new UtenteBean();
+
+        utentebean.setNome(nome);
+        utentebean.setCognome(cognome);
+        utentebean.setEmail(email);
+        utentebean.setPassword(hashing); //salviamo l'hash della password per motivi di sicurezza;
+        utentebean.setTipo(tipo);
+
+        boolean RisultatoRegistrazione= utenti.doSave(utentebean); //salviamo il nuovo utente nel db
+
+        return RisultatoRegistrazione;
     }
 
 }
