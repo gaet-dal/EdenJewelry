@@ -57,11 +57,14 @@ public class ProdottoBean{
 
     @Override
     public boolean equals(Object o) {
+        if(o == null)
+            return false;
+
+        if(!(o instanceof ProdottoBean))
+            return false;
+
         ProdottoBean p = (ProdottoBean) o;
 
-        if ((this.nome).equals(p.getNome()))
-            return true;
-
-        return false;
+        return (this.nome).equals(p.getNome());
     }
 }
