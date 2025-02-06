@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="prodotti" class="main.java.dataManagement.dao.ProdottoDAO" scope="page"/>
 <%@ page import="javax.sql.DataSource" %>
 <%@ page import="javax.servlet.http.HttpServlet" %>
 <%@ page import="main.java.dataManagement.dao.ProdottoDAO" %>
@@ -8,7 +7,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
 
-<!%
+<%
     DataSource ds=(DataSource) application.getAttribute("MyDataSource"); //recuperiamo il ds;
     ProdottoDAO prodottoDAO= new ProdottoDAO(ds); //otteniamo un collegamento al db;
 
@@ -20,7 +19,6 @@
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }
-
 
 %>
 
