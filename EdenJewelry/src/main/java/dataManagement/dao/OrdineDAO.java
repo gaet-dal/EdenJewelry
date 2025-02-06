@@ -151,6 +151,41 @@ public class OrdineDAO {
     }
 
 
+    public synchronized OrdineBean doRetrieveUltimoOrdine() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        OrdineBean bean = new OrdineBean();
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY numeroOrdine DESC";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+
+
+                bean.setIdOrdine(rs.getInt("numeroOrdine"));
+                bean.setEmail(rs.getString("email"));
+                bean.setTotale(rs.getFloat("totale"));
+                bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
+                bean.setIndirizzo(rs.getString("indirizzo"));
+
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+
+       if(bean==null) {
+           return null; //se non è stato effettuato nessun ordine, torna null;
+       }
+       else return bean;
+    }
 
 
     private void closeResources(AutoCloseable... resources) {
