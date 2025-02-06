@@ -76,7 +76,7 @@
     <!-- Catalogo venditore servlet -->
     <servlet>
         <servlet-name>CatalogoVenditoreServlet</servlet-name>
-        <servlet-class>main.java.presentation.home.CatalogoVenditoreServlet</servlet-class>
+        <servlet-class>main.java.presentation.home.CatalogoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CatalogoVenditoreServlet</servlet-name>

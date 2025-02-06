@@ -1,9 +1,7 @@
 package main.java.presentation.acquisti;
 
+import main.java.application.gestioneAcquisti.Wishlist;
 import main.java.dataManagement.bean.UtenteBean;
-import main.java.dataManagement.bean.ProdottoBean;
-import main.java.dataManagement.dao.ProdottoDAO;
-import main.java.dataManagement.bean.WishlistBean;
 import main.java.dataManagement.dao.WishlistDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -37,10 +35,12 @@ public class WishlistServlet extends HttpServlet {
 
         HttpSession session=request.getSession();
         UtenteBean utente = (UtenteBean) session.getAttribute("utente");
+        Wishlist wish = new Wishlist();
         String email=request.getParameter("email");
 
         //questa variabile sta nella jsp della wishlist;
         String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto su cui è stato indicato che si vuole effettuare l'eliminazione
+        int idItem = Integer.parseInt(request.getParameter("idItem"));
 
         String action = request.getParameter("WishlistAction"); // Recupera il valore del pulsante
         /*
@@ -63,12 +63,12 @@ public class WishlistServlet extends HttpServlet {
         if(action.equals("rimuovi")){
 
             try {
-                ris= removeWishlist(nome, email);
+                ris= wish.removeWishlist(idItem, ds);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-            if(ris==true){
+            if(ris){
                 //se l'operazione è andata a buonfine, allora reidirizziamo sulla jsp;
                 //il recuperò della wishlist verrà effettuato direttamente da quest'ultima;
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare sulla home;
@@ -80,53 +80,15 @@ public class WishlistServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
 
+        } else if (action.equals("aggiungi")) {
+            ris = wish.aggiungiWishlist(nome, email, ds);
+
+            if(!ris){
+                request.setAttribute("wishlistadd-error", "aggiunta non andata a buon fine");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp");
+                dispatcher.forward(request, response);
+            }
         }
 
     }
-
-    //inserire nel file i metodi di aggiunta e rimozione dalla wishlist;
-
-    public boolean AggiungiWishlist(String nome, String email) {
-        //usiamo il nome del prodotto (chiave primaria) per recuoerare tuttu i suoi dati dal db;
-        ProdottoDAO prodottoDAO=new ProdottoDAO(ds);
-        ProdottoBean prodotto=null;
-        try {
-            prodotto = prodottoDAO.doRetrieveByNome(nome);
-        } catch (SQLException e) {
-            //il prodotto non esiste
-            return false;
-        }
-
-        WishlistDAO wishlistDAO = new WishlistDAO(ds);
-        boolean aggiungi=false;
-        try {
-            WishlistBean wishlist = wishlistDAO.doRetrieveByEmail(email);
-            wishlist.addProdotto(prodotto);
-           aggiungi= wishlistDAO.doSave(wishlist);
-        } catch (SQLException e) {
-            return false;
-        }
-
-        return aggiungi; //restituiiamo l'esito dell'operazione doSave;
-    }
-
-    public boolean removeWishlist(String nome, String email) throws SQLException {
-        WishlistDAO wishlistDAO = new WishlistDAO(ds);
-        boolean rimuovi=false;
-
-        //recuperiamo la lista salvata nel db e manteniamola in un oggetto WishlistBean;
-
-        WishlistBean wishlist = wishlistDAO.doRetrieveByEmail(email);
-
-
-        wishlist.removeProdotto(nome); //eliminiamo il prodotto dalla lista che abbiamo salvato localmente;
-
-        //risalvimao la lista nel db;
-        //la lista va a sovrascrivere quella già presente nel db;
-        boolean aggiungi= wishlistDAO.doSave(wishlist);
-
-
-        return aggiungi;
-    }
-
 }
