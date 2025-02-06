@@ -7,20 +7,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
 
-<%
-    DataSource ds=(DataSource) application.getAttribute("MyDataSource"); //recuperiamo il ds;
-    ProdottoDAO prodottoDAO= new ProdottoDAO(ds); //otteniamo un collegamento al db;
-
-    //l'aggiunta dei prodotti la facciamo da AggiungiProdotto.jsp;
-    List <ProdottoBean> prodotti;
-    try {
-
-         prodotti= prodottoDAO.doRetrieveAll(); //ricerhiamo i prodotti nel database e li mandiamo in stampa;
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-
-%>
+<% List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("prodotti");%>
 
 <!DOCTYPE html>
 <html lang="it">

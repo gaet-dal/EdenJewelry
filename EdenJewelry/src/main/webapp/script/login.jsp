@@ -40,12 +40,13 @@
 <!-- Verifica del contesto dell'applicazione -->
 <%
     String contextPath = request.getContextPath();
+    out.print("<p>" + contextPath + "</p>");
 %>
 
-<img src="<%= request.getContextPath() %>/images/apple.png" alt="Eden" class="background-image">
+<img src="<%= request.getContextPath() %>/assets/images/apple.png" alt="Eden" class="background-image">
 <div class="header">
     <span class="menu-icon">&#9776;</span>
-    <img src="<%= request.getContextPath() %>/logo.png" alt="Eden Jewelry Logo">
+    <img src="<%= request.getContextPath() %>/assets/images/logo.png" alt="Eden Jewelry Logo">
     <div>
         <span class="menu-icon">&#128100;</span>
         <span class="menu-icon">&#128722;</span>
