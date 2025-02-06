@@ -1,0 +1,173 @@
+body {
+    font-family: "Merienda", serif;
+    background-color: #e7d7f2;
+    margin: 0;
+    padding: 0;
+}
+
+body button{
+    font-family: "Merienda", serif;
+}
+
+body input{
+    font-family: "Merienda", serif;
+}
+
+.background-image {
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    background-color: #7a5266;
+    color: white;
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    justify-content: space-between;
+    padding: 5px 20px;
+}
+
+header img {
+    height: 60px; /* Altezza uniforme del logo */
+}
+
+header .icons {
+    display: flex;
+    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
+    margin-top: 5px; /* per allineare le icone all'immagine del logo */
+}
+
+.icons img {
+    height: 40px;
+    cursor: pointer;
+}
+
+.icons p{
+    padding-right: 30px;
+    color: black;
+}
+
+.icons img:hover {
+    opacity: 65%;
+    height: 45px;
+}
+
+main {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    margin-top: 40px;
+    background: rgba(255, 255, 255, 0.2); /* background trasparente */
+    backdrop-filter: blur(10px); /* sfocatura effetto vetro */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    width: 900px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 20px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+    margin-right: 1px;
+    margin-left: 10px;
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.form-section input {
+    margin-left: 20px;
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.form-spedizione {
+    background: rgba(232, 161, 207, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(214, 161, 232, 0.6);
+    border-radius: 15px;
+
+}
+
+.form-pagamento {
+    background: rgba(232, 161, 207, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(214, 161, 232, 0.6);
+    border-radius: 15px;
+}
+
+.form-pagamento1 {
+    background: rgba(216, 161, 232, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(195, 161, 232, 0.6);
+}
+
+.form-container {
+    flex: 2;
+}
+
+.order-summary-container {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.order-summary img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.order-summary p {
+    margin: 10px 0;
+    font-size: 17px;
+    color: #333;
+}
+
+.total {
+    font-size: 25px;
+    font-weight: bold;
+    color: #5c4365;
+    text-align: left;
+}
+
+.purchase-button {
+    background-color: #dbc8e6;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.purchase-button:hover {
+    background-color: #b576b3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: black;
+}

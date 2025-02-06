@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - EdenJewelry</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/style/loginStyle.css"> <!--correggere il css collegato-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/loginStyle.css"> <!--correggere il css collegato-->
 
 </head>
 
@@ -13,9 +13,9 @@
 <%
     String contextPath = request.getContextPath();
 %>
-
-<div class="register-container"> <!-- questi sono i nomi che diamo dal css-->
-    <div class="register-box">  <!-- GIGI MODIFICA I NOMI IN BASE A QUELLI DEL CSS-->
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
+<div class="login-container"> <!-- questi sono i nomi che diamo dal css-->
+    <div class="login-box">  <!-- GIGI MODIFICA I NOMI IN BASE A QUELLI DEL CSS-->
 
         <h3>Registrazione:</h3>
         <form action="<%= request.getContextPath() %>/RegistrazioneServlet" method="post"> <!--qui bisogna ricontrollare da che cartella parte il contesto-->
@@ -39,14 +39,13 @@
             <div class="error-message"><%= request.getAttribute("email-error") %></div> <!--mandiamo in stampa l'errore che si è verificato-->
             <% } %>
 
-            <!--può essere gestito tramite un menù a discesa con 2 opzioni-->
+            <input type="password" name="password" placeholder="Password" required>
+
             <select id="tipo" name="tipo">
                 <option value="user">Utente</option>
                 <option value="seller">Venditore</option>
             </select>
-
-            <input type="password" name="password" placeholder="Password" required>
-
+            <!--può essere gestito tramite un menù a discesa con 2 opzioni-->
 
             <button type="submit">Registrati ora!</button>
             <% if (request.getAttribute("register-error") != null) { %>

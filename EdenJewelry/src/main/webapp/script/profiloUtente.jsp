@@ -37,7 +37,7 @@
     <title>Profilo Utente</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=login" />
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/style/profiloStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/profiloStyle.css">
 </head>
 <body>
 <img src="<%= request.getContextPath() %>/images/apple.png" alt="Decorazione" class="background-image">
