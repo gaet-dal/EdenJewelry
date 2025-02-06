@@ -27,7 +27,6 @@ public class CatalogoServlet extends HttpServlet {
 
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
-
     }
 
     private ProdottoDAO prodottoDAO;

@@ -55,7 +55,7 @@ public class CheckoutControl {
         }
     }
 
-    public static boolean checkout(Carrello carrello, String email, String metodoPagamento, float totale, String indirizzo, DataSource ds){
+    public static boolean checkout(Carrello carrello, String email, String metodoPagamento, String indirizzo, DataSource ds){
         // I dati non sono validi, non si può proseguire con il checkout
         if (!checkIndirizzo(indirizzo) || checkMetodoPagamento(metodoPagamento) || carrello.isEmpty())
             return false;
@@ -64,7 +64,7 @@ public class CheckoutControl {
         ProdottoDAO prodotti =new ProdottoDAO(ds);
         RigaOrdineDAO righe =  new RigaOrdineDAO(ds);
         OrdineBean ordine = new OrdineBean();
-        totale = 0.0f;
+        float totale = 0.0f;
 
         //recuperiamo l'ultimo ordine effettuato;
         ordine= ordini.doRetrieveUltimoOrdine();

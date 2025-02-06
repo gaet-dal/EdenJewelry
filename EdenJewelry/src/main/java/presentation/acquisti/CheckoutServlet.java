@@ -32,10 +32,9 @@ public class CheckoutServlet extends HttpServlet {
         String indirizzo = req.getParameter("indirizzo");
 
         DataSource ds = (DataSource) getServletContext().getAttribute("dataSource");
-        OrdineDAO ordineDAO = new OrdineDAO(ds);
-        ProdottoDAO prodottoDAO = new ProdottoDAO(ds);
 
-        if(CheckoutControl.checkout(carrello, metodoPagamento, indirizzo, utente.getEmail(), ordineDAO, prodottoDAO)) {
+
+        if(CheckoutControl.checkout(carrello, metodoPagamento, indirizzo, utente.getEmail(), ds)) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("OrderSuccess.jsp");
             dispatcher.forward(req, resp);
         } else {
