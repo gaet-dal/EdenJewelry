@@ -17,17 +17,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public class CatalogoVenditoreServlet extends HttpServlet {
+public class CatalogoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     //usiamo questa servlet per gestire la richiesta di un utente di poter effettuare il login al sito e, in base ai dati inseriti,
     //restituaiamo una visione di questo consona al suo tipo (cioè seller o user);
 
-    private static Logger logger = Logger.getLogger(CatalogoVenditoreServlet.class.getName());
+    private static Logger logger = Logger.getLogger(CatalogoServlet.class.getName());
 
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
-
     }
 
     private ProdottoDAO prodottoDAO;

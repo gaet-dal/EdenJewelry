@@ -4,6 +4,7 @@ import main.java.dataManagement.bean.UtenteBean;
 import main.java.application.gestioneAcquisti.CheckoutControl;
 import main.java.dataManagement.dao.OrdineDAO;
 import main.java.application.gestioneAcquisti.Carrello;
+import main.java.dataManagement.dao.ProdottoDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,9 +32,9 @@ public class CheckoutServlet extends HttpServlet {
         String indirizzo = req.getParameter("indirizzo");
 
         DataSource ds = (DataSource) getServletContext().getAttribute("dataSource");
-        OrdineDAO ordineDAO = new OrdineDAO(ds);
 
-        if(CheckoutControl.checkout(carrello, metodoPagamento, indirizzo, utente.getEmail(), ordineDAO)) {
+
+        if(CheckoutControl.checkout(carrello, metodoPagamento, indirizzo, utente.getEmail(), ds)) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("OrderSuccess.jsp");
             dispatcher.forward(req, resp);
         } else {

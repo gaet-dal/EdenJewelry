@@ -35,7 +35,4 @@ public class CarrelloServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Devi effettuare l'accesso");
         }
     }
-
-    //togliere il metodo showCarrello dal documento
-    //perchè possiamo fare la stampa direttame te dalla jsp;
 }

@@ -16,7 +16,7 @@
     <!-- AreaRiservata servlet -->
     <servlet>
         <servlet-name>AreaRiservataServlet</servlet-name>
-        <servlet-class>main.java.gestioneAccount.areaRiservata.AreaRiservataServlet</servlet-class>
+        <servlet-class>main.java.presentation.areaRiservata.AreaRiservataServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AreaRiservataServlet</servlet-name>
@@ -53,6 +53,16 @@
         <url-pattern>/CarrelloServlet</url-pattern>
     </servlet-mapping>
 
+    <!-- Checkout servlet -->
+    <servlet>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <servlet-class>main.java.presentation.acquisti.CheckoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <url-pattern>/CheckoutServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- Wishlist servlet -->
     <servlet>
         <servlet-name>WishlistServlet</servlet-name>
@@ -63,24 +73,26 @@
         <url-pattern>/WishlistServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Catalogo utente servlet -->
+    <!-- Catalogo servlet -->
     <servlet>
-        <servlet-name>CatalogoUtenteServlet</servlet-name>
-        <servlet-class>main.java.gestioneProdotti.catalogo.CatalogoUtenteServlet</servlet-class>
+        <servlet-name>CatalogoServlet</servlet-name>
+        <servlet-class>main.java.presentation.home.CatalogoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CatalogoUtenteServlet</servlet-name>
-        <url-pattern>/CatalogoUtenteServlet</url-pattern>
+        <servlet-name>CatalogoServlet</servlet-name>
+        <url-pattern>/CatalogoServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Catalogo venditore servlet -->
+    <!-- Ricerca prodotto servlet -->
     <servlet>
-        <servlet-name>CatalogoVenditoreServlet</servlet-name>
-        <servlet-class>main.java.presentation.home.CatalogoVenditoreServlet</servlet-class>
+        <servlet-name>RicercaProdottoServlet</servlet-name>
+        <servlet-class>main.java.presentation.home.RicercaProdottoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CatalogoVenditoreServlet</servlet-name>
-        <url-pattern>/CatalogoVenditoreServlet</url-pattern>
+        <servlet-name>RicercaProdottoServlet</servlet-name>
+        <url-pattern>/RicercaProdottoServlet</url-pattern>
     </servlet-mapping>
+
+
 
 </web-app>
