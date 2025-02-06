@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="prodotti" class="main.java.dataManagement.dao.ProdottoDAO" scope="page"/>
 <%@ page import="javax.sql.DataSource" %>
 <%@ page import="javax.servlet.http.HttpServlet" %>
 <%@ page import="main.java.dataManagement.dao.ProdottoDAO" %>
@@ -8,21 +7,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
 
-<!%
-    DataSource ds=(DataSource) application.getAttribute("MyDataSource"); //recuperiamo il ds;
-    ProdottoDAO prodottoDAO= new ProdottoDAO(ds); //otteniamo un collegamento al db;
-
-    //l'aggiunta dei prodotti la facciamo da AggiungiProdotto.jsp;
-    List <ProdottoBean> prodotti;
-    try {
-
-         prodotti= prodottoDAO.doRetrieveAll(); //ricerhiamo i prodotti nel database e li mandiamo in stampa;
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-
-
-%>
+<% List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("prodotti");%>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -33,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/main/webapp/assets/style/catalogoStyle.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/catalogoStyle.css" type="text/css">
 </head>
 <body>
 <img src="images/apple.png" alt="Eden" class="background-image">
