@@ -43,16 +43,23 @@
     out.print("<p>" + contextPath + "</p>");
 %>
 
-<img src="<%= request.getContextPath() %>/assets/images/apple.png" alt="Eden" class="background-image">
-<div class="header">
-    <span class="menu-icon">&#9776;</span>
-    <img src="<%= request.getContextPath() %>/assets/images/logo.png" alt="Eden Jewelry Logo">
-    <div>
-        <span class="menu-icon">&#128100;</span>
-        <span class="menu-icon">&#128722;</span>
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
+<header>
+    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    <div class="icons">
+        <a href="profiloUtente.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+        </a>
+        <p>Profilo</p>
+        <a href="wishlist.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
+        </a>
+        <p>Wishlist</p>
+        <a href="carrello.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
+        <p>Carrello</p>
     </div>
-</div>
-
+</header>
 <!-- Mostra messaggio di errore di login, se presente -->
 <%-- Controlla se è stato impostato un messaggio di errore di login --%>
 <% if (request.getAttribute("login-error") != null) { %>
