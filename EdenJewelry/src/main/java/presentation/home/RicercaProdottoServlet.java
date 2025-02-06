@@ -1,8 +1,6 @@
 package main.java.presentation.home;
 
-import main.java.gestioneProdotti.homepage.CategorySearch;
-import main.java.application.gestioneCatalogo.SimpleSearch;
-import main.java.gestioneProdotti.homepage.Strategy;
+import main.java.application.gestioneCatalogo.Ricerca;
 import main.java.dataManagement.dao.ProdottoDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +14,6 @@ import java.io.IOException;
 /**
  * @author Gaetano D'Alessio
  * Servlet per la ricerca del prodotto, gestista tramite il metodo search.
- * @see Strategy
  */
 
 public class RicercaProdottoServlet extends HttpServlet {
@@ -44,14 +41,10 @@ public class RicercaProdottoServlet extends HttpServlet {
 
         String query = request.getParameter("query");
         String category = request.getParameter("category");
-        Strategy strat;
 
-        if(category != null && category.equals("yes"))
-            strat = new CategorySearch();
-        else
-            strat = new SimpleSearch();
+        Ricerca alg = new Ricerca();
 
-        request.setAttribute("resultQuery", strat.search(query, prodotti));
+        request.setAttribute("resultQuery", alg.search(query, category,prodotti));
 
         RequestDispatcher rd = request.getRequestDispatcher(request.getContextPath()+"/ricercaProdotto.jsp");
         rd.forward(request, response);
