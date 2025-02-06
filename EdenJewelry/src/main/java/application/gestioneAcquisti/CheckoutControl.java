@@ -1,11 +1,14 @@
 package main.java.application.gestioneAcquisti;
 
 import main.java.dataManagement.bean.OrdineBean;
+import main.java.dataManagement.bean.RigaOrdineBean;
 import main.java.dataManagement.dao.OrdineDAO;
 import main.java.dataManagement.bean.ProdottoBean;
+import main.java.dataManagement.dao.ProdottoDAO;
 
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -49,26 +52,29 @@ public class CheckoutControl {
         }
     }
 
-    public static boolean checkout(Carrello carrello, String metodoPagamento, String indirizzo, String email, OrdineDAO dao){
+    public static boolean checkout(Carrello carrello, String metodoPagamento, String indirizzo, String email, OrdineDAO dao, ProdottoDAO prodotti){
         // I dati non sono validi, non si può proseguire con il checkout
         if (!checkIndirizzo(indirizzo) || checkMetodoPagamento(metodoPagamento) || carrello.isEmpty())
             return false;
 
         OrdineBean ordine = new OrdineBean();
-        Map<ProdottoBean, Integer> map = carrello.getMapProdotti();
-        Iterator<ProdottoBean> iterator = map.keySet().iterator();
         float totale = 0.0f;
 
-        //aggiunta dei prodotti e calcolo del totale
-        while(iterator.hasNext()){
-            ProdottoBean prodotto = iterator.next();
+        List<ItemCarrello> list = carrello.getListProdotti();
+        ItemCarrello []arr= list.toArray(new ItemCarrello[0]);
 
-            int i = map.get(prodotto);
-            while(i >= 0) {
-                ordine.addProdotti(prodotto);
-                totale += prodotto.getPrezzo();
-                i--;
+        for(ItemCarrello it : arr) {
+            String nome = it.getNome();
+            ProdottoBean p;
+            RigaOrdineBean riga = new RigaOrdineBean();
+
+            try{
+                p = prodotti.doRetrieveByNome(nome);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+
+            totale += p.getPrezzo() * it.getQuantità();
         }
 
         //salvataggio dei dati nel bean per la memorizazzione
