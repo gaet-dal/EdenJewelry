@@ -5,8 +5,15 @@ import main.java.dataManagement.dao.UtenteDAO;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.List;
 
 public class GestioneRegistrazione {
+    private UtenteDAO utenti;
+
+    public GestioneRegistrazione(UtenteDAO utenti){
+        this.utenti = utenti;
+    }
+
 
     //metodo che controlla se il parametro in ingresso contiene solo lettere (quindi rappresenta o un nome o un cognome)
     public boolean checkNomeCognome (String x) {
@@ -35,6 +42,16 @@ public class GestioneRegistrazione {
 
     //metodo che controlla se il parametro in ingresso è una mail valida
     public boolean checkEmail (String x){
+        UtenteBean utente = null;
+
+        try {
+            utente = utenti.doRetrieveByEmail(x);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        if(utente != null)
+            return false;
 
         //scorriamo la stringa
         for (int i = 0; i < x.length(); i++) {
@@ -53,7 +70,7 @@ public class GestioneRegistrazione {
         return false; //dopo aver valutato tutta la stringa, se non c'è la chicciola, ritorniamo false per indicare che non è una mail valida;
     }
 
-    public boolean register(String nome, String cognome, String email, String hashing, String tipo, UtenteDAO utenti) throws SQLException {
+    public boolean register(String nome, String cognome, String email, String hashing, String tipo) throws SQLException {
         //creiamo un UtenteBean in cui inserire i parametri presi dall'utente ed inserirli nel db;
 
         UtenteBean utentebean=new UtenteBean();
