@@ -40,15 +40,20 @@
   <link rel="stylesheet" href="<%= request.getContextPath() %>/style/profiloStyle.css">
 </head>
 <body>
-<img src="<%= request.getContextPath() %>/images/apple.png" alt="Decorazione" class="background-image">
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
-  <img src="<%= request.getContextPath() %>/images/logo1.png" alt="Eden Jewelry">
+  <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
   <div class="icons">
-    <img src="<%= request.getContextPath() %>/images/user-icon.png">
+    <a href="profiloUtente.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+    </a>
     <p>Profilo</p>
-    <img src="<%= request.getContextPath() %>/images/wishlist-icon.png">
+    <a href="wishlist.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
+    </a>
     <p>Wishlist</p>
-    <img src="<%= request.getContextPath() %>/images/cart-icon.png">
+    <a href="carrello.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
     <p>Carrello</p>
   </div>
 </header>

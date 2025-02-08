@@ -14,7 +14,23 @@
     <title>Aggiungi Prodotto</title>
 </head>
 <body>
-
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
+<header>
+  <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+  <div class="icons">
+    <a href="profiloUtente.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+    </a>
+    <p>Profilo</p>
+    <a href="wishlist.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
+    </a>
+    <p>Wishlist</p>
+    <a href="carrello.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
+    <p>Carrello</p>
+  </div>
+</header>
   <h2>da questa pagina è possibile inserire un nuovo prodotto. Inserisci i dati e poi clicca sul pulsante di aggiuta in fondo.</h2>
 
   <!-- Verifica del contesto dell'applicazione -->

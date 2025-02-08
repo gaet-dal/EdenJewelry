@@ -16,15 +16,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-<img src="images/apple.png" alt="Eden" class="background-image">
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
-    <img src="images/logo1.png" alt="Eden Jewelry Logo">
+    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
     <div class="icons">
-        <a href="profiloUtente.jsp"><img src="images/user-icon.png" alt="Icona utente"></a>
+        <a href="profiloUtente.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+        </a>
         <p>Profilo</p>
-        <img src="images/wishlist-icon.png" alt="Icona wishlist">
+        <a href="wishlist.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
+        </a>
         <p>Wishlist</p>
-        <img src="images/cart-icon.png" alt="Icona carrello">
+        <a href="carrello.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
         <p>Carrello</p>
     </div>
 </header>
