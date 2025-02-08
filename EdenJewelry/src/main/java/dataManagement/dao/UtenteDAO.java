@@ -24,7 +24,7 @@ public class UtenteDAO {
         this.ds = ds;
 
         if(ds == null) {
-            logger.info("DataSource utente nullo");
+            logger.warning("DataSource utente nullo");
         } else {
             logger.info("DataSource utente istanziato correttamente");
         }

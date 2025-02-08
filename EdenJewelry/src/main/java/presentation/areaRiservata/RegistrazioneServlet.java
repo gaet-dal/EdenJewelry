@@ -1,6 +1,7 @@
 package main.java.presentation.areaRiservata;
 
 import main.java.application.gestioneAccount.GestioneRegistrazione;
+import main.java.application.gestioneAcquisti.Carrello;
 import main.java.dataManagement.bean.UtenteBean;
 import main.java.dataManagement.dao.UtenteDAO;
 import main.java.utilities.HashingAlgoritm;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,7 +39,7 @@ public class RegistrazioneServlet extends HttpServlet {
         String password = request.getParameter("password");
         String tipo=request.getParameter("tipo");
 
-        GestioneRegistrazione gest=new GestioneRegistrazione();
+        GestioneRegistrazione gest=new GestioneRegistrazione(utenti);
         boolean n=gest.checkNomeCognome(nome);
         boolean c= gest.checkNomeCognome(cognome);
         boolean e= gest.checkEmail(email);
@@ -48,17 +50,25 @@ public class RegistrazioneServlet extends HttpServlet {
             String hashing= hash.toHash(password); //effettuiamo l'hash della password;
 
             try {
-                boolean RisultatoRegistrazione= gest.register(nome, cognome, email, hashing, tipo, utenti);
+                boolean RisultatoRegistrazione= gest.register(nome, cognome, email, hashing, tipo);
 
                 if(RisultatoRegistrazione==true){
                     //la registazione è andata a buon fine;
                     //bisogna creare la sessione e rimandare l'utente sulla home;
+                    UtenteBean utente= utenti.doRetrieveByEmail(email);
+                    HttpSession session=request.getSession();
+                    session.setAttribute("utente", utente);
+                    //una volta verificato l'utente, bisogna reindirizzarlo verso la sua area utente;
+
+                    //creiamo anche il carrello;
+                    Carrello cart=new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
+                    session.setAttribute("carrello", cart);
 
                 }
                 else{
                     //registrazione non andata a buon fine;
                     request.setAttribute("register-error", "registrazione non andata a buon fine");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
                     dispatcher.forward(request, response);
                 }
 
@@ -70,19 +80,22 @@ public class RegistrazioneServlet extends HttpServlet {
         }
         else if (n==false){
             request.setAttribute("nome-error", "il nome deve contenere solo lettere dell'alfabeto");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
             dispatcher.forward(request, response);
         }
         else if (c==false){
             request.setAttribute("cognome-error", "il cognome deve contenere solo lettere dell'alfabeto");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
             dispatcher.forward(request, response);
         }
         else if (e==false){
-            request.setAttribute("email-error", "l'email non valida");
+            request.setAttribute("email-error", "l'email non è valida");
             //mandiamo gli errori sulla jsp;
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
             dispatcher.forward(request, response);
         }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/script/homepage.jsp");
+        dispatcher.forward(request, response);
     }
 }
