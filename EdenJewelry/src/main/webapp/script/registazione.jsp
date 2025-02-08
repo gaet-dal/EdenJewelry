@@ -14,6 +14,23 @@
     String contextPath = request.getContextPath();
 %>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
+<header>
+    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    <div class="icons">
+        <a href="profiloUtente.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+        </a>
+        <p>Profilo</p>
+        <a href="wishlist.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
+        </a>
+        <p>Wishlist</p>
+        <a href="carrello.jsp">
+            <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
+        <p>Carrello</p>
+    </div>
+</header>
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <div class="login-container"> <!-- questi sono i nomi che diamo dal css-->
     <div class="login-box">  <!-- GIGI MODIFICA I NOMI IN BASE A QUELLI DEL CSS-->
 
