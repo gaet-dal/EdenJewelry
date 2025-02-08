@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - EdenJewelry</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/loginStyle.css"> <!--correggere il css collegato-->
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/registerStyle.css"> <!--correggere il css collegato-->
 
 </head>
 
@@ -34,7 +35,7 @@
 <div class="login-container"> <!-- questi sono i nomi che diamo dal css-->
     <div class="login-box">  <!-- GIGI MODIFICA I NOMI IN BASE A QUELLI DEL CSS-->
 
-        <h3>Registrazione:</h3>
+        <h3>Registrazione</h3>
         <form action="<%= request.getContextPath() %>/RegistrazioneServlet" method="post"> <!--qui bisogna ricontrollare da che cartella parte il contesto-->
 
             <input type="text" name="nome" placeholder="Nome" required>
