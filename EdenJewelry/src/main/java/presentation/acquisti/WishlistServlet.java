@@ -1,7 +1,10 @@
 package main.java.presentation.acquisti;
 
 import main.java.application.gestioneAcquisti.Wishlist;
+import main.java.dataManagement.bean.ItemWishlistBean;
 import main.java.dataManagement.bean.UtenteBean;
+import main.java.dataManagement.bean.WishlistBean;
+import main.java.dataManagement.dao.ItemWishlistDAO;
 import main.java.dataManagement.dao.WishlistDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Logger;
 
 //servlet che si occupa di stampare la wishlist;
 public class WishlistServlet extends HttpServlet {
@@ -27,9 +32,10 @@ public class WishlistServlet extends HttpServlet {
 
     }
 
-
+    private static Logger logger = Logger.getLogger(WishlistServlet.class.getName());
     DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
     private WishlistDAO wishlistDAO =new WishlistDAO(ds); //otteniamo il collegamento alla wishlist;
+    private ItemWishlistDAO itemWishlistDAO = new ItemWishlistDAO(ds);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
 
@@ -58,6 +64,18 @@ public class WishlistServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
         */
+
+        WishlistBean wishlistBean = new WishlistBean();
+
+        try {
+            wishlistBean = wishlistDAO.doRetrieveByEmail(utente.getEmail());
+        } catch (SQLException e) {
+            logger.warning("Errore durante il recupero della wishlist");
+        }
+
+
+        List<ItemWishlistBean> list = itemWishlistDAO.doRetrieveByIdWishlist(wishlistBean.getIdWishlist());
+        request.setAttribute("wishlist" , list);
 
         boolean ris=false;
         if(action.equals("rimuovi")){

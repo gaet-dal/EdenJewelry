@@ -18,14 +18,6 @@
     }
     else {
         response.sendRedirect("login.jsp"); //se non è loggato, si reindirizza al login;
-
-      /*  if("user".equals(tipo)){
-            response.sendRedirect("ProfiloUtente.jsp");
-        }
-        else
-            response.sendRedirect("ProfiloVenditore.jsp");
-        */
-
     }
 %>
 

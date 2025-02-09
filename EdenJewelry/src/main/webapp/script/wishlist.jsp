@@ -15,32 +15,23 @@
 <%@ page import="main.java.dataManagement.dao.WishlistDAO" %>
 <%@ page import="main.java.dataManagement.bean.WishlistBean" %>
 <%@ page import="main.java.dataManagement.bean.ProdottoBean" %>
+<%@ page import="main.java.dataManagement.bean.ItemWishlistBean" %>
 
-
-<%!
-  WishlistBean wishlist = null;
-%>
+<%! List<ItemWishlistBean> wishlist= null;%>
 
 <%
   // Controlla se l'utente è già loggato
   if (utente != null && utente.getEmail() != null && !utente.getEmail().isEmpty()) {
     String email = utente.getEmail(); // Recuperiamo l'email dell'utente
 
-    // Recuperiamo il DataSource
-    DataSource ds = (DataSource) application.getAttribute("MyDataSource");
-    WishlistDAO wishlistDAO = new WishlistDAO(ds);
-
-    try {
-      // Recuperiamo la wishlist dal database
-      wishlist = wishlistDAO.doRetrieveByEmail(email);
-    } catch (SQLException e) {
-      throw new RuntimeException("Errore durante il recupero della lista desideri", e);
-    }
+    wishlist = (List<ItemWishlistBean>) request.getAttribute("wishlist");
   } else {
     // Se l'utente non è loggato, lo rimandiamo al login
     response.sendRedirect("login.jsp");
   }
 %>
+
+
 
   }
   else
@@ -136,19 +127,19 @@
   <div class="wishlist-container">
     <h1>La tua Lista Desideri</h1>
     <%-- Controlla se la wishlist è vuota --%>
-    <% if (wishlist == null || wishlist.getProdotti() == null || wishlist.getProdotti().isEmpty()) { %>
+    <% if (wishlist == null || wishlist.isEmpty()) { %>
     <p>La tua lista desideri è vuota.</p>
     <% } else { %>
     <div class="products">
       <%-- Itera sui prodotti della wishlist --%>
-      <% for (ProdottoBean prodotto : wishlist.getProdotti()) { %>
+      <% for (ItemWishlistBean item : wishlist) { %>
       <div class="product">
-        <img src="<%= contextPath %>/images/products/<%= prodotto.getImmagine() %>" alt="<%= prodotto.getNome() %>">
-        <p><strong><%= prodotto.getNome() %></strong></p>
-        <p>€<%= prodotto.getPrezzo() %></p>
+        <img src="<%= contextPath %>/images/products/DA SCRIVERE" alt="<%= item.getNomeProdotto() %>">
+        <p><strong><%= item.getNomeProdotto() %></strong></p>
+        <p>€<%= item.getNomeProdotto() %></p>
         <%-- Creiamo un form per inviare alla servlet la gestione dell'eliminazione del prodotto --%>
         <form action="<%= contextPath %>/WishlistServlet" method="post">
-          <input type="hidden" name="prodottoId" value="<%= prodotto.getNome() %>">
+          <input type="hidden" name="prodottoId" value="<%= item.getNomeProdotto() %>">
           <%-- Controlliamo se ci sono degli errori nell'eliminazione di un prodotto dalla wishlist --%>
           <% if (request.getAttribute("wishlistremove-error") != null) { %>
           <%-- Se l'errore è presente, viene mostrato sotto il campo --%>
