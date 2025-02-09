@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class HomeServlet {
+public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Se hai dati da caricare, puoi recuperarli qui e aggiungerli alla request
         // Esempio: request.setAttribute("prodotti", prodottoDAO.doRetrieveAll());

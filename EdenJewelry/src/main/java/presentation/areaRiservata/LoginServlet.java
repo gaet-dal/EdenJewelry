@@ -4,6 +4,7 @@ import main.java.application.gestioneAccount.GestioneAutenticazione;
 import main.java.dataManagement.bean.UtenteBean;
 import main.java.dataManagement.dao.UtenteDAO;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,7 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
         //stabiliamo una connessione con il db, per mezzo del dao instanziato;
         DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
         utenti=new UtenteDAO(ds);
+
         GestioneAutenticazione gest = new GestioneAutenticazione();
         HashingAlgoritm hash=new HashingAlgoritm(); //creiamo un oggetto per poter usare il metodo per effettuare l'hashing della password;
         //acquisiamo in ingresso i parametri dell'utente e valutiamo le se credenziali sono corrette;
@@ -45,9 +47,14 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
         //se corrisponde al logout, allora eseguiamo il metodo;
 
         // Controlla se l'azione richiesta è "logout"
+        System.out.println("action "+ action);
         if ("logout".equals(action)) {
-           HttpSession session = request.getSession();
-            gest.logout(session);
+           HttpSession session = request.getSession(false);
+           boolean ris= gest.logout(session);
+           System.out.println("ris "+ris);
+
+            response.sendRedirect(request.getContextPath() + "/HomeServlet");
+            return; // ⬅ Questo impedisce l'esecuzione del resto del codice
         }
 
         //
@@ -62,16 +69,26 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
             throw new RuntimeException(e);
         }
 
-        if(b!=null){
+        if(b!=null) {
             //se l'utente non è null, allora c'è corrispondeza e creiamo la sessione per l'utente;
-            HttpSession session=request.getSession();
+            HttpSession session = request.getSession();
             session.setAttribute("utente", b);
             //una volta verificato l'utente, bisogna reindirizzarlo verso la sua area utente;
 
             //creiamo anche il carrello;
-            Carrello cart=new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
+            Carrello cart = new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
             session.setAttribute("carrello", cart);
 
+            //prendiamo il tipo per effettuare la ridirezione al profilo specifico;
+            String tipo = b.getTipo();
+            if (tipo.equals("user")) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/profiloUtente.jsp");
+                dispatcher.forward(request, response);
+            }
+            else if(tipo.equals("seller")) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/ProfiloVenditore.jsp");
+                dispatcher.forward(request, response);
+            }
         }
         else{
             request.setAttribute("login-error", "Credenziali non valide");
