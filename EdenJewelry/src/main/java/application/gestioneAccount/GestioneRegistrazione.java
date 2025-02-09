@@ -25,7 +25,8 @@ public class GestioneRegistrazione {
             //valutiamo, caratterre per carattere, se sono delle lettere;
             char lettera = x.charAt(i);
 
-            if ((lettera >= 'A' && lettera <= 'Z') || (lettera >= 'a' && lettera <= 'z')) {
+            //dobbiamo far accettare anche gli spazi nel nome
+            if ((lettera >= 'A' && lettera <= 'Z') || (lettera >= 'a' && lettera <= 'z') || (lettera==' ')) {
                 b= true;
 
 
@@ -80,6 +81,8 @@ public class GestioneRegistrazione {
         utentebean.setEmail(email);
         utentebean.setPassword(hashing); //salviamo l'hash della password per motivi di sicurezza;
         utentebean.setTipo(tipo);
+
+
 
         boolean RisultatoRegistrazione= utenti.doSave(utentebean); //salviamo il nuovo utente nel db
 

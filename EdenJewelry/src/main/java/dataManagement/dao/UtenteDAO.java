@@ -124,7 +124,7 @@ public class UtenteDAO {
     public synchronized UtenteBean doRetrieveByEmail(String email) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        UtenteBean bean = new UtenteBean();
+        UtenteBean bean = null; // Se l'utente non viene trovato, restituisco null
 
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
 
@@ -134,19 +134,24 @@ public class UtenteDAO {
             preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
 
-            bean.setNome(rs.getString("nome"));
-            bean.setEmail(rs.getString("email"));
-            bean.setCognome(rs.getString("cognome"));
-            bean.setPassword(rs.getString("password"));
-            bean.setTipo(rs.getString("tipo"));
+            // Controllo se esiste almeno un risultato
+            if (rs.next()) {
+                bean = new UtenteBean(); // Inizializzo solo se ho un risultato
+                bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setCognome(rs.getString("cognome"));
+                bean.setPassword(rs.getString("password"));
+                bean.setTipo(rs.getString("tipo"));
+            }
 
             rs.close();
 
         } finally {
             closeResources(preparedStatement, connection);
         }
-        return bean;
+        return bean; // Se l'utente non esiste, restituisce null
     }
+
 
     private void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {

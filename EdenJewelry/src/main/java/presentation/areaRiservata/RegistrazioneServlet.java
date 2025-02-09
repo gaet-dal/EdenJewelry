@@ -37,6 +37,7 @@ public class RegistrazioneServlet extends HttpServlet {
         utenti=new UtenteDAO(ds);
 
         String nome = request.getParameter("nome");
+
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -46,6 +47,12 @@ public class RegistrazioneServlet extends HttpServlet {
         boolean n=gest.checkNomeCognome(nome);
         boolean c= gest.checkNomeCognome(cognome);
         boolean e= gest.checkEmail(email);
+
+
+
+
+        //aggiungiamo un controllo sull'email per vedere se esiste già nel db, prima di arrivare ad avere un eccezione sul db stesso;
+
 
         //se i campi controllati rispettano le condizioni dei metodi di validazione, possiamo procedere con la registrazione
         if(n==true && c==true && e==true){
