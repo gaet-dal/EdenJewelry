@@ -16,8 +16,11 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class RegistrazioneServlet extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(RegistrazioneServlet.class.getName());
 
     private static final long serialVersionUID = 1L;
 
@@ -64,9 +67,7 @@ public class RegistrazioneServlet extends HttpServlet {
                     Carrello cart=new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
                     session.setAttribute("carrello", cart);
 
-                }
-                else{
-                    //registrazione non andata a buon fine;
+                } else{
                     request.setAttribute("register-error", "registrazione non andata a buon fine");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
                     dispatcher.forward(request, response);
@@ -74,7 +75,10 @@ public class RegistrazioneServlet extends HttpServlet {
 
 
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+               logger.warning("Un utente già registrato ha tentato la registrazione");
+                request.setAttribute("email-error", "email già esistente");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
+                dispatcher.forward(request, response);
             }
 
         }

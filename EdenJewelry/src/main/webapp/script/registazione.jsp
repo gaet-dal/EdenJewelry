@@ -6,7 +6,6 @@
     <title>Register - EdenJewelry</title>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style/registerStyle.css"> <!--correggere il css collegato-->
-
 </head>
 
 <body>
@@ -65,7 +64,7 @@
             </select>
             <!--può essere gestito tramite un menù a discesa con 2 opzioni-->
 
-            <button type="submit">Registrati ora!</button>
+            <button type="submit" name="submitRegistrazione">Registrati ora!</button>
             <% if (request.getAttribute("register-error") != null) { %>
             <div class="error-message"><%= request.getAttribute("register-error") %></div>
             <% } %>
@@ -75,4 +74,7 @@
 
 
 </body>
+
+
 </html>
+
