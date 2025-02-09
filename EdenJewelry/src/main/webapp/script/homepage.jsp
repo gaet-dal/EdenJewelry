@@ -25,15 +25,15 @@
 <header>
     <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
     <div class="icons">
-        <a href="profiloUtente.jsp">
+        <a href="${pageContext.request.contextPath}/script/profiloUtente.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
         </a>
         <p>Profilo</p>
-        <a href="wishlist.jsp">
+        <a href="${pageContext.request.contextPath}/script/wishlist.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
         </a>
         <p>Wishlist</p>
-        <a href="carrello.jsp">
+        <a href="${pageContext.request.contextPath}/script/carrello.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
         <p>Carrello</p>
     </div>
