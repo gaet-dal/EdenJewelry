@@ -75,7 +75,7 @@
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Accedi ora!</button>
-            <p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
+            <p>Non hai un account? <a class="link1" href="<%= contextPath %>/script/registazione.jsp">Registrati qui </a></p>
         </form>
         <%
             // messaggi di errore o successo
