@@ -63,17 +63,11 @@ public class CatalogoServlet extends HttpServlet {
             bean.setCategoria(categoria);
             bean.setImmagine(immagine);
 
-
-
             try {
-                System.out.println("arrivo al catalogo");
-                System.out.println("bean "+ bean.toString());
                 if(cat.addProduct(bean)) {
                     logger.info("Aggiunta prodotto riuscita");
-                    System.out.println("primo logger");
                 }else {
                     logger.info("Aggiunta prodotto non riuscita");
-                    System.out.println("secondo logger");
                 }
             } catch (SQLException e) {
                 logger.warning("Errore durante il salvataggio del prodotto nel database");
@@ -95,8 +89,8 @@ public class CatalogoServlet extends HttpServlet {
             }
         }
 
-        System.out.println("arrivo al punto prima della ridirezione");
-        response.sendRedirect(request.getContextPath() + "/HomeServlet");
+      //  System.out.println("arrivo al punto prima della ridirezione");
+       response.sendRedirect(request.getContextPath() + "/HomeServlet");
 
     }
 
