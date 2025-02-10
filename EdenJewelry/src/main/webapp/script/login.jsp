@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Eden Jewelry</title>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/style/loginStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/loginStylee.css">
 </head>
 
 <body>
@@ -40,7 +40,6 @@
 <!-- Verifica del contesto dell'applicazione -->
 <%
     String contextPath = request.getContextPath();
-    out.print("<p>" + contextPath + "</p>");
 %>
 
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">

@@ -60,11 +60,17 @@ header .icons {
 }
 
 .login-box {
-    background-color: #d7b3e5;
+    background-color: rgba(215, 179, 229, 0.75);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
     padding: 20px;
-    width: 350px;
+    width: 430px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: 0.5s width ease;
+}
+
+.login-box:hover{
+    width: 450px;
 }
 
 .login-box input {

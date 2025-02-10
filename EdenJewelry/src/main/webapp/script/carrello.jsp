@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrello</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style/confermaOrdineStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/carrelloStyle.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -35,7 +35,7 @@
 <div class="center-wrapper">
     <div class="cart-container">
         <div class="item">
-            <img src="<%= request.getContextPath() %>/images/products/collanaCuore.png" alt="Collana cuore">
+            <img src="${pageContext.request.contextPath}/assets/images/products/collanaCuore.png" alt="Collana cuore">
             <div class="item-info">
                 <h4>Collana cuore</h4>
                 <p>&euro;23,00</p>
