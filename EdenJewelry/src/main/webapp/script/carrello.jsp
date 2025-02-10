@@ -35,7 +35,7 @@
 <div class="center-wrapper">
     <div class="cart-container">
         <div class="item">
-            <img src="<%= request.getContextPath() %>/images/products/collanaCuore.png" alt="Collana cuore">
+            <img src="${pageContext.request.contextPath}/assets/images/products/collanaCuore.png" alt="Collana cuore">
             <div class="item-info">
                 <h4>Collana cuore</h4>
                 <p>&euro;23,00</p>

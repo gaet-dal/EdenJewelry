@@ -12,6 +12,8 @@
 <html>
 <head>
     <title>Aggiungi Prodotto</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/style/aggiungiProdottoStyle.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
