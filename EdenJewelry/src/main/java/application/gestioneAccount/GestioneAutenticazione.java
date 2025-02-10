@@ -18,6 +18,9 @@ public class GestioneAutenticazione {
         //ricerchiamo l'email inserita dall'utente, tramite i metodo esposti nel dao corrispondente;
         UtenteBean b=utenti.doRetrieveByEmail(email);
 
+        if (b == null)
+            return null;
+
         String p=b.getPassword(); //recuperiamo la password associata all'utente nel db;
 
         if(p.equals(hashing)){ //se la password inserita dall'utente al login corrisponde alla password associata alla sua email nel db, bisogna permettere l'accesso;

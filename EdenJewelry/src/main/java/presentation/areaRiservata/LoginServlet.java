@@ -92,6 +92,8 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
         }
         else{
             request.setAttribute("login-error", "Credenziali non valide");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/login.jsp");
+            dispatcher.forward(request, response);
             //bisogn richiedere all'utente di reiserire le credenziali;
         }
 
