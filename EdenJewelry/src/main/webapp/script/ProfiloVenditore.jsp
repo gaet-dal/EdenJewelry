@@ -19,13 +19,6 @@
   else {
     response.sendRedirect("login.jsp"); //se non è loggato, si reindirizza al login;
 
-      /*  if("user".equals(tipo)){
-            response.sendRedirect("ProfiloUtente.jsp");
-        }
-        else
-            response.sendRedirect("ProfiloVenditore.jsp");
-        */
-
   }
 %>
 
@@ -67,7 +60,7 @@
         </div>
         <div class="profile-info">
           <!--recupera il nome del utente dalla sessione e lo stampa-->
-          <h3><%= session.getAttribute("nome") != null ? session.getAttribute("nome") : "Nome Utente" %></h3>
+          <h3><%= utente.getNome() != null ? utente.getNome() : "Nome Utente" %></h3>
           <a href="<%= request.getContextPath() %>/profile" class="profile-link">Visualizza profilo &#8594;</a>
         </div>
       </div>
@@ -75,32 +68,32 @@
 
     <!--creare dei bottoni per visualizzare wishlist e ordini-->
 
-    <form action="${pageContext.request.contextPath}/WishlistServlet" method="post">
+    <form action="${pageContext.request.contextPath}/script/wishlist.jsp" method="post">
       <input type="hidden" name="email" value="<%= utente.getEmail() %>">
       <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
     </form>
 
     <!-- correggere la servet a cui collegare gli ordini-->
-    <form action="${pageContext.request.contextPath}/Ordini" method="post">
+    <form action="${pageContext.request.contextPath}/script/storicoOrdini.jsp" method="post">
       <input type="hidden" name="email" value="<%= utente.getEmail() %>">
       <button name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
     </form>
 
     <!-- Pulsante per aggiungere un prodotto al catalogo -->
-    <form action="<%= request.getContextPath() %>/aggiungiProdotto.jsp" method="post">
+    <form action="<%= request.getContextPath() %>/script/AggiungiProdotto.jsp" method="post">
       <button type="submit">Aggiungi Prodotto</button>
     </form>
 
     <!-- Pulsante per rimuovere un prodotto dal catalogo -->
-    <form action="<%= request.getContextPath() %>/rimuoviProdotto.jsp" method="post">
+    <form action="<%= request.getContextPath() %>/script/RimozioneProdotto.jsp" method="post">
       <button type="submit">Rimuovi Prodotto</button>
     </form>
 
     <p class="logout">
-      <!--non dobbiamo passare alcun parametro--->
-      <!--semplicemente viene invalidata la sessione quando l'utente clicca su logout-->
-      <!--diamo il valore logout alla action, in modo da poter richiamare solo lo specifico metodo nella servlet del login--->
-      <a href="<%= request.getContextPath() %>/LoginServlet?action=logout" class="logout-link">Log out &#8594;</a>
+    <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
+      <input type="hidden" name="action" value="logout">
+      <button type="submit" class="logout-link">Log out &#8594;</button>
+    </form>
     </p>
 
   </div>
