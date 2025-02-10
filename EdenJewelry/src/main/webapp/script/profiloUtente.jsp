@@ -11,14 +11,21 @@
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 
 <%
+    String tipo=null;
     // Controlla se l'utente è già loggato
     if (utente != null && utente.getEmail() != null && !utente.getEmail().isEmpty()) {
-        String tipo = utente.getTipo(); //recuperiamo il ripo dell'utente
+         tipo = utente.getTipo(); //recuperiamo il ripo dell'utente
         String nome = utente.getNome();
+
+        if(tipo.equals("seller")){
+            response.sendRedirect("ProfiloVenditore.jsp"); //se non è loggato, si reindirizza al login;
+        }
     }
     else {
         response.sendRedirect("login.jsp"); //se non è loggato, si reindirizza al login;
     }
+
+
 %>
 
 <!DOCTYPE html>
