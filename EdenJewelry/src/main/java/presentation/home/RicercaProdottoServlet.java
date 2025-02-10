@@ -1,6 +1,7 @@
 package main.java.presentation.home;
 
 import main.java.application.gestioneCatalogo.Ricerca;
+import main.java.dataManagement.bean.ProdottoBean;
 import main.java.dataManagement.dao.ProdottoDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Gaetano D'Alessio
@@ -17,36 +20,35 @@ import java.io.IOException;
  */
 
 public class RicercaProdottoServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private ProdottoDAO prodotti;
 
-    public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
-        prodotti = new ProdottoDAO(ds);
-
-        String action = request.getParameter("submitAction");
-
-        // if MOMENTANEO, da rivedere dopo aver risolto la jsp corrispondente
-        /*
-        if(action.equals("delete")){
-            String query = request.getParameter("query");
-            SimpleSearch simple = new SimpleSearch();
-            simple.search("query", prodotti);
-            request.setAttribute("resultQuery", simple.search(query, prodotti));
-
-            RequestDispatcher rd = request.getRequestDispatcher(request.getContextPath()+"/RimozioneProdotto.jsp");
-            rd.forward(request, response);
-        }
-         */
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");
-        String category = request.getParameter("category");
+        String submitAction=request.getParameter("submitAction");
+        List<ProdottoBean> listaProdotti = new ArrayList<>();
 
-        Ricerca alg = new Ricerca();
+        try {
+            DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
+            ProdottoDAO prodottoDAO = new ProdottoDAO(ds);
 
-        request.setAttribute("resultQuery", alg.search(query, category,prodotti));
+            if (query != null) {
+                listaProdotti = prodottoDAO.cercaProdottiPerNome(query); // Metodo che esegue la query
+                System.out.println(listaProdotti.toString());
+            }
 
-        RequestDispatcher rd = request.getRequestDispatcher(request.getContextPath()+"/ricercaProdotto.jsp");
-        rd.forward(request, response);
+            System.out.println("DEBUG: Numero prodotti trovati = " + listaProdotti.size()); // Controllo
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Imposta il risultato della ricerca nella request
+        request.setAttribute("resultQuery", listaProdotti);
+
+        // Inoltra la richiesta alla JSP
+        if(submitAction.equals("delete")){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/RimozioneProdotto.jsp");
+            dispatcher.forward(request, response);
+        }
+
     }
 }

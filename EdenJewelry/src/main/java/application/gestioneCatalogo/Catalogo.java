@@ -28,10 +28,8 @@ public class Catalogo{
         boolean validazione=checkProduct(prodotto); //verifichiamo se i dati del prodotto sono corretti;
         boolean ris=false;
 
-        System.out.println("validazione "+ validazione);
         if(validazione){
             ris=dao.doSave(prodotto);
-            System.out.println("ris salvataggio prodotto " + ris);
         }
 
         return ris;
@@ -65,10 +63,6 @@ public class Catalogo{
 
         // Se tutti i controlli sono validi, il prodotto è accettato
         boolean ris = n && c && q && p;
-
-        // Debugging output
-        System.out.println("risultato check " + ris);
-        System.out.println("n " + n + " c " + c + " p " + p + " q " + q);
 
         return ris;
     }

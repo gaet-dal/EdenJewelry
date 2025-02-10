@@ -166,4 +166,31 @@ public class ProdottoDAO {
         }
         return true; // Valore predefinito se qualcosa va storto
     }
+
+    //permette una ricerca parziale di una stringa
+    public List<ProdottoBean> cercaProdottiPerNome(String x) throws SQLException {
+        List<ProdottoBean> prodotti = new ArrayList<>();
+        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE LOWER(nome) LIKE LOWER(?)"; // Converte in lowercase per ricerca case-insensitive
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, "%" + x + "%"); // Cerca qualsiasi parte del nome
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                ProdottoBean prodotto = new ProdottoBean();
+                prodotto.setNome(rs.getString("nome"));
+                prodotto.setPrezzo(rs.getFloat("prezzo"));
+                prodotto.setQuantita(rs.getInt("quantità"));
+                prodotto.setCategoria(rs.getString("categoria"));
+                prodotto.setImmagine(rs.getString("immagine"));
+
+                prodotti.add(prodotto);
+            }
+        }
+
+        return prodotti;
+    }
+
 }
