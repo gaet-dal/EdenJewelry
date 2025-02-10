@@ -44,7 +44,7 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("prodotti", list);
 
         // Inoltra la richiesta alla homepage.jsp
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/script/homepage.jsp");
         dispatcher.forward(request, response);
     }
 }
