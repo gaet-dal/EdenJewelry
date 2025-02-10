@@ -87,7 +87,7 @@ public class ProdottoDAO {
 
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " ORDER BY nome ASC";
 
-
+        int count=0;
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
@@ -104,12 +104,14 @@ public class ProdottoDAO {
                 bean.setImmagine(rs.getString("immagine"));
 
                 prodotti.add(bean);
+                count++;
             }
             rs.close();
 
         } finally {
             closeResources(preparedStatement, connection);
         }
+        System.out.println("Totale prodotti trovati: " + count);
         return prodotti;
     }
 

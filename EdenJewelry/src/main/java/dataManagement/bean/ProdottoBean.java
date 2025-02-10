@@ -67,4 +67,15 @@ public class ProdottoBean{
 
         return (this.nome).equals(p.getNome());
     }
+
+    @Override
+    public String toString() {
+        return "ProdottoBean{" +
+                "nome='" + nome + '\'' +
+                ", prezzo=" + prezzo +
+                ", quantita=" + quantita +
+                ", categoria='" + categoria + '\'' +
+                ", immagine='" + immagine + '\'' +
+                '}';
+    }
 }

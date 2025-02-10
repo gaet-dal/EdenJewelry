@@ -40,7 +40,7 @@
 
   <!-- Form per Aggiungere un prodotto -->
   <div class="form-group">
-    <form id="add_form" action="${pageContext.request.contextPath}/CatalogoVenditoreServlet" method="post">
+    <form id="add_form" action="${pageContext.request.contextPath}/CatalogoServlet" method="post">
       <input type="text" name="nome" placeholder="Nome del prodotto">
       <input type="text" name="prezzo" placeholder="Prezzo">
       <input type="number" name="quantita" placeholder="Quantità disponibile">

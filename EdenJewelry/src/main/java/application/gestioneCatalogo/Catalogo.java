@@ -27,8 +27,11 @@ public class Catalogo{
 
         boolean validazione=checkProduct(prodotto); //verifichiamo se i dati del prodotto sono corretti;
         boolean ris=false;
+
+        System.out.println("validazione "+ validazione);
         if(validazione){
             ris=dao.doSave(prodotto);
+            System.out.println("ris salvataggio prodotto " + ris);
         }
 
         return ris;
@@ -42,69 +45,34 @@ public class Catalogo{
         return ris;
     }
 
-    public boolean checkProduct(ProdottoBean prodotto){
+    public boolean checkProduct(ProdottoBean prodotto) {
+        String nome = prodotto.getNome();
+        float prezzo = prodotto.getPrezzo();
+        int quantita = prodotto.getQuantita();
+        String categoria = prodotto.getCategoria();
 
-        String nome=prodotto.getNome();
-        float prezzo=prodotto.getPrezzo();
-        int quantita= prodotto.getQuantita();
-        String categoria=prodotto.getCategoria();
-        String immagine=prodotto.getImmagine(); //passiamo l'url di un'immagine;
+        // Controllo Nome (solo lettere e spazi)
+        boolean n = nome.matches("[a-zA-Zà-ùÀ-Ù ]+");
 
-        //recuperati i parametri, dobbiamo solo controllare se i formati sono corretti;
+        // Controllo Categoria (deve essere tra quelle valide)
+        boolean c = categoria.equals("collane") || categoria.equals("bracciali") || categoria.equals("anelli");
 
-        boolean n=false;
-        boolean c=false;
+        // Controllo Quantità (maggiore di 0)
+        boolean q = quantita > 0;
 
-        //controlliamo il nome
-        for(int i=0; i < nome.length(); i++) {
-            //valutiamo, caratterre per carattere, se sono delle lettere;
-            char lettera = nome.charAt(i);
+        // Controllo Prezzo (tra 0 e 9999)
+        boolean p = prezzo > 0 && prezzo <= 9999;
 
-            if ((lettera >= 'A' && lettera <= 'Z') || (lettera >= 'a' && lettera <= 'z')) {
-                n= true;
+        // Se tutti i controlli sono validi, il prodotto è accettato
+        boolean ris = n && c && q && p;
 
-
-            }
-            else{
-
-                n= false; //al primo carattere che non è una lettera dell'alfabeto, b viene settato a false e il ciclo si blocca;
-                break;
-            }
-        }
-
-        //controlliamo la categoria
-        for(int i=0; i < categoria.length(); i++) {
-
-            if(categoria.equals("collane") || categoria.equals("bracciali") || categoria.equals("anelli")){
-               c= true;
-            }
-            else c= false; //se non corrisponde ad una delle 3 categorie, allora restituiamo false;
-
-        }
-
-        //controlliamo la quantità
-        boolean q=false;
-            if(quantita>0 ){
-                q= true;
-            }
-            //se non corrisponde ad una delle 3 categorie, allora restituiamo false;
-
-
-        boolean p=false;
-        if(prezzo >0 && prezzo<=9999){
-            p= true;
-        };
-
-
-        //se è presente anche solo un campo con degli errori, bisogna indicarli;
-        //dobbiamo pensare un momento a come deve essere restituito l'errore. Se sulla sessione o altro
-       boolean ris=false;
-        if(n && c && q && p){
-            ris= true; //se tutti i campi sono corretti, possiamo diree che tutti i dati sono corretti;
-        }
+        // Debugging output
+        System.out.println("risultato check " + ris);
+        System.out.println("n " + n + " c " + c + " p " + p + " q " + q);
 
         return ris;
     }
+
 }
 
 

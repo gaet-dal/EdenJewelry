@@ -63,11 +63,18 @@ public class CatalogoServlet extends HttpServlet {
             bean.setCategoria(categoria);
             bean.setImmagine(immagine);
 
+
+
             try {
-                if(cat.addProduct(bean))
+                System.out.println("arrivo al catalogo");
+                System.out.println("bean "+ bean.toString());
+                if(cat.addProduct(bean)) {
                     logger.info("Aggiunta prodotto riuscita");
-                else
+                    System.out.println("primo logger");
+                }else {
                     logger.info("Aggiunta prodotto non riuscita");
+                    System.out.println("secondo logger");
+                }
             } catch (SQLException e) {
                 logger.warning("Errore durante il salvataggio del prodotto nel database");
                 e.printStackTrace();
@@ -88,8 +95,9 @@ public class CatalogoServlet extends HttpServlet {
             }
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher(getServletContext().getContextPath()+"/homepage.jsp");
-        rd.forward(request, response);
+        System.out.println("arrivo al punto prima della ridirezione");
+        response.sendRedirect(request.getContextPath() + "/HomeServlet");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

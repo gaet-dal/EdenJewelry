@@ -23,8 +23,19 @@ public class HomeServlet extends HttpServlet {
         DataSource ds = (DataSource) request.getServletContext().getAttribute("MyDataSource");
         ProdottoDAO prodottoDAO = new ProdottoDAO(ds);
         List<ProdottoBean> list;
+
+
+
         try {
+            System.out.print("prima del retrieve");
             list = prodottoDAO.doRetrieveAll();
+            System.out.println("Numero di prodotti trovati in HomeServlet: " + list.size());
+            System.out.print("prima del retrieve");
+
+            for(ProdottoBean prodottoBean : list) {
+                System.out.println("prodotto "+ prodottoBean.toString());
+            }
+
         } catch (SQLException e) {
             //problema sulla ridirezione sulla home quando il catalogo è vuoto;
             System.out.println(e);
@@ -33,7 +44,7 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("prodotti", list);
 
         // Inoltra la richiesta alla homepage.jsp
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/script/homepage.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/");
         dispatcher.forward(request, response);
     }
 }
