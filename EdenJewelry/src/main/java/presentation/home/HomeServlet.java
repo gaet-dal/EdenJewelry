@@ -26,12 +26,14 @@ public class HomeServlet extends HttpServlet {
         try {
             list = prodottoDAO.doRetrieveAll();
         } catch (SQLException e) {
+            //problema sulla ridirezione sulla home quando il catalogo è vuoto;
+            System.out.println(e);
             throw new RuntimeException(e);
         }
         request.setAttribute("prodotti", list);
 
         // Inoltra la richiesta alla homepage.jsp
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"homepage.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/script/homepage.jsp");
         dispatcher.forward(request, response);
     }
 }

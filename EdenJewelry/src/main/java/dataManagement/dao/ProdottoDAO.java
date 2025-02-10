@@ -85,7 +85,8 @@ public class ProdottoDAO {
 
         List<ProdottoBean> prodotti = new ArrayList<ProdottoBean>();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY nome ASC";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " ORDER BY nome ASC";
+
 
         try {
             connection = ds.getConnection();
