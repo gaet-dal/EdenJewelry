@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrello</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style/confermaOrdineStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/carrelloStyle.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>

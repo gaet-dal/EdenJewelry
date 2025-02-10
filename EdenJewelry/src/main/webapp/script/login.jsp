@@ -40,7 +40,6 @@
 <!-- Verifica del contesto dell'applicazione -->
 <%
     String contextPath = request.getContextPath();
-    out.print("<p>" + contextPath + "</p>");
 %>
 
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
