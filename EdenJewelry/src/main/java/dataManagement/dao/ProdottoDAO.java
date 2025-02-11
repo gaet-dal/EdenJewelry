@@ -120,22 +120,28 @@ public class ProdottoDAO {
         PreparedStatement preparedStatement = null;
         ProdottoBean bean = new ProdottoBean();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome = ?";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE TRIM(LOWER(nome)) = TRIM(LOWER(?))";
 
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, nome);
+            preparedStatement.setString(1, nome.trim()); // Elimina gli spazi dalla stringa ricevuta
+            System.out.println("Eseguo query: " + preparedStatement.toString());
+
             ResultSet rs = preparedStatement.executeQuery();
 
-            bean.setNome(rs.getString("nome"));
-            bean.setPrezzo(rs.getFloat("prezzo"));
-            bean.setQuantita(rs.getInt("quantità"));
-            bean.setCategoria(rs.getString("password"));
-            bean.setImmagine(rs.getString("immagine"));
+            if (rs.next()) {
+                bean.setNome(rs.getString("nome").trim());  // Anche qui eliminiamo eventuali spazi
+                bean.setPrezzo(rs.getFloat("prezzo"));
+                bean.setQuantita(rs.getInt("quantità"));
+                bean.setCategoria(rs.getString("categoria"));
+                bean.setImmagine(rs.getString("immagine"));
+            } else {
+                System.out.println("Nessun prodotto trovato per il nome: " + nome);
+                return null;
+            }
 
             rs.close();
-
         } finally {
             closeResources(preparedStatement, connection);
         }

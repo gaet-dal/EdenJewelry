@@ -1,26 +1,24 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="javax.sql.DataSource" %>
-<%@ page import="javax.servlet.http.HttpServlet" %>
-<%@ page import="main.java.dataManagement.dao.ProdottoDAO" %>
-<%@ page import="java.util.List" %>
 <%@ page import="main.java.dataManagement.bean.ProdottoBean" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("prodotti");%>
-
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage - EdenJewelry</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage.css" type="text/css">
-</head>
+<!-- Debug per vedere se la lista arriva correttamente -->
+<%
+    List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("resultQuery");
+%>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--qui mandiamo in stampa il nome del prodotto-->
+        <title>Risultati ricerca - EdenJewelry</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage.css" type="text/css">
+    </head>
 <body>
+
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
     <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
@@ -39,19 +37,9 @@
     </div>
 </header>
 
-
-<div class="search-bar">
-    <form action="${pageContext.request.contextPath}/RicercaProdottoServlet" method="get" method="GET">
-        <input type="text" name="query" placeholder="Cerca" required>
-        <button name="submitAction" value="view" type="submit" style="display: none;"></button>
-    </form>
-</div>
-
-
 <div class="container">
 
     <div class="section">
-        <h2>CATALOGO</h2>
         <div class="box">
             <div class="products">
                 <% if (prodotti != null && !prodotti.isEmpty()) { %>
@@ -65,7 +53,7 @@
                 </div>
                 <% } %>
                 <% } else { %>
-                <p>Nessun prodotto disponibile nel catalogo.</p>
+                <p>OPS! Non crediamo di avere l'articolo da te cercato</p>
                 <% } %>
             </div>
         </div>

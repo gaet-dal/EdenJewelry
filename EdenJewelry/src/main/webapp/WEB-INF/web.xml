@@ -55,6 +55,16 @@
         <url-pattern>/RegistrazioneServlet</url-pattern>
     </servlet-mapping>
 
+    <!-- Dettagli prodotto servlet -->
+    <servlet>
+        <servlet-name>DettagliProdottoServlet</servlet-name>
+        <servlet-class>main.java.presentation.home.DettagliProdottoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DettagliProdottoServlet</servlet-name>
+        <url-pattern>/DettagliProdottoServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- Carrello servlet -->
     <servlet>
         <servlet-name>CarrelloServlet</servlet-name>
