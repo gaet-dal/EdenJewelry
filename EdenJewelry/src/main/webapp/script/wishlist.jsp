@@ -25,6 +25,7 @@
     String email = utente.getEmail(); // Recuperiamo l'email dell'utente
 
     wishlist = (List<ItemWishlistBean>) session.getAttribute("wishlist");
+    System.out.print("wishlist nella jsp "+wishlist.toString());
 
   } else {
     // Se l'utente non è loggato, lo rimandiamo al login

@@ -70,7 +70,7 @@
 
     <!--creare dei bottoni per visualizzare wishlist e ordini-->
 
-    <form action="${pageContext.request.contextPath}/script/wishlist.jsp" method="post">
+    <form action="${pageContext.request.contextPath}/WishlistServlet" method="post">
       <input type="hidden" name="email" value="<%= utente.getEmail() %>">
       <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
     </form>
