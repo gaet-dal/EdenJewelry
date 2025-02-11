@@ -30,16 +30,17 @@ header {
 
 header:hover{
     box-shadow: 0 13px 21px rgba(164, 69, 175, 0.6);
+    background-color: rgba(142, 78, 127, 0.6);
 }
 
 header img {
-    height: 60px; /* Altezza uniforme del logo */
+    height: 55px; /* Altezza uniforme del logo */
 }
 
 header .icons {
     display: flex;
     /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
-    margin-top: 5px; /* per allineare le icone all'immagine del logo */
+    margin-top: 5px;
 }
 
 .icons img {
