@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage2.css" type="text/css">
 </head>
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
@@ -41,9 +41,12 @@
 
 
 <div class="search-bar">
-    <form action="${pageContext.request.contextPath}/RicercaProdottoServlet" method="get" method="GET">
-        <input type="text" name="query" placeholder="Cerca" required>
-        <button name="submitAction" value="view" type="submit" style="display: none;"></button>
+    <form action="${pageContext.request.contextPath}/RicercaProdottoServlet" method="GET">
+        <label>
+            <input type="text" name="query" placeholder="Cerca" required>
+        </label>
+        <br>
+        <button name="submitAction" value="view" type="submit"></button>
     </form>
 </div>
 
@@ -51,7 +54,6 @@
 <div class="container">
 
     <div class="section">
-        <h2>CATALOGO</h2>
         <div class="box">
             <div class="products">
                 <% if (prodotti != null && !prodotti.isEmpty()) { %>

@@ -118,6 +118,11 @@ header .icons {
     width: 80%;
 }
 
+.buttonBox button{
+    background: none;
+    border: none;
+}
+
 .wishlist {
     background: rgba(232, 161, 207, 0.6); /* background trasparente */
     backdrop-filter: blur(10px); /* sfocatura effetto vetro */

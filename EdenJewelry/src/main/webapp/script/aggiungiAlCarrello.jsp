@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prodotto Info</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/prodottoInfo.css">         <!--<c:url value='/style/prodottoInfo.css' />-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/main/webapp/style/dettagliProdotto.css">         <!--<c:url value='/style/prodottoInfo.css' />-->
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
