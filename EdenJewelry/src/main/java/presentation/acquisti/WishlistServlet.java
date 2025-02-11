@@ -3,9 +3,8 @@ package main.java.presentation.acquisti;
 import main.java.application.gestioneAcquisti.Wishlist;
 import main.java.dataManagement.bean.ItemWishlistBean;
 import main.java.dataManagement.bean.UtenteBean;
-import main.java.dataManagement.bean.WishlistBean;
-import main.java.dataManagement.dao.ItemWishlistDAO;
 import main.java.dataManagement.dao.WishlistDAO;
+import main.java.dataManagement.dao.ItemWishlistDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -20,67 +19,119 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
-//servlet che si occupa di stampare la wishlist;
 public class WishlistServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    //usiamo questa servlet per gestire la richiesta di un utente di poter effettuare il login al sito e, in base ai dati inseriti,
-    //restituaiamo una visione di questo consona al suo tipo (cioè seller o user);
+    private static Logger logger = Logger.getLogger(WishlistServlet.class.getName());
 
+    private WishlistDAO wishlistDAO;
+    private ItemWishlistDAO itemWishlistDAO;
+
+    @Override
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
-
+        System.out.println("WishlistServlet inizializzata.");
     }
 
-    private static Logger logger = Logger.getLogger(WishlistServlet.class.getName());
-    DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
-    private WishlistDAO wishlistDAO =new WishlistDAO(ds); //otteniamo il collegamento alla wishlist;
-    private ItemWishlistDAO itemWishlistDAO = new ItemWishlistDAO(ds);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
+        // Recupero della sessione
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("utente") == null) {
+            System.out.println("Sessione nulla o utente non trovato. Redirect a login.jsp.");
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
-        HttpSession session=request.getSession();
+        // Recupero dati utente
         UtenteBean utente = (UtenteBean) session.getAttribute("utente");
+        String email = utente.getEmail();
+
+        // Recupero dell'azione (aggiungere o rimuovere)
+        String action = request.getParameter("lista_desideri");
+        //possiamo sfruttare questo pezzetto per permettere la vi
+        if (action == null) {
+            response.sendRedirect("wishlist.jsp");
+            return;
+        }
+
+        // Creazione dell'oggetto Wishlist
         Wishlist wish = new Wishlist();
-        String email=request.getParameter("email");
+        boolean ris = false;
 
-        //questa variabile sta nella jsp della wishlist;
-        String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto su cui è stato indicato che si vuole effettuare l'eliminazione
-        int idItem = Integer.parseInt(request.getParameter("idItem"));
+        // Recupero DataSource dal contesto della servlet
+        DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
+        if (ds == null) {
+            System.out.println("Errore: DataSource è null.");
+            throw new ServletException("DataSource non trovato");
+        }
 
-        String action = request.getParameter("lista-desideri"); // Recupera il valore del pulsante
+        wishlistDAO = new WishlistDAO(ds);
+        itemWishlistDAO = new ItemWishlistDAO(ds);
+        System.out.println("action della wishservlet: " + action);
 
+        // Aggiunta alla wishlist
+            if (action.equals("aggiungi")) {
 
-        boolean ris=false;
-        if(action.equals("rimuovi")){
+                // Recupero del prodotto da aggiungere alla wishlist
+                String nomeProdotto = request.getParameter("prodottoId");
+                if (nomeProdotto == null || nomeProdotto.trim().isEmpty()) {
+                    response.sendRedirect("wishlist.jsp");
+                    return;
+                }
+                // Chiama il metodo per aggiungere il prodotto alla wishlist
+                ris = wish.aggiungiWishlist(nomeProdotto, email, ds);
 
+                if (!ris) {
+                    System.out.println("Errore: aggiunta alla wishlist non riuscita.");
+                    request.setAttribute("wishlistadd-error", "Aggiunta non andata a buon fine.");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/wishlist.jsp");
+                    dispatcher.forward(request, response);
+                }
+            }
+
+        // Rimozione dalla wishlist
+        else if (action.equals("rimuovi")) {
+            System.out.println("Tentativo di rimuovere il prodotto dalla wishlist...");
+
+            // Ricava l'ID del prodotto se presente (da implementare)
+            int idItem = -1; // L'id dell'item wishlist andrebbe recuperato correttamente
+
+            /*
             try {
-                ris= wish.removeWishlist(idItem, ds);
+                ris = wish.removeWishlist(idItem, ds);
             } catch (SQLException e) {
+                System.out.println("Errore durante la rimozione: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            if (!ris) {
+                System.out.println("Errore: rimozione dalla wishlist non riuscita.");
+                request.setAttribute("wishlistremove-error", "Rimozione non andata a buon fine.");
+            }
+            */
+        }
+        else if(action.equals("view")){
+            //da qui permettiamo la visualizzazione della wishlist quando si clicca sul button;
+            try {
+                List<ItemWishlistBean> list=wish.viewWishList(email, ds);
+                System.out.println("wishlist "+list.toString());
+                session.setAttribute("wishlist", list);
+                System.out.println("deve rimandare la lista desideri in stampa");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/wishlist.jsp");
+                dispatcher.forward(request, response);
+            } catch (SQLException e) {
+                System.out.println("non posso visualizzare la wishlist");
                 throw new RuntimeException(e);
-            }
-
-            if(ris){
-                //se l'operazione è andata a buonfine, allora reidirizziamo sulla jsp;
-                //il recuperò della wishlist verrà effettuato direttamente da quest'ultima;
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare sulla home;
-                dispatcher.forward(request, response);
-            }
-            else {
-                request.setAttribute("wishlistremove-error", "rimozione non andata a buonfine");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare sulla home;
-                dispatcher.forward(request, response);
-            }
-
-        } else if (action.equals("aggiungi")) {
-            ris = wish.aggiungiWishlist(nome, email, ds);
-
-            if(!ris){
-                request.setAttribute("wishlistadd-error", "aggiunta non andata a buon fine");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp");
-                dispatcher.forward(request, response);
             }
         }
 
+        /*Redirect alla pagina della wishlist dopo l'operazione
+        System.out.println("Operazione completata. Redirect a wishlist.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/script/wishlist.jsp");
+        dispatcher.forward(request, response);
+
+         */
     }
 }

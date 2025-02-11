@@ -35,7 +35,9 @@
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
-  <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+  <a href="${pageContext.request.contextPath}/HomeServlet">
+    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+  </a>
   <div class="icons">
     <a href="profiloUtente.jsp">
       <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
@@ -68,7 +70,7 @@
 
     <!--creare dei bottoni per visualizzare wishlist e ordini-->
 
-    <form action="${pageContext.request.contextPath}/script/wishlist.jsp" method="post">
+    <form action="${pageContext.request.contextPath}/WishlistServlet" method="post">
       <input type="hidden" name="email" value="<%= utente.getEmail() %>">
       <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
     </form>

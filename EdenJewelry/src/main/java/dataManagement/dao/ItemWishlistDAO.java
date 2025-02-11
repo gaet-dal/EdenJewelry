@@ -29,21 +29,46 @@ public class ItemWishlistDAO {
     public synchronized boolean doSave(ItemWishlistBean item) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         int result = 0;
 
-        String insertSQL = "INSERT INTO " + TABLE_NAME  + " (idWishlist, nomeProdotto) VALUES (?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (idWishlist, nomeProdotto) VALUES (?, ?)";
 
-        try{
+        try {
+            // Log: Inizio operazione
+            System.out.println("Inizio operazione di salvataggio per l'item nella wishlist.");
+
             connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
+            System.out.println("Connessione al database stabilita.");
 
+            preparedStatement = connection.prepareStatement(insertSQL);
+            System.out.println("Query preparata: " + insertSQL);
+
+            // Impostiamo i parametri
             preparedStatement.setInt(1, item.getIdWishlist());
             preparedStatement.setString(2, item.getNomeProdotto());
 
+            // Log: Parametri della query
+            System.out.println("Parametri impostati: idWishlist = " + item.getIdWishlist() + ", nomeProdotto = " + item.getNomeProdotto());
+
+            // Eseguiamo l'aggiornamento
             result = preparedStatement.executeUpdate();
-        }  finally {
+            System.out.println("Eseguito executeUpdate, result = " + result);
+
+        } catch (SQLException e) {
+            // Log: Errore durante l'esecuzione
+            System.out.println("Errore durante il salvataggio dell'item nella wishlist: " + e.getMessage());
+            throw e;
+        } finally {
+            // Chiudiamo le risorse
             closeResources(preparedStatement, connection);
+            System.out.println("Risorse chiuse.");
+        }
+
+        // Log: Verifica esito
+        if (result != 0) {
+            System.out.println("Salvataggio completato con successo.");
+        } else {
+            System.out.println("Salvataggio non riuscito.");
         }
 
         return result != 0;

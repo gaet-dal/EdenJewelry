@@ -25,6 +25,7 @@
     String email = utente.getEmail(); // Recuperiamo l'email dell'utente
 
     wishlist = (List<ItemWishlistBean>) session.getAttribute("wishlist");
+    System.out.print("wishlist nella jsp "+wishlist.toString());
 
   } else {
     // Se l'utente non è loggato, lo rimandiamo al login
@@ -46,7 +47,9 @@
   <body>
   <img src="<%= contextPath%>/assets/images/apple.png" alt="Eden" class="background-image">
   <header>
-    <img src="<%= contextPath%>/assets/images/logo1.png" alt="Eden Jewelry">
+    <a href="${pageContext.request.contextPath}/HomeServlet">
+      <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    </a>
     <div class="icons">
       <img src="<%= contextPath%>/assets/images/user-icon.png">
       <p>Profilo</p>

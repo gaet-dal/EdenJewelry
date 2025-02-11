@@ -32,4 +32,13 @@ public class ItemWishlistBean {
     public void setNomeProdotto(String nomeProdotto) {
         this.nomeProdotto = nomeProdotto;
     }
+
+    @Override
+    public String toString() {
+        return "ItemWishlistBean{" +
+                "idItem=" + idItem +
+                ", idWishlist=" + idWishlist +
+                ", nomeProdotto='" + nomeProdotto + '\'' +
+                '}';
+    }
 }
