@@ -31,6 +31,8 @@ public class Wishlist {
             item.setIdWishlist(wishlist.getIdWishlist());
             item.setNomeProdotto(nome);
 
+            System.out.println(item);
+
             aggiungi = itemWishlistDAO.doSave(item);
         } catch (SQLException e) {
             return false;

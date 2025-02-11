@@ -98,14 +98,12 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("Errore durante il recupero della wishlist");
             }
 
-            System.out.println("WishlistBean: "+ wishlistBean);
 
             List<ItemWishlistBean> list = itemWishlistDAO.doRetrieveByIdWishlist(wishlistBean.getIdWishlist());
             if(list == null){
                 System.out.println("La lista è vuota");
             }
             session.setAttribute("wishlist" , list);
-            System.out.println(list);
 
             //prendiamo il tipo per effettuare la ridirezione al profilo specifico;
             String tipo = b.getTipo();

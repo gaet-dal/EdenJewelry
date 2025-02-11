@@ -2,8 +2,12 @@ package main.java.presentation.areaRiservata;
 
 import main.java.application.gestioneAccount.GestioneRegistrazione;
 import main.java.application.gestioneAcquisti.Carrello;
+import main.java.dataManagement.bean.ItemWishlistBean;
 import main.java.dataManagement.bean.UtenteBean;
+import main.java.dataManagement.bean.WishlistBean;
+import main.java.dataManagement.dao.ItemWishlistDAO;
 import main.java.dataManagement.dao.UtenteDAO;
+import main.java.dataManagement.dao.WishlistDAO;
 import main.java.utilities.HashingAlgoritm;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class RegistrazioneServlet extends HttpServlet {
@@ -30,11 +35,15 @@ public class RegistrazioneServlet extends HttpServlet {
 
     }
     private UtenteDAO utenti;
+    private WishlistDAO wishlist;
+    private ItemWishlistDAO itemWishlistDAO;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         //creiamo il dao per poter lavorare con il database;
         DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
         utenti=new UtenteDAO(ds);
+        wishlist = new WishlistDAO(ds);
+        itemWishlistDAO = new ItemWishlistDAO(ds);
 
         String nome = request.getParameter("nome");
 
@@ -73,6 +82,22 @@ public class RegistrazioneServlet extends HttpServlet {
                     //creiamo anche il carrello;
                     Carrello cart=new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
                     session.setAttribute("carrello", cart);
+
+                    WishlistBean wishBean = new WishlistBean();
+                    wishBean.setEmail(email);
+                    wishlist.doSave(wishBean);
+
+                    try {
+                       wishBean = wishlist.doRetrieveByEmail(email);
+                    } catch (SQLException ex) {
+                        System.out.println("Errore durante il recupero della wishlist");
+                    }
+
+                    List<ItemWishlistBean> list = itemWishlistDAO.doRetrieveByIdWishlist(wishBean.getIdWishlist());
+                    if(list == null){
+                        System.out.println("La lista è vuota");
+                    }
+                    session.setAttribute("wishlist" , list);
 
                 } else{
                     request.setAttribute("register-error", "registrazione non andata a buon fine");

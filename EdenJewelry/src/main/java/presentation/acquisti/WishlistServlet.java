@@ -48,7 +48,7 @@ public class WishlistServlet extends HttpServlet {
         String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto su cui è stato indicato che si vuole effettuare l'eliminazione
         int idItem = Integer.parseInt(request.getParameter("idItem"));
 
-        String action = request.getParameter("WishlistAction"); // Recupera il valore del pulsante
+        String action = request.getParameter("lista-desideri"); // Recupera il valore del pulsante
 
 
         boolean ris=false;
