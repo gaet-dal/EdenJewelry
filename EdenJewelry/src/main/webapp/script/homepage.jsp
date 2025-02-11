@@ -52,10 +52,11 @@
                 <% if (prodotti != null && !prodotti.isEmpty()) { %>
                 <% for (ProdottoBean prodotto : prodotti) { %>
                 <div class="product">
-                    <!--PER GIGI: controllare come far recuperare l'immagine--->
-                    <img src="images/products/<%= prodotto.getImmagine() %>" alt="<%= prodotto.getNome() %>">
-                    <p><%= prodotto.getNome() %></p>
-                    <p>€<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
+                    <a href="DettagliProdottoServlet?nome=<%= prodotto.getNome() %>">
+                        <img src="images/products/<%= prodotto.getImmagine() %>" alt="<%= prodotto.getNome() %>">
+                        <p><%= prodotto.getNome() %></p>
+                        <p>€<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
+                    </a>
                 </div>
                 <% } %>
                 <% } else { %>
@@ -65,7 +66,7 @@
         </div>
     </div>
 </div>
-</div>
+
 
 </body>
 </html>
