@@ -24,6 +24,8 @@ public class CarrelloServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         //recuperiamo il carrello dalla sessione
+
+
         HttpSession session=request.getSession(false); //la session non deve essere ricreata se non esiste;
         Carrello carrello = (Carrello) session.getAttribute("carrello"); //recuperiamo il carrello dalla sessione;
 

@@ -21,7 +21,9 @@
 
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
-    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    <a href="${pageContext.request.contextPath}/HomeServlet">
+        <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    </a>
     <div class="icons">
         <a href="${pageContext.request.contextPath}/script/profiloUtente.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">

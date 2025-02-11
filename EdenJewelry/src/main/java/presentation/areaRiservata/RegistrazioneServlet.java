@@ -99,6 +99,9 @@ public class RegistrazioneServlet extends HttpServlet {
                     }
                     session.setAttribute("wishlist" , list);
 
+                    response.sendRedirect(request.getContextPath() + "/HomeServlet");
+                    return; // ⬅ Questo impedisce l'esecuzione del resto del codice
+
                 } else{
                     request.setAttribute("register-error", "registrazione non andata a buon fine");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/script/registazione.jsp");
