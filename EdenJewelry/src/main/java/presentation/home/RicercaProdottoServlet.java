@@ -49,6 +49,10 @@ public class RicercaProdottoServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/script/RimozioneProdotto.jsp");
             dispatcher.forward(request, response);
         }
+        else if(submitAction.equals("view")){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/Ricerca.jsp");
+            dispatcher.forward(request, response);
+        }
 
     }
 }
