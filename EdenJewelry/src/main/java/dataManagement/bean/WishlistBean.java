@@ -29,4 +29,12 @@ public class WishlistBean {
     public void setIdWishlist(int idWishlist) {
         this.idWishlist = idWishlist;
     }
+
+    @Override
+    public String toString() {
+        return "WishlistBean{" +
+                "idWishlist=" + idWishlist +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

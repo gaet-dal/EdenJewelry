@@ -42,13 +42,12 @@ public class WishlistDAO {
         int result = 0;
 
         String insertSQL = "INSERT INTO " + TABLE_NAME
-                + " (email, prodotti) VALUES (?, ?)";
+                + " (email) VALUES (?)";
 
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
-            preparedStatement.setInt(1, wishlist.getIdWishlist());
             preparedStatement.setString(1, wishlist.getEmail());
 
 
@@ -120,17 +119,24 @@ public class WishlistDAO {
         PreparedStatement preparedStatement = null;
         WishlistBean bean = new WishlistBean();
 
-        int result = 0;
 
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
 
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, email);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            bean.setEmail(rs.getString("email"));
+            if(rs.next()) {
+                bean.setIdWishlist(rs.getInt("idWishlist"));
+                bean.setEmail(rs.getString("email").trim());
+
+            }else{
+                System.out.println("Email non trovato");
+                return null;
+            }
 
             rs.close();
         } finally {

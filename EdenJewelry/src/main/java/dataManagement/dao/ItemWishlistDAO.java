@@ -85,6 +85,7 @@ public class ItemWishlistDAO {
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
 
