@@ -1,10 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: luigi
-  Date: 23/01/2025
-  Time: 11:51
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="main.java.dataManagement.bean.UtenteBean" %>
+<jsp:useBean id="utente" class="main.java.dataManagement.bean.UtenteBean" scope="session"/>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.sql.DataSource" %>
+
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="main.java.dataManagement.dao.WishlistDAO" %>
+<%@ page import="main.java.dataManagement.bean.WishlistBean" %>
+<%@ page import="main.java.dataManagement.bean.ProdottoBean" %>
+<%@ page import="main.java.dataManagement.bean.ItemWishlistBean" %>
+
+<%! List<ItemWishlistBean> wishlist= null;%>
+
+<%
+    // Controlla se l'utente è già loggato
+    if (utente != null && utente.getEmail() != null && !utente.getEmail().isEmpty()) {
+        String email = utente.getEmail(); // Recuperiamo l'email dell'utente
+    } else {
+        // Se l'utente non è loggato, lo rimandiamo al login
+        response.sendRedirect("login.jsp");
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>

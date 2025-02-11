@@ -1,7 +1,10 @@
 package main.java.presentation.areaRiservata;
 
 import main.java.application.gestioneAccount.GestioneAutenticazione;
+import main.java.dataManagement.bean.ItemWishlistBean;
 import main.java.dataManagement.bean.UtenteBean;
+import main.java.dataManagement.bean.WishlistBean;
+import main.java.dataManagement.dao.ItemWishlistDAO;
 import main.java.dataManagement.dao.UtenteDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -14,8 +17,10 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import main.java.application.gestioneAcquisti.Carrello;
+import main.java.dataManagement.dao.WishlistDAO;
 import main.java.utilities.HashingAlgoritm;
 
 public class LoginServlet extends HttpServlet {
@@ -27,7 +32,9 @@ public class LoginServlet extends HttpServlet {
         super.init(cfg);
 
     }
-private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il contenuto del database;
+    private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il contenuto del database;
+    private WishlistDAO wishlistDAO;
+    private ItemWishlistDAO itemWishlistDAO;
 
     //questo perchè, una volta che ci vengono fortniti email e password, è necessario confrontare questi parametri con le varie entry del database alla ricerca di una corrispondenza;
     //se non vi è riscontro, bisogna informae l'utente che sta provando ad affettuare il login, che deve  reinserire le credenziali;
@@ -36,6 +43,8 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
         //stabiliamo una connessione con il db, per mezzo del dao instanziato;
         DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");
         utenti=new UtenteDAO(ds);
+        wishlistDAO = new WishlistDAO(ds);
+        itemWishlistDAO = new ItemWishlistDAO(ds);
 
         GestioneAutenticazione gest = new GestioneAutenticazione();
         HashingAlgoritm hash=new HashingAlgoritm(); //creiamo un oggetto per poter usare il metodo per effettuare l'hashing della password;
@@ -78,6 +87,23 @@ private UtenteDAO utenti; //creiamo l'oggetto in grado di interagire che il cont
             //creiamo anche il carrello;
             Carrello cart = new Carrello(email);//passiamo la mail, in modo che venga associata a un utente in particolare;
             session.setAttribute("carrello", cart);
+
+            WishlistBean wishlistBean = new WishlistBean();
+
+            System.out.println(email);
+
+            try {
+                wishlistBean = wishlistDAO.doRetrieveByEmail(email);
+            } catch (SQLException e) {
+                System.out.println("Errore durante il recupero della wishlist");
+            }
+
+
+            List<ItemWishlistBean> list = itemWishlistDAO.doRetrieveByIdWishlist(wishlistBean.getIdWishlist());
+            if(list == null){
+                System.out.println("La lista è vuota");
+            }
+            session.setAttribute("wishlist" , list);
 
             //prendiamo il tipo per effettuare la ridirezione al profilo specifico;
             String tipo = b.getTipo();

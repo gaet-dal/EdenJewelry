@@ -48,34 +48,8 @@ public class WishlistServlet extends HttpServlet {
         String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto su cui è stato indicato che si vuole effettuare l'eliminazione
         int idItem = Integer.parseInt(request.getParameter("idItem"));
 
-        String action = request.getParameter("WishlistAction"); // Recupera il valore del pulsante
-        /*
-        WishlistBean wishlist=null;
-        try {
-            wishlist = wishlistDAO.doRetrieveByEmail(utente.getEmail());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String action = request.getParameter("lista-desideri"); // Recupera il valore del pulsante
 
-        if(wishlist!=null && utente.getEmail()!=null){
-            //reindirizziamo alla jsp della wishlist;
-            request.setAttribute("wishlist", wishlist); //settiamo la wishlist sulla request;
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("wishlist.jsp"); //dobbiamo mandare il risultato sulla wishlist; ;
-            dispatcher.forward(request, response);
-        }
-        */
-
-        WishlistBean wishlistBean = new WishlistBean();
-
-        try {
-            wishlistBean = wishlistDAO.doRetrieveByEmail(utente.getEmail());
-        } catch (SQLException e) {
-            logger.warning("Errore durante il recupero della wishlist");
-        }
-
-
-        List<ItemWishlistBean> list = itemWishlistDAO.doRetrieveByIdWishlist(wishlistBean.getIdWishlist());
-        request.setAttribute("wishlist" , list);
 
         boolean ris=false;
         if(action.equals("rimuovi")){
