@@ -44,7 +44,7 @@ public class WishlistServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("utente") == null) {
             System.out.println("Sessione nulla o utente non trovato. Redirect a login.jsp.");
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(getServletContext().getContextPath()+"/script/login.jsp");
             return;
         }
 
