@@ -74,6 +74,9 @@ public class GestioneRegistrazione {
     public boolean register(String nome, String cognome, String email, String hashing, String tipo) throws SQLException {
         //creiamo un UtenteBean in cui inserire i parametri presi dall'utente ed inserirli nel db;
 
+        if(!checkNomeCognome(nome) || !checkNomeCognome(cognome) || !checkEmail(email))
+            return false;
+
         UtenteBean utentebean=new UtenteBean();
 
         utentebean.setNome(nome);
