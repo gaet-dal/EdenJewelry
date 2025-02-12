@@ -83,7 +83,7 @@
           <div class="wishlistremove-message"><%= request.getAttribute("wishlistremove-error") %></div>
           <% } %>
           <%-- Dalla servlet, recuperiamo questa variabile per distinguere le varie operazioni --%>
-          <button type="submit" name="WishlistAction" value="rimuovi">Rimuovi</button>
+          <button type="submit" name="lista_desideri" value="rimuovi">Rimuovi</button>
         </form>
       </div>
       <% } %>
