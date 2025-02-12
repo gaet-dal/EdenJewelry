@@ -1,4 +1,4 @@
-package test.dataManagement.dao;
+package test.unit.dataManagement.dao;
 
 import main.java.dataManagement.bean.ItemWishlistBean;
 import org.junit.After;
