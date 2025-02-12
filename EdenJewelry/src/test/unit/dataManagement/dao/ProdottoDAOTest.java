@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -88,18 +89,101 @@ public class ProdottoDAOTest {
     }
 
     @Test
-    public void testDoRetrieveAll() {
+    public void testDoRetrieveAll() throws SQLException {
+        when(ds.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("nome")).thenReturn("Collana argento");
+        when(resultSet.getFloat("prezzo")).thenReturn(25.5f);
+        when(resultSet.getInt("quantità")).thenReturn(10);
+        when(resultSet.getString("categoria")).thenReturn("collane");
+        when(resultSet.getString("immagine")).thenReturn("collana.jpg");
+
+        List<ProdottoBean> list = prodottoDAO.doRetrieveAll();
+        assertEquals(1, list.size());
+        assertEquals("Collana argento", list.get(0).getNome());
+        assertEquals(25.5f, list.get(0).getPrezzo(), 0.01);
+        assertEquals(10, list.get(0).getQuantita());
+        assertEquals("collane", list.get(0).getCategoria());
+        assertEquals("collana.jpg", list.get(0).getImmagine());
+
+        verify(preparedStatement).executeQuery();
+        verify(resultSet).close();
     }
 
     @Test
-    public void testDoRetrieveByNome() {
+    public void testDoRetrieveByNome() throws SQLException {
+        String nome = "Collana argento";
+
+        when(ds.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        when(resultSet.next()).thenReturn(true);
+
+        when(resultSet.getString("nome")).thenReturn("Collana argento");
+        when(resultSet.getFloat("prezzo")).thenReturn(25.5f);
+        when(resultSet.getInt("quantità")).thenReturn(10);
+        when(resultSet.getString("categoria")).thenReturn("collane");
+        when(resultSet.getString("immagine")).thenReturn("collana.jpg");
+
+        ProdottoBean bean = prodottoDAO.doRetrieveByNome(nome);
+        assertNotNull(bean);
+        assertEquals("Collana argento", bean.getNome());
+        assertEquals(25.5f, bean.getPrezzo(), 0.01);
+        assertEquals(10, bean.getQuantita());
+        assertEquals("collane", bean.getCategoria());
+        assertEquals("collana.jpg", bean.getImmagine());
+
+        verify(preparedStatement).executeQuery();
+        verify(resultSet).close();
+        verify(preparedStatement).setString(1, nome);
     }
 
     @Test
-    public void testIsEmpty() {
+    public void testIsEmpty() throws SQLException {
+        when(ds.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("total")).thenReturn(2);
+
+        boolean result = prodottoDAO.isEmpty();
+        assertFalse(result);
+
+        verify(preparedStatement).executeQuery();
+        verify(resultSet).close();
     }
 
     @Test
-    public void testCercaProdottiPerNome() {
+    public void testCercaProdottiPerNome() throws SQLException {
+        String nome = "Collana argento";
+
+        when(ds.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("nome")).thenReturn("Collana argento");
+        when(resultSet.getFloat("prezzo")).thenReturn(25.5f);
+        when(resultSet.getInt("quantità")).thenReturn(10);
+        when(resultSet.getString("categoria")).thenReturn("collane");
+        when(resultSet.getString("immagine")).thenReturn("collana.jpg");
+
+        List<ProdottoBean> list = prodottoDAO.cercaProdottiPerNome(nome);
+        assertEquals(1, list.size());
+        assertEquals("Collana argento", list.get(0).getNome());
+        assertEquals(25.5f, list.get(0).getPrezzo(), 0.01);
+        assertEquals(10, list.get(0).getQuantita());
+        assertEquals("collane", list.get(0).getCategoria());
+        assertEquals("collana.jpg", list.get(0).getImmagine());
+
+        verify(preparedStatement).setString(1, "%" + nome + "%");
+        verify(preparedStatement).executeQuery();
+
+        verify(resultSet).close();
     }
 }
