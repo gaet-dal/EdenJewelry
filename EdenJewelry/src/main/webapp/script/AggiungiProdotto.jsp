@@ -12,7 +12,7 @@
 <html>
 <head>
     <title>Aggiungi Prodotto</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/style/aggiungiProdottoStyle.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/style/aggiungiProdotto.css">
   <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -33,7 +33,9 @@
     <p>Carrello</p>
   </div>
 </header>
-  <h2>da questa pagina è possibile inserire un nuovo prodotto. Inserisci i dati e poi clicca sul pulsante di aggiuta in fondo.</h2>
+<div class="container">
+  <!--<h2>da questa pagina è possibile inserire un nuovo prodotto. Inserisci i dati e poi clicca sul pulsante di aggiuta in fondo.</h2>-->
+  <h1>Aggiungi prodotto:</h1>
 
   <!-- Verifica del contesto dell'applicazione -->
   <%
@@ -43,10 +45,12 @@
   <!-- Form per Aggiungere un prodotto -->
   <div class="form-group">
     <form id="add_form" action="${pageContext.request.contextPath}/CatalogoServlet" method="post">
+      <div class="left-box">
       <input type="text" name="nome" placeholder="Nome del prodotto">
       <input type="text" name="prezzo" placeholder="Prezzo">
       <input type="number" name="quantita" placeholder="Quantità disponibile">
-
+      </div>
+      <div class="right-box">
       <select id="categoria" type="text" name="categoria">
         <option value="collane">collane</option>
         <option value="bracciali">bracciali</option>
@@ -57,7 +61,9 @@
       <input type="file" name="immagine" placeholder="Immagine" required accept="images/*"> <!-- Campo per caricare l'immagine del gioco -->
 
       <button id="agg_button" name="submitAction" type="submit"  value="Aggiungi">Conferma aggiunta prodotto</button> <!-- Pulsante per aggiungere un nuovo gioco -->
+      </div>
     </form>
+  </div>
   </div>
 
 
