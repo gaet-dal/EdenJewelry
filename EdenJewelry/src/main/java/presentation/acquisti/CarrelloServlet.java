@@ -36,5 +36,16 @@ public class CarrelloServlet extends HttpServlet {
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Devi effettuare l'accesso");
         }
+
+        //il carrello si prende il nome del prodotto e la quantità;
+        String action=request.getParameter("action");
+
+        if(action.equals("aggiungi")){
+            String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto da aggiungere al carrello;
+            carrello.addToCart(nome);
+            //ridirezioniamo direttamente ai dettagli del prodotto;
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 }
