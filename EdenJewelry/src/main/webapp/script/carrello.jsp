@@ -14,6 +14,7 @@
 
 <%! Carrello cart = null;
     List<ItemCarrello> items = null;
+    float totale = 0.0f;
 %>
 
 <%
@@ -66,9 +67,8 @@
         <p>Il tuo carrello è vuoto.</p>
         <%
         } else {
-            double totale = 0.0;
             for (ItemCarrello item : items) {
-                totale += 20; // Calcola totale DA CAMBIARE
+                totale = (Float) request.getAttribute("totale");
         %>
         <div class="item">
             <img src="<%= request.getContextPath() %>/images/products/<%= item.getNome().replace(" ", "") %>.png" alt="<%= item.getNome() %>">
