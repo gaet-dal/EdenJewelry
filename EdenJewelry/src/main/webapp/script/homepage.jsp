@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage2.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage1.css" type="text/css">
 </head>
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">

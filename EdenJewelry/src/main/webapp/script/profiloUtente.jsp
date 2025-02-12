@@ -78,19 +78,19 @@
 
         <form action="${pageContext.request.contextPath}/script/wishlist.jsp" method="post">
             <input type="hidden" name="email" value="<%= utente.getEmail() %>">
-            <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+            <button class="profile-button" name="lista_desideri" type="submit" value="view">Lista Desideri</button>
         </form>
 
         <!-- correggere la servet a cui collegare gli ordini-->
         <form action="${pageContext.request.contextPath}/script/storicoOrdini.jsp" method="post">
             <input type="hidden" name="email" value="<%= utente.getEmail() %>">
-            <button name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+            <button class="profile-button" name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
         </form>
 
         <p class="logout">
         <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
             <input type="hidden" name="action" value="logout">
-            <button type="submit" class="logout-link">Log out &#8594;</button>
+            <button type="submit" class="profile-button">Log out &#8594;</button>
         </form>
         </p>
 

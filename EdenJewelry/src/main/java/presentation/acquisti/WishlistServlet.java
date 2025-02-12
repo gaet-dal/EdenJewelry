@@ -2,7 +2,10 @@ package main.java.presentation.acquisti;
 
 import main.java.application.gestioneAcquisti.Wishlist;
 import main.java.dataManagement.bean.ItemWishlistBean;
+import main.java.dataManagement.bean.ProdottoBean;
 import main.java.dataManagement.bean.UtenteBean;
+import main.java.dataManagement.bean.WishlistBean;
+import main.java.dataManagement.dao.ProdottoDAO;
 import main.java.dataManagement.dao.WishlistDAO;
 import main.java.dataManagement.dao.ItemWishlistDAO;
 
@@ -26,6 +29,7 @@ public class WishlistServlet extends HttpServlet {
 
     private WishlistDAO wishlistDAO;
     private ItemWishlistDAO itemWishlistDAO;
+    private ProdottoDAO prodottoDAO;
 
     @Override
     public void init(ServletConfig cfg) throws ServletException {
@@ -40,7 +44,7 @@ public class WishlistServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("utente") == null) {
             System.out.println("Sessione nulla o utente non trovato. Redirect a login.jsp.");
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(getServletContext().getContextPath()+"/script/login.jsp");
             return;
         }
 
@@ -89,41 +93,77 @@ public class WishlistServlet extends HttpServlet {
                     RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/wishlist.jsp");
                     dispatcher.forward(request, response);
                 }
+
+                //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
+                prodottoDAO=new ProdottoDAO(ds);
+                ProdottoBean prodotto;
+                try {
+                     prodotto=prodottoDAO.doRetrieveByNome(nomeProdotto);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                request.setAttribute("prodotto", prodotto);
+                //settare una scritta che faccia capire che un prodotto è stato aggiunto alla wishlist;
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
+                dispatcher.forward(request, response);
             }
 
         // Rimozione dalla wishlist
         else if (action.equals("rimuovi")) {
             System.out.println("Tentativo di rimuovere il prodotto dalla wishlist...");
 
-            // Ricava l'ID del prodotto se presente (da implementare)
-            int idItem = -1; // L'id dell'item wishlist andrebbe recuperato correttamente
+            // Recupero del prodotto da rimuovere alla wishlist
+                String nomeProdotto = request.getParameter("prodottoId"); //reucperiamo l'id del prodotto che si vuole eliminare;
 
-            /*
-            try {
-                ris = wish.removeWishlist(idItem, ds);
-            } catch (SQLException e) {
-                System.out.println("Errore durante la rimozione: " + e.getMessage());
-                e.printStackTrace();
-            }
+            //prendiamo l'id della wishlist tramite l'email con una ricerca;
+            WishlistBean wishlist = new WishlistBean();
 
-            if (!ris) {
-                System.out.println("Errore: rimozione dalla wishlist non riuscita.");
-                request.setAttribute("wishlistremove-error", "Rimozione non andata a buon fine.");
-            }
-            */
+                try {
+                    wishlist  =wishlistDAO.doRetrieveByEmail(email);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                int idWishlist=wishlist.getIdWishlist(); //recuperiamo l'id della wishlist;
+
+                //avendo i nome del prodotto da eliminare e la wishlist collegata alla mail, passiamo all'eliminazione del prodotto;
+                boolean eliminato=itemWishlistDAO.doDeleteByNomeProdottoEIdWishlist(nomeProdotto, idWishlist);
+
+                System.out.println("Eliminato: " + eliminato);
+
+                //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
+                if (eliminato) {
+                    // Aggiorniamo la lista della wishlist
+                    List<ItemWishlistBean> nuovaWishlist;
+
+                    nuovaWishlist = itemWishlistDAO.doRetrieveByIdWishlist(idWishlist);
+
+                    // Aggiorniamo la sessione con la nuova lista aggiornata
+                    session.setAttribute("wishlist", nuovaWishlist);
+                    // Dopo aver aggiornato la sessione, reindirizziamo alla wishlist JSP
+                    response.sendRedirect(request.getContextPath() + "/script/wishlist.jsp");
+                }
         }
         else if(action.equals("view")){
-            //da qui permettiamo la visualizzazione della wishlist quando si clicca sul button;
-            try {
-                List<ItemWishlistBean> list=wish.viewWishList(email, ds);
-                System.out.println("wishlist "+list.toString());
-                session.setAttribute("wishlist", list);
-                System.out.println("deve rimandare la lista desideri in stampa");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/wishlist.jsp");
+            System.out.println("email "+email);
+            if(email!=null) {
+                //da qui permettiamo la visualizzazione della wishlist quando si clicca sul button;
+                try {
+                    List<ItemWishlistBean> list = wish.viewWishList(email, ds);
+                    System.out.println("wishlist " + list.toString());
+                    session.setAttribute("wishlist", list);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/wishlist.jsp");
+                    dispatcher.forward(request, response);
+                } catch (SQLException e) {
+                    System.out.println("non posso visualizzare la wishlist");
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/login.jsp");
                 dispatcher.forward(request, response);
-            } catch (SQLException e) {
-                System.out.println("non posso visualizzare la wishlist");
-                throw new RuntimeException(e);
             }
         }
 
