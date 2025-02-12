@@ -29,7 +29,8 @@ public class GestioneAutenticazioneTest {
 
 
     @Before
-    public void setUp() {System.out.println("Inizializzazione dei mock");
+    public void setUp() {
+        System.out.println("Inizializzazione dei mock");
         MockitoAnnotations.openMocks(this);
         gestioneAutenticazione = new GestioneAutenticazione();
     }

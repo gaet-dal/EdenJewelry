@@ -85,7 +85,12 @@
             }
         %>
         <div class="total">Importo totale: &euro;<%= String.format("%.2f", totale) %></div>
-        <button class="checkout-button">Procedi all'acquisto</button>
+
+        <form action="${pageContext.request.contextPath}/script/confermaOrdine.jsp">
+            <input type="hidden" name="totale" value="<%= totale %>">
+            <button name="RiepilogoOrdine" value="view" type="submit" class="checkout-button">Procedi all'acquisto</button>
+        </form>
+
         <%
             }
         %>

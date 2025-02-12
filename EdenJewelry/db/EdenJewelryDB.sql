@@ -23,13 +23,12 @@ CREATE TABLE PRODOTTO (
 
 CREATE TABLE ORDINE (
     numeroOrdine int AUTO_INCREMENT,
-    email varchar(20) NOT NULL,
+    email varchar(50) NOT NULL,
     totale float NOT NULL,
     metodoPagamento varchar(20) NOT NULL,
     indirizzo varchar(50),
 
-    PRIMARY KEY (numeroOrdine),
-    FOREIGN KEY (email) REFERENCES UTENTE (email)
+    PRIMARY KEY (numeroOrdine)
 );
 
 CREATE TABLE WISHLIST (
@@ -48,8 +47,7 @@ CREATE TABLE RIGAORDINE  (
     prezzo float,
 
     PRIMARY KEY (idRiga),
-    FOREIGN KEY (nomeProdotto) REFERENCES PRODOTTO (nome),
-    FOREIGN KEY (numeroOrdine) REFERENCES ORDINE (numeroOrdine)
+    FOREIGN KEY (nomeProdotto) REFERENCES PRODOTTO (nome)
 );
 
 CREATE TABLE ITEMWISHLIST (
