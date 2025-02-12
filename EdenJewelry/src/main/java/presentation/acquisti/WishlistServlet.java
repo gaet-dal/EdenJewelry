@@ -113,22 +113,38 @@ public class WishlistServlet extends HttpServlet {
         else if (action.equals("rimuovi")) {
             System.out.println("Tentativo di rimuovere il prodotto dalla wishlist...");
 
-            // Ricava l'ID del prodotto se presente (da implementare)
-            int idItem = -1; // L'id dell'item wishlist andrebbe recuperato correttamente
+            // Recupero del prodotto da rimuovere alla wishlist
+                String nomeProdotto = request.getParameter("prodottoId"); //reucperiamo l'id del prodotto che si vuole eliminare;
 
-            /*
-            try {
-                ris = wish.removeWishlist(idItem, ds);
-            } catch (SQLException e) {
-                System.out.println("Errore durante la rimozione: " + e.getMessage());
-                e.printStackTrace();
-            }
+            //prendiamo l'id della wishlist tramite l'email con una ricerca;
+            WishlistBean wishlist = new WishlistBean();
 
-            if (!ris) {
-                System.out.println("Errore: rimozione dalla wishlist non riuscita.");
-                request.setAttribute("wishlistremove-error", "Rimozione non andata a buon fine.");
-            }
-            */
+                try {
+                    wishlist  =wishlistDAO.doRetrieveByEmail(email);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                int idWishlist=wishlist.getIdWishlist(); //recuperiamo l'id della wishlist;
+
+                //avendo i nome del prodotto da eliminare e la wishlist collegata alla mail, passiamo all'eliminazione del prodotto;
+                boolean eliminato=itemWishlistDAO.doDeleteByNomeProdottoEIdWishlist(nomeProdotto, idWishlist);
+
+                System.out.println("Eliminato: " + eliminato);
+
+                //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
+                if (eliminato) {
+                    // Aggiorniamo la lista della wishlist
+                    List<ItemWishlistBean> nuovaWishlist;
+
+                    nuovaWishlist = itemWishlistDAO.doRetrieveByIdWishlist(idWishlist);
+
+                    // Aggiorniamo la sessione con la nuova lista aggiornata
+                    session.setAttribute("wishlist", nuovaWishlist);
+                    // Dopo aver aggiornato la sessione, reindirizziamo alla wishlist JSP
+                    response.sendRedirect(request.getContextPath() + "/script/wishlist.jsp");
+                }
         }
         else if(action.equals("view")){
             System.out.println("email "+email);

@@ -164,6 +164,39 @@ public class ItemWishlistDAO {
 
     }
 
+    public synchronized boolean doDeleteByNomeProdottoEIdWishlist(String nomeProdotto, int idWishlist) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int result = 0;
+
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE nomeProdotto = ? AND idWishlist = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+
+            preparedStatement.setString(1, nomeProdotto);
+            preparedStatement.setInt(2, idWishlist);
+
+            result = preparedStatement.executeUpdate();
+
+            if (result > 0) {
+                logger.info("Elemento eliminato con successo dalla wishlist.");
+            } else {
+                logger.warning("Nessun elemento trovato con il nome prodotto: " + nomeProdotto + " e idWishlist: " + idWishlist);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.warning("Errore durante la rimozione dell'item dalla wishlist: " + e.getMessage());
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+
+        return result != 0;
+    }
+
+
     private void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {
             if (resource != null) {
