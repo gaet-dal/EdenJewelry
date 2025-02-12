@@ -82,16 +82,13 @@ public class CheckoutControl {
 
         int numeroOrdine=1;
         if(ordine!=null){
-
             numeroOrdine=ordine.getIdOrdine();
             System.out.println("numeroOrdine "+numeroOrdine);
             numeroOrdine+=1; //creiamo il l'indentificativo dell'oridne che dovvrà essere effettuato e salvato nel db;
         }
 
-
         List<ItemCarrello> list = carrello.getListProdotti();
         ItemCarrello []arr= list.toArray(new ItemCarrello[0]);
-        List<RigaOrdineBean> righeToSave =new ArrayList<>();
 
         for(ItemCarrello it : arr) {
             String nome = it.getNome();
@@ -113,7 +110,7 @@ public class CheckoutControl {
 
             totale += p.getPrezzo() * it.getQuantità();
             riga.setPrezzoUnitario(p.getPrezzo());
-            righeToSave.add(riga);
+            righe.doSave(riga);
 
         }
 
@@ -130,12 +127,6 @@ public class CheckoutControl {
         } catch (SQLException e) {
             logger.warning("Errore nel salvataggio dell'ordine");
             e.printStackTrace();
-        }
-
-        Iterator<RigaOrdineBean> it = righeToSave.iterator();
-        while(it.hasNext()) {
-            RigaOrdineBean riga = it.next();
-            righe.doSave(riga);
         }
 
         return result;
