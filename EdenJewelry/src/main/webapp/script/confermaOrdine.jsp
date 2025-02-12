@@ -1,10 +1,36 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: luigi
-  Date: 23/01/2025
-  Time: 11:51
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         import="main.java.dataManagement.bean.UtenteBean,
+            javax.servlet.http.HttpServletRequest,
+            javax.sql.DataSource,
+            java.util.List,
+            java.sql.SQLException,
+            main.java.dataManagement.dao.WishlistDAO,
+            main.java.dataManagement.bean.WishlistBean,
+            main.java.dataManagement.bean.ProdottoBean,
+            main.java.dataManagement.bean.ItemWishlistBean,
+            main.java.application.gestioneAcquisti.Carrello,
+            main.java.application.gestioneAcquisti.ItemCarrello" %>
+<jsp:useBean id="utente" class="main.java.dataManagement.bean.UtenteBean" scope="session" />
+
+<%!
+    Carrello cart = null;
+    List<ItemCarrello> items = null;
+    float totale = 0.0f;
+%>
+
+<%
+
+    // Recupera il carrello dalla sessione
+    cart = (Carrello) session.getAttribute("carrello");
+    if (cart != null) {
+        items = cart.getListProdotti();
+    }
+
+    // Se l'attributo "totale" è stato impostato nella richiesta, usalo, altrimenti calcola dal carrello
+   float totale = Float.parseFloat(request.getParameter("totale"));
+    System.out.println("totale "+totale);
+
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -16,27 +42,12 @@
 </head>
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
-<header>
-    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
-    <div class="icons">
-        <a href="profiloUtente.jsp">
-        <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
-        </a>
-        <p>Profilo</p>
-        <a href="wishlist.jsp">
-        <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
-        </a>
-        <p>Wishlist</p>
-        <a href="carrello.jsp">
-        <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
-        <p>Carrello</p>
-    </div>
-</header>
+
 <main>
     <div class="container">
         <div class="form-container">
             <h1>Conferma ordine:</h1>
-            <form action="<%= request.getContextPath() %>/confermaOrdine" method="post">
+            <form action="${pageContext.request.contextPath}/CheckoutServlet" method="post">
                 <div class="form-section">
                     <div class="form-spedizione">
                         <h2>Dati di spedizione</h2>
@@ -57,16 +68,33 @@
                         <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
                     </div>
                 </div>
-                <button type="submit" class="purchase-button">Acquista ora!</button>
+                <button name="RiepilogoOrdine" value="view" type="submit" class="purchase-button">Acquista ora!</button>
             </form>
         </div>
         <div class="order-summary-container">
             <h2>Riepilogo ordine:</h2>
-            <div class="order-summary">
-                <img src="<%= request.getContextPath() %>/images/products/collanaCuore.png" alt="Collana cuore">
-                <p>Collana cuore - &euro;23,00</p>
+            <%
+                if (items == null || items.isEmpty()) {
+            %>
+            <p>Il tuo carrello è vuoto.</p>
+            <%
+            } else {
+                for (ItemCarrello item : items) {
+            %>
+            <div class="item">
+                <img src="${pageContext.request.contextPath}/images/products/<%= item.getNome().replace(" ", "") %>.png" alt="<%= item.getNome() %>">
+                <div class="item-info">
+                    <h4><%= item.getNome() %></h4>
+                    <p>Quantità: <%= item.getQuantità() %></p>
+                </div>
             </div>
-            <p class="total">Importo totale: &euro;67,00</p>
+            <%
+                }
+            %>
+            <div class="total">Importo totale: &euro;<%= String.format("%.2f", totale) %></div>
+            <%
+                }
+            %>
         </div>
     </div>
 </main>
