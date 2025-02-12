@@ -9,18 +9,28 @@
 <%@ page import="main.java.dataManagement.bean.WishlistBean" %>
 <%@ page import="main.java.dataManagement.bean.ProdottoBean" %>
 <%@ page import="main.java.dataManagement.bean.ItemWishlistBean" %>
+<%@ page import="main.java.application.gestioneAcquisti.Carrello" %>
+<%@ page import="main.java.application.gestioneAcquisti.ItemCarrello" %>
 
-<%! List<ItemWishlistBean> wishlist= null;%>
+<%! Carrello cart = null;
+    List<ItemCarrello> items = null;
+    float totale = 0.0f;
+%>
 
 <%
     // Controlla se l'utente è già loggato
     if (utente != null && utente.getEmail() != null && !utente.getEmail().isEmpty()) {
-        String email = utente.getEmail(); // Recuperiamo l'email dell'utente
+        String email = utente.getEmail();
+        cart = (Carrello) session.getAttribute("carrello");
+        items = cart.getListProdotti();// Recuperiamo l'email dell'utente
     } else {
         // Se l'utente non è loggato, lo rimandiamo al login
         response.sendRedirect("login.jsp");
     }
 %>
+
+
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -34,7 +44,9 @@
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
-    <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    <a href="${pageContext.request.contextPath}/HomeServlet">
+        <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
+    </a>
     <div class="icons">
         <a href="profiloUtente.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
@@ -44,41 +56,39 @@
             <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
         </a>
         <p>Wishlist</p>
-        <a href="carrello.jsp">
-            <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
-        <p>Carrello</p>
     </div>
 </header>
+
 <div class="center-wrapper">
     <div class="cart-container">
+        <%
+            if (items == null || items.isEmpty()) {
+        %>
+        <p>Il tuo carrello è vuoto.</p>
+        <%
+        } else {
+            for (ItemCarrello item : items) {
+                totale = (Float) request.getAttribute("totale");
+        %>
         <div class="item">
-            <img src="${pageContext.request.contextPath}/assets/images/products/collanaCuore.png" alt="Collana cuore">
+            <img src="<%= request.getContextPath() %>/images/products/<%= item.getNome().replace(" ", "") %>.png" alt="<%= item.getNome() %>">
             <div class="item-info">
-                <h4>Collana cuore</h4>
-                <p>&euro;23,00</p>
+                <h4><%= item.getNome() %></h4>
+                <p>Quantità: <%= item.getQuantità() %></p>
             </div>
-            <button class="remove-button">Elimina</button>
+            <form action="${pageContext.request.contextPath}/CarrelloServlet" method="post">
+                <input type="hidden" name="prodottoId" value="<%= item.getNome() %>">
+                <button name="carrello" value="elimina" type="submit" class="remove-button">Elimina</button>
+            </form>
         </div>
-        <div class="item">
-            <img src="<%= request.getContextPath() %>/images/products/collanaPiuma.png" alt="Collana piuma">
-            <div class="item-info">
-                <h4>Collana piuma</h4>
-                <p>&euro;17,00</p>
-            </div>
-            <button class="remove-button">Elimina</button>
-        </div>
-
-        <div class="item">
-            <img src="<%= request.getContextPath() %>/images/products/collanaElizabeth.png" alt="Collana Mary">
-            <div class="item-info">
-                <h4>Collana Mary</h4>
-                <p>&euro;27,00</p>
-            </div>
-            <button class="remove-button">Elimina</button>
-        </div>
-
-        <div class="total">Importo totale: &euro;67,00</div>
+        <%
+            }
+        %>
+        <div class="total">Importo totale: &euro;<%= String.format("%.2f", totale) %></div>
         <button class="checkout-button">Procedi all'acquisto</button>
+        <%
+            }
+        %>
     </div>
 </div>
 </body>

@@ -73,7 +73,6 @@
       </form>
       <form action="${pageContext.request.contextPath}/CarrelloServlet" method="post">
         <!--se l'utente è null, viene ridirezionato direttamente al login-->
-        <input type="hidden" name="email" value="<%= utente.getEmail() %>">
         <input type="hidden" name="prodottoId" value="<%= prodotto.getNome() %>">
         <div class="button cart">
           <div class="buttonBox">

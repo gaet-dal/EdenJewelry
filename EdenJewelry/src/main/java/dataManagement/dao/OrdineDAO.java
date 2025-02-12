@@ -41,18 +41,16 @@ public class OrdineDAO {
 
         int result = 0;
 
-        String insertSQL = "INSERT INTO " + TABLE_NAME
-                + " (numeroOrdine, email, totale, metodoPagamento, indirizzo) VALUES (?, ?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (email, totale, metodoPagamento, indirizzo) VALUES (?, ?, ?, ?)";
 
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
-            preparedStatement.setInt(1, ordine.getIdOrdine());
-            preparedStatement.setString(2, ordine.getEmail());
-            preparedStatement.setFloat(3, ordine.getTotale());
-            preparedStatement.setString(4, ordine.getMetodoPagamento());
-            preparedStatement.setString(5, ordine.getIndirizzo());
+            preparedStatement.setString(1, ordine.getEmail());
+            preparedStatement.setFloat(2, ordine.getTotale());
+            preparedStatement.setString(3, ordine.getMetodoPagamento());
+            preparedStatement.setString(4, ordine.getIndirizzo());
 
 
             result = preparedStatement.executeUpdate();

@@ -43,12 +43,13 @@
       <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
     </a>
     <p>Profilo</p>
-    <a href="wishlist.jsp">
-      <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
-    </a>
-    <p>Wishlist</p>
-    <a href="carrello.jsp">
-      <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
+
+    <form action="${pageContext.request.contextPath}/CarrelloServlet" method="post">
+      <input type="hidden" name="action" value="view">
+      <button name="carrello" type="submit"  value="view" style="border: none; background: none; padding: 0;">
+        <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
+      </button>
+    </form>
     <p>Carrello</p>
   </div>
 </header>
