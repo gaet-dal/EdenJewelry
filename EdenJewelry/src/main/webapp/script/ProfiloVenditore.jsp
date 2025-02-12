@@ -72,29 +72,29 @@
 
     <form action="${pageContext.request.contextPath}/WishlistServlet" method="post">
       <input type="hidden" name="email" value="<%= utente.getEmail() %>">
-      <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+      <button class="profile-button" name="lista_desideri" type="submit" value="view">Lista Desideri</button>
     </form>
 
     <!-- correggere la servet a cui collegare gli ordini-->
     <form action="${pageContext.request.contextPath}/script/storicoOrdini.jsp" method="post">
       <input type="hidden" name="email" value="<%= utente.getEmail() %>">
-      <button name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+      <button class="profile-button" name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
     </form>
 
     <!-- Pulsante per aggiungere un prodotto al catalogo -->
     <form action="<%= request.getContextPath() %>/script/AggiungiProdotto.jsp" method="post">
-      <button type="submit">Aggiungi Prodotto</button>
+      <button class="profile-button" type="submit">Aggiungi Prodotto</button>
     </form>
 
     <!-- Pulsante per rimuovere un prodotto dal catalogo -->
     <form action="<%= request.getContextPath() %>/script/RimozioneProdotto.jsp" method="post">
-      <button type="submit">Rimuovi Prodotto</button>
+      <button class="profile-button" type="submit">Rimuovi Prodotto</button>
     </form>
 
     <p class="logout">
     <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
       <input type="hidden" name="action" value="logout">
-      <button type="submit" class="logout-link">Log out &#8594;</button>
+      <button class="profile-button" type="submit">Log out &#8594;</button>
     </form>
     </p>
 
