@@ -19,17 +19,17 @@
 <%
     // Controlla se l'utente è già loggato
     if (utente != null && utente.getEmail() != null && !utente.getEmail().isEmpty()) {
-        String email = utente.getEmail(); // Recuperiamo l'email dell'utente
+        String email = utente.getEmail();
+        cart = (Carrello) session.getAttribute("carrello");
+        items = cart.getListProdotti();// Recuperiamo l'email dell'utente
     } else {
         // Se l'utente non è loggato, lo rimandiamo al login
         response.sendRedirect("login.jsp");
     }
 %>
 
-<%
-    cart = (Carrello) session.getAttribute("carrello");
-    items = cart.getListProdotti();
-%>
+
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -71,15 +71,14 @@
                 totale += 20; // Calcola totale DA CAMBIARE
         %>
         <div class="item">
-            <img src="<%= request.getContextPath() %>/images/products/<%= item.getNome().replace(" ", "") %>.png" alt="<%= item.getNomeProdotto() %>">
+            <img src="<%= request.getContextPath() %>/images/products/<%= item.getNome().replace(" ", "") %>.png" alt="<%= item.getNome() %>">
             <div class="item-info">
                 <h4><%= item.getNome() %></h4>
                 <p>Quantità: <%= item.getQuantità() %></p>
             </div>
-            <form action="CarrelloServlet" method="post">
-                <input type="hidden" name="action" value="rimuovi">
+            <form action="${pageContext.request.contextPath}/CarrelloServlet" method="post">
                 <input type="hidden" name="prodottoId" value="<%= item.getNome() %>">
-                <button type="submit" class="remove-button">Elimina</button>
+                <button name="carrello" value="elimina" type="submit" class="remove-button">Elimina</button>
             </form>
         </div>
         <%

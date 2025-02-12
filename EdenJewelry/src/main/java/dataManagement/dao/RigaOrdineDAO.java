@@ -91,6 +91,7 @@ public class RigaOrdineDAO {
         try{
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, numeroOrdine);
 
             ResultSet rs = preparedStatement.executeQuery();
 

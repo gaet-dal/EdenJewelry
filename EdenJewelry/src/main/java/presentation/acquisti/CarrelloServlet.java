@@ -30,21 +30,23 @@ public class CarrelloServlet extends HttpServlet {
         Carrello carrello = (Carrello) session.getAttribute("carrello"); //recuperiamo il carrello dalla sessione;
 
         //chiamiamo il metodo showcarrello per la stampa, se non è vuoto;
-        if(carrello!=null){
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/carrello.jsp");
-            dispatcher.forward(request, response);
-        } else {
+        if(carrello==null){
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Devi effettuare l'accesso");
         }
 
         //il carrello si prende il nome del prodotto e la quantità;
-        String action=request.getParameter("action");
+        String action=request.getParameter("carrello");
 
         if(action.equals("aggiungi")){
             String nome=request.getParameter("prodottoId"); //recuperiamo il nome del prodotto da aggiungere al carrello;
             carrello.addToCart(nome);
             //ridirezioniamo direttamente ai dettagli del prodotto;
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/carrello.jsp");
+            dispatcher.forward(request, response);
+        } else if(action.equals("elimina")){
+            String nome=request.getParameter("prodottoId");
+            carrello.deleteFromCart(nome);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/carrello.jsp");
             dispatcher.forward(request, response);
         }
     }
