@@ -82,9 +82,8 @@
         </form>
 
         <!-- correggere la servet a cui collegare gli ordini-->
-        <form action="${pageContext.request.contextPath}/script/storicoOrdini.jsp" method="post">
-            <input type="hidden" name="email" value="<%= utente.getEmail() %>">
-            <button class="profile-button" name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+        <form action="${pageContext.request.contextPath}/CheckoutServlet" method="post">
+            <button class="profile-button" name=RiepilogoOrdine type="submit" value="review" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
         </form>
 
         <p class="logout">

@@ -52,8 +52,20 @@ public class OrdineDAO {
             preparedStatement.setString(3, ordine.getMetodoPagamento());
             preparedStatement.setString(4, ordine.getIndirizzo());
 
+            System.out.println("📦 Tentativo di inserimento ordine:");
+            System.out.println("Email: " + ordine.getEmail());
+            System.out.println("Totale: " + ordine.getTotale());
+            System.out.println("Metodo Pagamento: " + ordine.getMetodoPagamento());
+            System.out.println("Indirizzo: " + ordine.getIndirizzo());
 
-            result = preparedStatement.executeUpdate();
+            try {
+                result = preparedStatement.executeUpdate();
+                System.out.println("✅ Ordine salvato con successo.");
+            } catch (SQLException e) {
+                System.out.println("❌ Errore SQL durante il salvataggio dell'ordine:");
+                e.printStackTrace();
+            }
+            //result = preparedStatement.executeUpdate();
         }  finally {
             closeResources(preparedStatement, connection);
         }
@@ -91,7 +103,7 @@ public class OrdineDAO {
 
         List<OrdineBean> ordini = new ArrayList<OrdineBean>();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY email ASC";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " ORDER BY email ASC";
 
         try {
             connection = ds.getConnection();
@@ -105,7 +117,7 @@ public class OrdineDAO {
                 bean.setIdOrdine(rs.getInt("numeroOrdine"));
                 bean.setEmail(rs.getString("email"));
                 bean.setTotale(rs.getFloat("totale"));
-                bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
+                bean.setMetodoPagamento(rs.getString("metodoPagamento"));
                 bean.setIndirizzo(rs.getString("indirizzo"));
 
                 ordini.add(bean);
@@ -134,11 +146,12 @@ public class OrdineDAO {
             preparedStatement.setInt(1, numeroOrdine);
             ResultSet rs = preparedStatement.executeQuery();
 
-
-            bean.setEmail(rs.getString("email"));
-            bean.setTotale(rs.getFloat("totale"));
-            bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
-            bean.setIndirizzo(rs.getString("indirizzo"));
+            if (rs.next()) { // AGGIUNTO rs.next()
+                bean.setEmail(rs.getString("email"));
+                bean.setTotale(rs.getFloat("totale"));
+                bean.setMetodoPagamento(rs.getString("metodoPagamento"));
+                bean.setIndirizzo(rs.getString("indirizzo"));
+            }
 
             rs.close();
 
@@ -155,22 +168,20 @@ public class OrdineDAO {
 
         OrdineBean bean = new OrdineBean();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY numeroOrdine DESC";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " ORDER BY numeroOrdine DESC";
 
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
 
             ResultSet rs = preparedStatement.executeQuery();
-
-
-
+            if (rs.next()) {  // AGGIUNTO rs.next()
                 bean.setIdOrdine(rs.getInt("numeroOrdine"));
                 bean.setEmail(rs.getString("email"));
                 bean.setTotale(rs.getFloat("totale"));
-                bean.setMetodoPagamento(rs.getString("metodo di pagamento"));
+                bean.setMetodoPagamento(rs.getString("metodoPagamento"));
                 bean.setIndirizzo(rs.getString("indirizzo"));
-
+            }
             rs.close();
 
         } catch (SQLException e) {
@@ -185,6 +196,37 @@ public class OrdineDAO {
        else return bean;
     }
 
+    public synchronized List<OrdineBean> doRetrieveByMail(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<OrdineBean> ordini = new ArrayList<>();
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? ORDER BY numeroOrdine DESC";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                OrdineBean bean = new OrdineBean();
+                bean.setIdOrdine(rs.getInt("numeroOrdine"));
+                bean.setEmail(rs.getString("email"));
+                bean.setTotale(rs.getFloat("totale"));
+                bean.setMetodoPagamento(rs.getString("metodoPagamento"));
+                bean.setIndirizzo(rs.getString("indirizzo"));
+
+                ordini.add(bean);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+        return ordini;
+    }
 
     private void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {

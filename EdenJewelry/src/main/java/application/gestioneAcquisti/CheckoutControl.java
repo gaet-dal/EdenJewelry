@@ -10,6 +10,7 @@ import main.java.dataManagement.dao.UtenteDAO;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,40 +26,50 @@ public class CheckoutControl {
     private static Logger logger = Logger.getLogger(CheckoutControl.class.getName());
 
     private static boolean checkIndirizzo(String indirizzo) {
-        if (indirizzo == null || indirizzo.equals(""))
-            return false;
+        boolean ris=false;
+        if (indirizzo == null || indirizzo.isEmpty()) {
+            ris= false;
+        }
 
-        boolean ris = false;
-        for(int i = 0; i < indirizzo.length(); i++) {
-            char lettera = indirizzo.toLowerCase().charAt(i);
 
-            if((lettera >= 'a' && lettera <= 'z') || (lettera >= '0' && lettera <= '9'))
-                ris = true;
-            else
-                return false;
+        for (char c : indirizzo.toCharArray()) {
+            if (Character.isDigit(c) || Character.isWhitespace(c) || Character.isLetter(c) ) {
+                ris= true;
+            }
+        }
+
+        return ris; // Se arriva qui, tutti i caratteri sono validi
+    }
+
+
+    private static boolean checkMetodoPagamento(String metodoPagamento){
+       boolean ris = false;
+
+        if (metodoPagamento == null || metodoPagamento.isEmpty()) {
+            ris= false;
+        }
+
+        // Controlla se la stringa contiene numeri o spazi
+        for (char c : metodoPagamento.toCharArray()) {
+            if (Character.isDigit(c) || Character.isWhitespace(c)) {
+                ris= true;
+            }
         }
 
         return ris;
     }
 
-    private static boolean checkMetodoPagamento(String metodoPagamento){
-        if (metodoPagamento == null || metodoPagamento.equals(""))
-            return false;
-
-        //hardcoding dei valori per semplicità
-        switch(metodoPagamento){
-            case "contanti", "paypal", "carta di credito":
-                return true;
-            default:
-                return false;
-
-        }
-    }
-
     public static boolean checkout(Carrello carrello, String email, String metodoPagamento, String indirizzo, DataSource ds){
         // I dati non sono validi, non si può proseguire con il checkout
-        if (!checkIndirizzo(indirizzo) || checkMetodoPagamento(metodoPagamento) || carrello.isEmpty())
+        if (!checkIndirizzo(indirizzo) || !checkMetodoPagamento(metodoPagamento) || carrello.isEmpty()) {
+            System.out.println("checkIndirizzo "+checkIndirizzo(indirizzo));
+            System.out.println("checkMetodoPagamento "+checkMetodoPagamento(metodoPagamento));
+            System.out.println("carrello "+ carrello.toString());
+
+            System.out.println("Errore nei dati di checkout: indirizzo/metodoPagamento non valido o carrello vuoto.");
             return false;
+        }
+
 
         OrdineDAO ordini=new OrdineDAO(ds);
         ProdottoDAO prodotti =new ProdottoDAO(ds);
@@ -69,16 +80,18 @@ public class CheckoutControl {
         //recuperiamo l'ultimo ordine effettuato;
         ordine= ordini.doRetrieveUltimoOrdine();
 
-        int numeroOrdine=0;
+        int numeroOrdine=1;
         if(ordine!=null){
 
             numeroOrdine=ordine.getIdOrdine();
+            System.out.println("numeroOrdine "+numeroOrdine);
             numeroOrdine+=1; //creiamo il l'indentificativo dell'oridne che dovvrà essere effettuato e salvato nel db;
         }
 
 
         List<ItemCarrello> list = carrello.getListProdotti();
         ItemCarrello []arr= list.toArray(new ItemCarrello[0]);
+        List<RigaOrdineBean> righeToSave =new ArrayList<>();
 
         for(ItemCarrello it : arr) {
             String nome = it.getNome();
@@ -100,7 +113,7 @@ public class CheckoutControl {
 
             totale += p.getPrezzo() * it.getQuantità();
             riga.setPrezzoUnitario(p.getPrezzo());
-            righe.doSave(riga); //salviamo la riga nel db;
+            righeToSave.add(riga);
 
         }
 
@@ -117,6 +130,12 @@ public class CheckoutControl {
         } catch (SQLException e) {
             logger.warning("Errore nel salvataggio dell'ordine");
             e.printStackTrace();
+        }
+
+        Iterator<RigaOrdineBean> it = righeToSave.iterator();
+        while(it.hasNext()) {
+            RigaOrdineBean riga = it.next();
+            righe.doSave(riga);
         }
 
         return result;
