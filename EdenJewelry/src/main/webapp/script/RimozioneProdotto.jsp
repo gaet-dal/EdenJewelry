@@ -33,8 +33,8 @@
   </div>
 </header>
 <!-- Form per Eliminare Prodotto -->
-<div class="ProdottiList">
-  <form id="delete_form" action="${pageContext.request.contextPath}/RicercaProdottoServlet" method="get">
+<div class="content">
+  <form id="delete_form" action="${pageContext.request.contextPath}/RicercaProdottoServlet" method="get" class="search-bar">
     <input type="text" name="query" placeholder="Cerca prodotto per nome">
     <button name="submitAction" type="submit" value="delete">Cerca</button>
   </form>
@@ -52,6 +52,7 @@
     <%
       for (ProdottoBean bean : list) {
     %>
+    <div class="product">
     <li>
       <p>Nome: <%= bean.getNome() %></p>
       <form action="${pageContext.request.contextPath}/CatalogoServlet" method="post">
@@ -59,6 +60,7 @@
         <button name="submitAction" type="submit" value="Elimina">Elimina</button>
       </form>
     </li>
+    </div>
     <%
       }
     %>
