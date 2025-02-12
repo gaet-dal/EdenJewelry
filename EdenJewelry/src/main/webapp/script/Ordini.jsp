@@ -11,6 +11,7 @@
 
 <%
   List<RigaOrdineBean> righe = (List<RigaOrdineBean>) request.getAttribute("righe");
+  List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("ordini");
 %>
 
 <!DOCTYPE html>
@@ -34,20 +35,27 @@
   <div class="orders">
     <h2>I miei ordini:</h2>
 
-    <% if (righe != null && !righe.isEmpty()) {
-      for (RigaOrdineBean riga : righe) {
+    <% if (ordini != null && !ordini.isEmpty()) {
+      for (OrdineBean ordine : ordini) {
     %>
     <div class="order-card">
       <div>
-        <p><strong>Numero Ordine: <%= riga.getNumeroOrdine() %></strong></p>
+        <p><strong>Numero Ordine: <%= ordine.getIdOrdine() %></strong></p>
+        <p><strong>E-mail: <%= ordine.getEmail() %></strong></p>  <!-- Aggiungi l'email dell'ordine -->
+        <p><strong>Indirizzo: <%= ordine.getIndirizzo() %></strong></p> <!-- Aggiungi l'indirizzo dell'ordine -->
+
+        <!-- Dettagli dell'ordine -->
         <div class="order-details">
+          <% for (RigaOrdineBean riga : righe) {
+            if (riga.getNumeroOrdine() == ordine.getIdOrdine()) {
+          %>
           <p>Prodotto: <%= riga.getNomeProdotto() %></p>
           <p>Quantità: <%= riga.getQuantità() %></p>
           <p>Prezzo unitario: €<%= String.format("%.2f", riga.getPrezzoUnitario()) %></p>
           <p>Totale riga: €<%= String.format("%.2f", riga.getPrezzoUnitario() * riga.getQuantità()) %></p>
+          <% } } %>
         </div>
       </div>
-      <a href="#">Dettagli ordine</a>
     </div>
     <%  }
     } else { %>

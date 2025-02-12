@@ -34,43 +34,45 @@ public class CheckoutServlet extends HttpServlet {
         OrdineDAO dao = new OrdineDAO(ds);
         RigaOrdineDAO rigaDao = new RigaOrdineDAO(ds);
 
-        String action= request.getParameter("RiepilogoOrdine");
-        System.out.println("action nel riepilogo "+action);
+        String action = request.getParameter("RiepilogoOrdine");
+        System.out.println("action nel riepilogo " + action);
 
-        if(action.equals("view")){
+        if (action.equals("view")) {
 
             HttpSession session = request.getSession();
-            UtenteBean utente =(UtenteBean) session.getAttribute("utente"); //prendiamo l'utente dalla sessione
-            String email= utente.getEmail(); //recuperiamo l'email
-            System.out.println("email "+email);
+            UtenteBean utente = (UtenteBean) session.getAttribute("utente"); //prendiamo l'utente dalla sessione
+            String email = utente.getEmail(); //recuperiamo l'email
+            System.out.println("email " + email);
 
             Carrello carrello = (Carrello) session.getAttribute("carrello"); //prendiamo il carrello dalla sessione
 
-            String via=request.getParameter("via");
-            String numero=request.getParameter("numero");
-            String indirizzo= via +" "+ numero;
+            String via = request.getParameter("via");
+            String numero = request.getParameter("numero");
+            String indirizzo = via + " " + numero;
 
-            String carta=request.getParameter("carta");
-            String scadenza=request.getParameter("scadenza");
-            String cvv=request.getParameter("cvv");
-            String metodoPagamento =carta +" "+ scadenza +" "+ cvv;
+            String carta = request.getParameter("carta");
+            String scadenza = request.getParameter("scadenza");
+            String cvv = request.getParameter("cvv");
+            String metodoPagamento = carta + " " + scadenza + " " + cvv;
 
-            if(CheckoutControl.checkout(carrello, utente.getEmail(), metodoPagamento, indirizzo, ds)) {
+            if (CheckoutControl.checkout(carrello, utente.getEmail(), metodoPagamento, indirizzo, ds)) {
                 request.setAttribute("order-success", "Ordine andato a buon fine");
             } else {
                 request.setAttribute("order-failure", "Ordine fallito");
             }
 
-            if(utente.getTipo().equals("user")){
+            if (utente.getTipo().equals("user")) {
                 List<OrdineBean> ordini = dao.doRetrieveByMail(email);
+                request.setAttribute("ordini", ordini);
                 List<RigaOrdineBean> righe = new ArrayList<RigaOrdineBean>();
 
                 for (OrdineBean ordineBean : ordini) {
                     righe.addAll(rigaDao.doRetrieveByNumeroOrdine(ordineBean.getIdOrdine()));
                 }
                 request.setAttribute("righe", righe);
-            }else{
+            } else {
                 List<OrdineBean> ordini = dao.doRetrieveAll();
+                request.setAttribute("ordini", ordini);
                 List<RigaOrdineBean> righe = new ArrayList<>();
 
                 for (OrdineBean ordineBean : ordini) {
@@ -83,22 +85,23 @@ public class CheckoutServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/script/Ordini.jsp");
             dispatcher.forward(request, response);
 
-        }
-        else if(action.equals("review")){
+        } else if (action.equals("review")) {
             HttpSession session = request.getSession();
-            UtenteBean utente =(UtenteBean) session.getAttribute("utente"); //prendiamo l'utente dalla sessione
-            String email= utente.getEmail(); //recuperiamo l'email
+            UtenteBean utente = (UtenteBean) session.getAttribute("utente"); //prendiamo l'utente dalla sessione
+            String email = utente.getEmail(); //recuperiamo l'email
 
-            if(utente.getTipo().equals("user")){
+            if (utente.getTipo().equals("user")) {
                 List<OrdineBean> ordini = dao.doRetrieveByMail(email);
+                request.setAttribute("ordini", ordini);
                 List<RigaOrdineBean> righe = new ArrayList<RigaOrdineBean>();
 
                 for (OrdineBean ordineBean : ordini) {
                     righe.addAll(rigaDao.doRetrieveByNumeroOrdine(ordineBean.getIdOrdine()));
                 }
                 request.setAttribute("righe", righe);
-            }else{
+            } else {
                 List<OrdineBean> ordini = dao.doRetrieveAll();
+                request.setAttribute("ordini", ordini);
                 List<RigaOrdineBean> righe = new ArrayList<>();
 
                 for (OrdineBean ordineBean : ordini) {
@@ -106,13 +109,13 @@ public class CheckoutServlet extends HttpServlet {
                 }
 
                 request.setAttribute("righe", righe);
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/Ordini.jsp");
+                dispatcher.forward(request, response);
+
             }
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/Ordini.jsp");
-            dispatcher.forward(request, response);
 
         }
-
-
     }
 }
