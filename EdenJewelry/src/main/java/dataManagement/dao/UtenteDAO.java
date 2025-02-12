@@ -31,10 +31,6 @@ public class UtenteDAO {
     }
 
     public synchronized boolean doSave(UtenteBean utente) throws SQLException{
-        if(doRetrieveByEmail(utente.getEmail()) != null) {
-            return false;
-        }
-
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
