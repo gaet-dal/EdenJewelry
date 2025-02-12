@@ -29,9 +29,12 @@
             <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
         </a>
         <p>Profilo</p>
-        <a href="${pageContext.request.contextPath}/script/wishlist.jsp">
-            <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
-        </a>
+        <form action="${pageContext.request.contextPath}/WishlistServlet" method="post">
+            <input type="hidden" name="action" value="view">
+            <button name="lista_desideri" type="submit"  value="view" style="border: none; background: none; padding: 0;">
+                <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png" alt="Wishlist">
+            </button>
+        </form>
         <p>Wishlist</p>
         <a href="${pageContext.request.contextPath}/script/carrello.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>

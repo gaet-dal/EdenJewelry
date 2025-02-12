@@ -2,7 +2,10 @@ package main.java.presentation.acquisti;
 
 import main.java.application.gestioneAcquisti.Wishlist;
 import main.java.dataManagement.bean.ItemWishlistBean;
+import main.java.dataManagement.bean.ProdottoBean;
 import main.java.dataManagement.bean.UtenteBean;
+import main.java.dataManagement.bean.WishlistBean;
+import main.java.dataManagement.dao.ProdottoDAO;
 import main.java.dataManagement.dao.WishlistDAO;
 import main.java.dataManagement.dao.ItemWishlistDAO;
 
@@ -26,6 +29,7 @@ public class WishlistServlet extends HttpServlet {
 
     private WishlistDAO wishlistDAO;
     private ItemWishlistDAO itemWishlistDAO;
+    private ProdottoDAO prodottoDAO;
 
     @Override
     public void init(ServletConfig cfg) throws ServletException {
@@ -40,7 +44,7 @@ public class WishlistServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("utente") == null) {
             System.out.println("Sessione nulla o utente non trovato. Redirect a login.jsp.");
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(getServletContext().getContextPath()+"/script/login.jsp");
             return;
         }
 
@@ -89,6 +93,20 @@ public class WishlistServlet extends HttpServlet {
                     RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/wishlist.jsp");
                     dispatcher.forward(request, response);
                 }
+
+                //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
+                prodottoDAO=new ProdottoDAO(ds);
+                ProdottoBean prodotto;
+                try {
+                     prodotto=prodottoDAO.doRetrieveByNome(nomeProdotto);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                request.setAttribute("prodotto", prodotto);
+                //settare una scritta che faccia capire che un prodotto è stato aggiunto alla wishlist;
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
+                dispatcher.forward(request, response);
             }
 
         // Rimozione dalla wishlist
@@ -113,17 +131,23 @@ public class WishlistServlet extends HttpServlet {
             */
         }
         else if(action.equals("view")){
-            //da qui permettiamo la visualizzazione della wishlist quando si clicca sul button;
-            try {
-                List<ItemWishlistBean> list=wish.viewWishList(email, ds);
-                System.out.println("wishlist "+list.toString());
-                session.setAttribute("wishlist", list);
-                System.out.println("deve rimandare la lista desideri in stampa");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/wishlist.jsp");
+            System.out.println("email "+email);
+            if(email!=null) {
+                //da qui permettiamo la visualizzazione della wishlist quando si clicca sul button;
+                try {
+                    List<ItemWishlistBean> list = wish.viewWishList(email, ds);
+                    System.out.println("wishlist " + list.toString());
+                    session.setAttribute("wishlist", list);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/wishlist.jsp");
+                    dispatcher.forward(request, response);
+                } catch (SQLException e) {
+                    System.out.println("non posso visualizzare la wishlist");
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/login.jsp");
                 dispatcher.forward(request, response);
-            } catch (SQLException e) {
-                System.out.println("non posso visualizzare la wishlist");
-                throw new RuntimeException(e);
             }
         }
 
