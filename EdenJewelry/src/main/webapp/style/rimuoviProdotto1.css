@@ -1,0 +1,149 @@
+html{
+    background-image: linear-gradient(to top right, rgba(175, 133, 184, 0.9) 0%, rgba(223, 21, 206, 0.71) 37%, rgba(157, 63, 182, 0.7) 69%, rgba(201, 170, 239, 0.85) 100%);
+    height: 100%;
+}
+
+body {
+    font-family: "Merienda", serif;
+    margin: 0;
+    padding: 0;
+    /*background-color: #e8d8f1;*/
+}
+
+.background-image {
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    background-color: rgba(142, 78, 122, 0.75);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 7px rgba(175, 69, 173, 0.35);
+    color: white;
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    justify-content: space-between;
+    padding: 5px 20px;
+    transition-duration: 0.65s;
+}
+
+header:hover{
+    box-shadow: 0 13px 21px rgba(164, 69, 175, 0.6);
+    background-color: rgba(142, 78, 127, 0.6);
+}
+
+header img {
+    height: 55px; /* Altezza uniforme del logo */
+}
+
+header .icons {
+    display: flex;
+    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
+    margin-top: 5px;
+}
+
+.icons img {
+    height: 40px;
+    cursor: pointer;
+}
+
+.icons p{
+    padding-right: 30px;
+    color: black;
+}
+
+.icons img:hover {
+    opacity: 65%;
+    height: 45px;
+}
+
+.content {
+    padding: 20px;
+    position: relative;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #EADAF0;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    width: 100%;
+    background-color: white;
+    color: #4D3B4D;
+    font-size: 16px;
+}
+
+.search-bar button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.product img {
+    height: 80px;
+    border-radius: 5px;
+}
+
+.product-info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.product-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.product-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.remove-button {
+    background-color: #B784B9;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.remove-button:hover {
+    background-color: #A06EA4;
+}
+
+.expand {
+    text-align: center;
+    margin-top: 20px;
+    color: #4D3B4D;
+    cursor: pointer;
+    font-size: 16px;
+}
