@@ -40,7 +40,8 @@ public class CarrelloServlet extends HttpServlet {
 
         //chiamiamo il metodo showcarrello per la stampa, se non è vuoto;
         if(carrello==null){
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Devi effettuare l'accesso");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/script/login.jsp");
+            dispatcher.forward(request, response);
         }
 
         List<ItemCarrello> list = carrello.getListProdotti();

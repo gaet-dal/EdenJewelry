@@ -103,7 +103,7 @@ public class OrdineDAO {
 
         List<OrdineBean> ordini = new ArrayList<OrdineBean>();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " ORDER BY email ASC";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " ORDER BY email DESC";
 
         try {
             connection = ds.getConnection();

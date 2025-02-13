@@ -80,6 +80,12 @@ public class WishlistServlet extends HttpServlet {
 
                 // Recupero del prodotto da aggiungere alla wishlist
                 String nomeProdotto = request.getParameter("prodottoId");
+
+                if(utente.getEmail()==null){
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/login.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 if (nomeProdotto == null || nomeProdotto.trim().isEmpty()) {
                     response.sendRedirect("wishlist.jsp");
                     return;

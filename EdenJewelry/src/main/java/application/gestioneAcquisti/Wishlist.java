@@ -37,8 +37,10 @@ public class Wishlist {
         }
 
         boolean aggiungi=false;
+
         try {
             WishlistBean wishlist = wishlistDAO.doRetrieveByEmail(email);
+
             System.out.println("Wishlist aggiungi wishlist: " + wishlist.toString()); //wishlist viene trovata correttamente;
 
             ItemWishlistBean item = new ItemWishlistBean();
