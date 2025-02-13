@@ -28,6 +28,7 @@ import java.util.List;
  */
 
 public class CheckoutServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
@@ -89,16 +90,24 @@ public class CheckoutServlet extends HttpServlet {
             HttpSession session = request.getSession();
             UtenteBean utente = (UtenteBean) session.getAttribute("utente"); //prendiamo l'utente dalla sessione
             String email = utente.getEmail(); //recuperiamo l'email
+            System.out.println("email " + email);
 
             if (utente.getTipo().equals("user")) {
                 List<OrdineBean> ordini = dao.doRetrieveByMail(email);
+                System.out.println("ordini "+ordini.toString());
+
+
                 request.setAttribute("ordini", ordini);
                 List<RigaOrdineBean> righe = new ArrayList<RigaOrdineBean>();
 
                 for (OrdineBean ordineBean : ordini) {
                     righe.addAll(rigaDao.doRetrieveByNumeroOrdine(ordineBean.getIdOrdine()));
                 }
+
                 request.setAttribute("righe", righe);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/Ordini.jsp");
+                dispatcher.forward(request, response);
+
             } else {
                 List<OrdineBean> ordini = dao.doRetrieveAll();
                 request.setAttribute("ordini", ordini);

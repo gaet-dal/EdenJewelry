@@ -36,7 +36,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conferma Ordine</title>
+    <title>Conferma Ordine - EdenJewelry</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style/confermaOrdineStyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -63,7 +63,7 @@
                         <label for="carta">Numero carta:</label>
                         <input type="text" id="carta" name="carta" placeholder="Numero della carta" required>
                         <label for="scadenza">Scadenza:</label>
-                        <input type="text" id="scadenza" name="scadenza" placeholder="MM/AA" required>
+                        <input type="text" id="scadenza" name="scadenza" placeholder="MM AA" required>
                         <label for="cvv">CVV:</label>
                         <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
                     </div>

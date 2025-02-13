@@ -14,11 +14,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage - EdenJewelry</title>
+    <title>EdenJewelry</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage1.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/homepage2.css" type="text/css">
 </head>
 <body>
 <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
@@ -38,6 +38,10 @@
         <a href="${pageContext.request.contextPath}/script/carrello.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
         <p>Carrello</p>
+        <a href="https://www.instagram.com/edenjewelryofficial/">
+            <img src="${pageContext.request.contextPath}/assets/images/instagram-icon.png">
+        </a>
+        <p>IG</p>
     </div>
 </header>
 

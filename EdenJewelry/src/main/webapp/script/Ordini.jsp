@@ -19,21 +19,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Miei Ordini - Eden Jewelry</title>
-  <link rel="stylesheet" href="style/storicoOrdiniStyle.css">
+  <title>Ordini Effettuati - Eden Jewelry</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/style/ordiniStyle1.css" type="text/css">
   <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-<img src="images/apple.png" alt="Eden" class="background-image">
+<img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
 <header>
   <a href="${pageContext.request.contextPath}/HomeServlet">
     <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
   </a>
+  <div class="icons">
+    <a href="${pageContext.request.contextPath}/script/profiloUtente.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+    </a>
+    <p>Profilo</p>
+    <a href="${pageContext.request.contextPath}/script/wishlist.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/wishlist-icon.png">
+    </a>
+    <p>Wishlist</p>
+    <a href="${pageContext.request.contextPath}/script/carrello.jsp">
+      <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
+    <p>Carrello</p>
+  </div>
 </header>
 
 <div class="container">
   <div class="orders">
-    <h2>I miei ordini:</h2>
+    <h2>Ordini Effettuati:</h2>
 
     <% if (ordini != null && !ordini.isEmpty()) {
       for (OrdineBean ordine : ordini) {

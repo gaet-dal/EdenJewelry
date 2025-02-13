@@ -27,7 +27,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profilo Utente</title>
+  <title>Profilo Venditore - EdenJewelry</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=login" />
   <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/style/profiloStyle.css">
@@ -78,7 +78,7 @@
 
     <!-- correggere la servet a cui collegare gli ordini-->
     <form action="${pageContext.request.contextPath}/CheckoutServlet" method="post">
-      <button class="profile-button" name=RiepilogoOrdine type="submit" value="review" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+      <button class="profile-button" name=RiepilogoOrdine type="submit" value="review" >Ordini Effettuati</button> <!-- Reindirizza alla servlet per lo storico -->
     </form>
 
     <!-- Pulsante per aggiungere un prodotto al catalogo -->
