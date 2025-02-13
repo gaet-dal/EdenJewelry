@@ -66,6 +66,11 @@
         <input type="hidden" name="email" value="<%= utente.getEmail() %>">
         <input type="hidden" name="prodottoId" value="<%= prodotto.getNome() %>">
         <div class="button wishlist">
+          <% if (request.getAttribute("wish-error") != null) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= request.getAttribute("wish-error") %>
+          </div>
+          <% } %>
           <div class="buttonBox">
             <button name="lista_desideri" type="submit" value="aggiungi">Aggiungi alla Wishlist</button>
           </div>
