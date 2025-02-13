@@ -148,7 +148,7 @@ public class ProdottoDAO {
         return bean;
     }
 
-    private void closeResources(AutoCloseable... resources) {
+    public void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {
             if (resource != null) {
                 try {

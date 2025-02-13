@@ -45,9 +45,15 @@ class CheckoutControlTest {
     @Mock
     ResultSet resultSet;
 
+    @Mock
+    AutoCloseable autoCloseable;
+
+    @Mock
+    ProdottoDAO prodottoDAO;
+
+
     private OrdineDAO ordineDAO;
-    private RigaOrdineDAO rigaOrdineDAO;
-    private ProdottoDAO prodottoDAO;
+
 
 
     @BeforeEach
@@ -55,8 +61,6 @@ class CheckoutControlTest {
         System.out.println("Inizializzazione dei mock");
         MockitoAnnotations.openMocks(this);
         ordineDAO = new OrdineDAO(ds);
-        rigaOrdineDAO = new RigaOrdineDAO(ds);
-        prodottoDAO = new ProdottoDAO(ds);
     }
 
     @AfterEach
@@ -66,12 +70,21 @@ class CheckoutControlTest {
     }
 
     @Test
-    public void testCheckoutSuccess() throws SQLException { //DA FARE
+    public void testCheckoutSuccess() throws SQLException {
+        OrdineBean ordine = new OrdineBean();
+        ordine.setEmail("email@example.com");
+        ordine.setMetodoPagamento("2222222222 22 22 222");
+        ordine.setIndirizzo("indirizzo 1");
+
         when(ds.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        when(ordineDAO.doSave(any(OrdineBean.class))).thenReturn(true);
+        doNothing().when(preparedStatement).close(); // Chiudi PreparedStatement
+        doNothing().when(connection).close();
+        doNothing().when(prodottoDAO).closeResources(autoCloseable);
+
+        when(ordineDAO.doSave(ordine)).thenReturn(true);
 
         boolean result = CheckoutControl.checkout(carrello, "email@example.com", "2222222222 22 22 222", "indirizzo 1", ds);
 
