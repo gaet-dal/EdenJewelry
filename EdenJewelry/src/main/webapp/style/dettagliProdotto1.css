@@ -103,7 +103,15 @@ header .icons {
     width: 290px;
     margin-bottom: -40px;
     justify-content: left;
+    transition-duration: 1s;
 }
+
+.product-image img:hover {
+    width: 350px;
+    transform: rotate(70deg);
+    transform-origin: 60% 80%;
+}
+
 
 .product-title {
     font-size: 29px;

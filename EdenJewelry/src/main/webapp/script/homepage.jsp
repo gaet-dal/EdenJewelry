@@ -66,7 +66,7 @@
                 <% for (ProdottoBean prodotto : prodotti) { %>
                 <div class="product">
                     <a href="DettagliProdottoServlet?nome=<%= prodotto.getNome() %>">
-                        <img src="images/products/<%= prodotto.getImmagine() %>" alt="<%= prodotto.getNome() %>">
+                        <img src="${pageContext.request.contextPath}/assets/images/products/collanaCuore.png" alt="<%= prodotto.getNome() %>">
                         <p><%= prodotto.getNome() %></p>
                         <p>€<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
                     </a>
