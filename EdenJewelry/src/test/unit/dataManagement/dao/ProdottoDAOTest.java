@@ -183,7 +183,6 @@ public class ProdottoDAOTest {
 
         verify(preparedStatement).setString(1, "%" + nome + "%");
         verify(preparedStatement).executeQuery();
-
         verify(resultSet).close();
     }
 }

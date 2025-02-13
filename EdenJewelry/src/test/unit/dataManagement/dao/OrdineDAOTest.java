@@ -53,7 +53,7 @@ public class OrdineDAOTest {
         bean.setIdOrdine(1);
         bean.setEmail("test@gmail.com");
         bean.setIndirizzo("via test 1");
-        bean.setMetodoPagamento("paypal");
+        bean.setMetodoPagamento("123456789 22 25 333");
         bean.setTotale(50.5f);
 
         when(ds.getConnection()).thenReturn(connection);
@@ -64,11 +64,10 @@ public class OrdineDAOTest {
         assertTrue(result);
 
         verify(preparedStatement).executeUpdate();
-        verify(preparedStatement).setInt(1, bean.getIdOrdine());
-        verify(preparedStatement).setString(2, bean.getEmail());
-        verify(preparedStatement).setFloat(3, bean.getTotale());
-        verify(preparedStatement).setString(4, bean.getMetodoPagamento());
-        verify(preparedStatement).setString(5, bean.getIndirizzo());
+        verify(preparedStatement).setString(1, bean.getEmail());
+        verify(preparedStatement).setFloat(2, bean.getTotale());
+        verify(preparedStatement).setString(3, bean.getMetodoPagamento());
+        verify(preparedStatement).setString(4, bean.getIndirizzo());
     }
 
     @Test
@@ -96,7 +95,7 @@ public class OrdineDAOTest {
         when(resultSet.getInt("numeroOrdine")).thenReturn(1);
         when(resultSet.getString("email")).thenReturn("test@gmail.com");
         when(resultSet.getFloat("totale")).thenReturn(50.5f);
-        when(resultSet.getString("metodo di pagamento")).thenReturn("paypal");
+        when(resultSet.getString("metodoPagamento")).thenReturn("123456789 22 22 333");
         when(resultSet.getString("indirizzo")).thenReturn("via test 1");
 
         List<OrdineBean> list = ordineDAO.doRetrieveAll();
@@ -104,7 +103,7 @@ public class OrdineDAOTest {
         assertEquals("test@gmail.com", list.get(0).getEmail());
         assertEquals(50.5f, list.get(0).getTotale(), 0.01);
         assertEquals(1, list.get(0).getIdOrdine());
-        assertEquals("paypal", list.get(0).getMetodoPagamento());
+        assertEquals("123456789 22 22 333", list.get(0).getMetodoPagamento());
         assertEquals("via test 1", list.get(0).getIndirizzo());
 
         verify(preparedStatement).executeQuery();
@@ -122,14 +121,14 @@ public class OrdineDAOTest {
         when(resultSet.next()).thenReturn(true);
         when(resultSet.getString("email")).thenReturn("test@gmail.com");
         when(resultSet.getFloat("totale")).thenReturn(50.5f);
-        when(resultSet.getString("metodo di pagamento")).thenReturn("paypal");
+        when(resultSet.getString("metodoPagamento")).thenReturn("123456789 22 22 333");
         when(resultSet.getString("indirizzo")).thenReturn("via test 1");
 
         OrdineBean result = ordineDAO.doRetrieveByNumeroOrdine(numeroOrdine);
         assertNotNull(result);
         assertEquals("test@gmail.com", result.getEmail());
         assertEquals(50.5f, result.getTotale(), 0.01);
-        assertEquals("paypal", result.getMetodoPagamento());
+        assertEquals("123456789 22 22 333", result.getMetodoPagamento());
         assertEquals("via test 1", result.getIndirizzo());
 
         verify(resultSet).close();
@@ -147,14 +146,14 @@ public class OrdineDAOTest {
         when(resultSet.getInt("numeroOrdine")).thenReturn(1);
         when(resultSet.getString("email")).thenReturn("test@gmail.com");
         when(resultSet.getFloat("totale")).thenReturn(50.5f);
-        when(resultSet.getString("metodo di pagamento")).thenReturn("paypal");
+        when(resultSet.getString("metodoPagamento")).thenReturn("123456789 22 22 333");
         when(resultSet.getString("indirizzo")).thenReturn("via test 1");
 
         OrdineBean result = ordineDAO.doRetrieveUltimoOrdine();
         assertNotNull(result);
         assertEquals("test@gmail.com", result.getEmail());
         assertEquals(50.5f, result.getTotale(), 0.01);
-        assertEquals("paypal", result.getMetodoPagamento());
+        assertEquals("123456789 22 22 333", result.getMetodoPagamento());
         assertEquals("via test 1", result.getIndirizzo());
 
         verify(resultSet).close();
