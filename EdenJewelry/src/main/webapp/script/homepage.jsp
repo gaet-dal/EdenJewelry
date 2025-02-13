@@ -38,6 +38,10 @@
         <a href="${pageContext.request.contextPath}/script/carrello.jsp">
             <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png"></a>
         <p>Carrello</p>
+        <a href="https://www.instagram.com/edenjewelryofficial/">
+            <img src="${pageContext.request.contextPath}/assets/images/instagram-icon.png">
+        </a>
+        <p>IG</p>
     </div>
 </header>
 
