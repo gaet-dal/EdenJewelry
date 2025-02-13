@@ -1,4 +1,4 @@
-html{
+html {
     background-image: linear-gradient(to top right, rgba(175, 133, 184, 0.9) 0%, rgba(223, 21, 206, 0.71) 37%, rgba(157, 63, 182, 0.7) 69%, rgba(201, 170, 239, 0.85) 100%);
     height: 100%;
 }
@@ -7,7 +7,6 @@ body {
     font-family: "Merienda", serif;
     margin: 0;
     padding: 0;
-    /*background-color: #e8d8f1;*/
 }
 
 .background-image {
@@ -27,13 +26,12 @@ header {
     color: white;
     display: flex;
     align-items: center;
-    /*justify-content: space-between;*/
     justify-content: space-between;
     padding: 5px 20px;
     transition-duration: 0.65s;
 }
 
-header:hover{
+header:hover {
     box-shadow: 0 13px 21px rgba(164, 69, 175, 0.6);
     background-color: rgba(142, 78, 127, 0.6);
 }
@@ -44,7 +42,6 @@ header img {
 
 header .icons {
     display: flex;
-    /*gap: 25px;*/ /* Spaziatura uniforme tra le icone */
     margin-top: 5px;
 }
 
@@ -53,7 +50,7 @@ header .icons {
     cursor: pointer;
 }
 
-.icons p{
+.icons p {
     padding-right: 30px;
     color: black;
 }
@@ -70,59 +67,84 @@ header .icons {
 }
 
 .search-bar input {
-    /*width: 55%;*/
-    width: 750px;
+    width: 100%; /* Modificato per essere responsive */
+    max-width: 750px; /* Limite massimo per desktop */
     height: 25px;
     padding: 10px;
     border-radius: 25px;
-    border: 1px solid #ccc;
+    /*background-color: rgba(96, 71, 96, 0.4);
+    border: 1px solid #ccc;*/
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     opacity: 0.7;
     transition-property: width, height, opacity;
     transition-duration: 0.7s;
+    font-family: "Merienda", serif;
 }
 
-.search-bar input:hover{
+.search-bar input::placeholder{
+    color: white;
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+    .search-bar input {
+        width: 750px; /* Rende l'input il 150% della larghezza del contenitore */
+        max-width: none; /* Rimuove il limite massimo per desktop */
+    }
+
+    .search-bar input:hover {
+        opacity: 0.9;
+        width: 800px;
+        height: 30px;
+    }
+}
+
+.search-bar input:hover {
     opacity: 0.9;
-    /*width: 70%;*/
-    width: 800px;
     height: 30px;
 }
 
-.search-bar button{
-    display: none ;
+.search-bar button {
+    display: none;
 }
 
 .container {
     display: flex;
+    flex-wrap: wrap; /* Permette il wrapping per dispositivi più piccoli */
     justify-content: space-around;
     padding: 20px;
 }
+
 .section {
     width: 45%;
+    margin-bottom: 20px; /* Spazio tra le sezioni */
 }
+
 .section h2 {
-    /*writing-mode: vertical-rl;
-    text-orientation: upright;*/
     font-size: 1.5em;
     margin: 0;
     color: #333;
 }
+
 .section .boxBasic {
     background: white;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-
 }
 
 .section .box {
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
-    background: rgba(255, 255, 255, 0.2); /* Sfondo trasparente */
-    backdrop-filter: blur(10px); /* Sfocatura per l'effetto vetro */
-    -webkit-backdrop-filter: blur(10px); /* Supporto per Safari */
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -135,9 +157,8 @@ header .icons {
 }
 
 .product {
-    /*background: white;*/
-    background: rgba(255, 255, 255, 0.01); /* Sfondo trasparente */
-    backdrop-filter: blur(10px); /* Sfocatura per l'effetto vetro */
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
     padding: 10px;
     text-align: center;
@@ -147,7 +168,7 @@ header .icons {
     transition: opacity 0.5s ease;
 }
 
-.product:hover{
+.product:hover {
     opacity: 0.5;
     text-decoration: none;
 }
@@ -156,6 +177,7 @@ header .icons {
     max-width: 100%;
     border-radius: 10px;
     color: black;
+    cursor: pointer;
 }
 
 .product p {
@@ -173,4 +195,58 @@ header .icons {
     color: #7a5266;
     text-decoration: none;
     font-weight: bold;
+}
+
+/* Media Queries per la Responsività */
+@media (max-width: 768px) {
+    .background-image {
+        width: 50%; /* Aumenta la larghezza per schermi più piccoli */
+    }
+
+    header {
+        flex-direction: column;
+        align-items: center; /* Allinea gli elementi al centro */
+    }
+
+    .section {
+        width: 100%; /* Sezione a larghezza piena per schermi piccoli */
+    }
+
+    .products {
+        grid-template-columns: 1fr; /* Una colonna per schermi piccoli */
+    }
+
+    .search-bar input {
+        width: 90%; /* Riduce la larghezza per schermi più piccoli */
+    }
+
+    header img {
+        height: 40px; /* Riduce l'altezza del logo */
+    }
+
+    .icons img {
+        height: 30px; /* Riduce l'altezza delle icone */
+    }
+
+    .icons p {
+        padding-right: 15px; /* Riduce il padding per schermi piccoli */
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 10px; /* Riduce il padding per schermi molto piccoli */
+    }
+
+    .search-bar input {
+        height: 20px; /* Riduce l'altezza della barra di ricerca */
+    }
+
+    .section h2 {
+        font-size: 1.2em; /* Riduce la dimensione del font per i titoli */
+    }
+
+    .product img {
+        max-width: 80%; /* Limita la larghezza delle immagini dei prodotti */
+    }
 }

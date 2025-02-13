@@ -70,12 +70,20 @@ header .icons {
     height: calc(100vh - 70px);
 }
 
-.profile-box {
+/*.profile-box {
     background-color: #d7b3e5;
     border-radius: 10px;
     padding: 30px;
     width: 35%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}*/
+
+.profile-box{
+    background: rgba(255, 255, 255, 0.2); /* background trasparente */
+    backdrop-filter: blur(10px); /* sfocatura effetto vetro */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
 }
 
 .profile-box-glass {
