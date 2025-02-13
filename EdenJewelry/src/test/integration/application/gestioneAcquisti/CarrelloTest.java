@@ -1,4 +1,4 @@
-package test.unit.application.gestioneAcquisti;
+package test.integration.application.gestioneAcquisti;
 
 import main.java.dataManagement.bean.ProdottoBean;
 import main.java.dataManagement.dao.ProdottoDAO;

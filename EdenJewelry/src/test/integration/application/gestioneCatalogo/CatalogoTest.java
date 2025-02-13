@@ -1,4 +1,4 @@
-package test.unit.application.gestioneCatalogo;
+package test.integration.application.gestioneCatalogo;
 
 import main.java.application.gestioneCatalogo.Catalogo;
 import main.java.dataManagement.bean.ProdottoBean;

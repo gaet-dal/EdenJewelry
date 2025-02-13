@@ -1,14 +1,11 @@
-package test.unit.application.gestioneAcquisti;
+package test.integration.application.gestioneAcquisti;
 
 import main.java.application.gestioneAcquisti.Carrello;
 import main.java.application.gestioneAcquisti.CheckoutControl;
 import main.java.application.gestioneAcquisti.ItemCarrello;
 import main.java.dataManagement.bean.OrdineBean;
-import main.java.dataManagement.bean.ProdottoBean;
-import main.java.dataManagement.bean.RigaOrdineBean;
 import main.java.dataManagement.dao.OrdineDAO;
 import main.java.dataManagement.dao.ProdottoDAO;
-import main.java.dataManagement.dao.RigaOrdineDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
