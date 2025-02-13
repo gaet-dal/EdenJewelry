@@ -19,7 +19,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Miei Ordini - Eden Jewelry</title>
+  <title>Ordini Effettuati - Eden Jewelry</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/style/ordiniStyle1.css" type="text/css">
   <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -46,7 +46,7 @@
 
 <div class="container">
   <div class="orders">
-    <h2>I miei ordini:</h2>
+    <h2>Ordini Effettuati:</h2>
 
     <% if (ordini != null && !ordini.isEmpty()) {
       for (OrdineBean ordine : ordini) {

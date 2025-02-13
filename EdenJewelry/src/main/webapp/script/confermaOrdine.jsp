@@ -63,7 +63,7 @@
                         <label for="carta">Numero carta:</label>
                         <input type="text" id="carta" name="carta" placeholder="Numero della carta" required>
                         <label for="scadenza">Scadenza:</label>
-                        <input type="text" id="scadenza" name="scadenza" placeholder="MM/AA" required>
+                        <input type="text" id="scadenza" name="scadenza" placeholder="MM AA" required>
                         <label for="cvv">CVV:</label>
                         <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
                     </div>

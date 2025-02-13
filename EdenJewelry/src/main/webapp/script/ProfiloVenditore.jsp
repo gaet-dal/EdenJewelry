@@ -78,7 +78,7 @@
 
     <!-- correggere la servet a cui collegare gli ordini-->
     <form action="${pageContext.request.contextPath}/CheckoutServlet" method="post">
-      <button class="profile-button" name=RiepilogoOrdine type="submit" value="review" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+      <button class="profile-button" name=RiepilogoOrdine type="submit" value="review" >Ordini Effettuati</button> <!-- Reindirizza alla servlet per lo storico -->
     </form>
 
     <!-- Pulsante per aggiungere un prodotto al catalogo -->
