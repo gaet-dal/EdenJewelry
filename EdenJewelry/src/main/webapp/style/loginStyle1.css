@@ -77,9 +77,9 @@ header .icons {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     /*background-color: rgba(215, 179, 229, 0.75);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);*/
     padding: 20px;
     width: 430px;
@@ -96,9 +96,14 @@ header .icons {
     padding: 10px;
     margin: 10px 0px 10px 3px;
     border: none;
+    box-shadow: 0 4px 6px rgba(133, 69, 175, 0.3);
     border-radius: 5px;
-    background-color: #f2e7f6;
+    background-color: rgba(242, 231, 246, 0.2);
     font-size: 16px;
+}
+
+.login-box input::placeholder{
+    color: white;
 }
 
 .login-box button1 {

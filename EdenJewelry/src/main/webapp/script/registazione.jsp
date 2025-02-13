@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - EdenJewelry</title>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/registerStyle.css"> <!--correggere il css collegato-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/registerStyle1.css"> <!--correggere il css collegato-->
 </head>
 
 <body>

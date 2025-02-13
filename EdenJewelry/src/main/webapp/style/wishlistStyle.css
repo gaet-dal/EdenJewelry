@@ -73,7 +73,7 @@ header .icons {
     min-height: 90vh; /* per gestire l'altezza della pagina */
 }
 
-.cart-container {
+.wishlist-container {
     display: flex;
     flex-direction: column;
     min-width: 50%;

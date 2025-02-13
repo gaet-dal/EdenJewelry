@@ -45,17 +45,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
   </head>
   <body>
-  <img src="<%= contextPath%>/assets/images/apple.png" alt="Eden" class="background-image">
+  <img src="${pageContext.request.contextPath}/assets/images/apple.png" alt="Eden" class="background-image">
   <header>
     <a href="${pageContext.request.contextPath}/HomeServlet">
       <img src="${pageContext.request.contextPath}/assets/images/logo1.png" alt="Eden Jewelry">
     </a>
     <div class="icons">
-      <img src="<%= contextPath%>/assets/images/user-icon.png">
+      <a href="profiloUtente.jsp">
+        <img src="${pageContext.request.contextPath}/assets/images/user-icon.png">
+      </a>
       <p>Profilo</p>
-      <img src="<%= contextPath%>/assets/images/wishlist-icon.png">
-      <p>Wishlist</p>
-      <img src="<%= contextPath%>/assets/images/cart-icon.png">
+      <a href="carrello.jsp">
+        <img src="${pageContext.request.contextPath}/assets/images/cart-icon.png">
+      </a>
       <p>Carrello</p>
     </div>
   </header>
@@ -67,20 +69,20 @@
     <% if (wishlist == null || wishlist.isEmpty()) { %>
     <p>La tua lista desideri è vuota.</p>
     <% } else { %>
-    <div class="products">
+    <div class="item">
       <%-- Itera sui prodotti della wishlist --%>
       <% for (ItemWishlistBean item : wishlist) { %>
-      <div class="product">
-        <img src="<%= contextPath %>/images/products/DA SCRIVERE" alt="<%= item.getNomeProdotto() %>">
+      <div class="item-info">
+        <img src="<%= contextPath %>/assets/images/products/collanaCuore.png" alt="<%= item.getNomeProdotto() %>">
         <p><strong><%= item.getNomeProdotto() %></strong></p>
-        <p>€<%= item.getNomeProdotto() %></p>
+      </div>
         <%-- Creiamo un form per inviare alla servlet la gestione dell'eliminazione del prodotto --%>
         <form action="<%= contextPath %>/WishlistServlet" method="post">
           <input type="hidden" name="prodottoId" value="<%= item.getNomeProdotto() %>">
           <%-- Controlliamo se ci sono degli errori nell'eliminazione di un prodotto dalla wishlist --%>
           <% if (request.getAttribute("wishlistremove-error") != null) { %>
           <%-- Se l'errore è presente, viene mostrato sotto il campo --%>
-          <div class="wishlistremove-message"><%= request.getAttribute("wishlistremove-error") %></div>
+          <%= request.getAttribute("wishlistremove-error") %>
           <% } %>
           <%-- Dalla servlet, recuperiamo questa variabile per distinguere le varie operazioni --%>
           <button type="submit" name="lista_desideri" value="rimuovi">Rimuovi</button>
@@ -89,7 +91,6 @@
       <% } %>
     </div>
     <% } %>
-  </div>
   </div>
 </body>
 </html>
