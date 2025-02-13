@@ -1,7 +1,5 @@
 package main.java.dataManagement.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import main.java.dataManagement.bean.OrdineBean;
 import main.java.dataManagement.bean.ProdottoBean;
 
@@ -228,7 +226,7 @@ public class OrdineDAO {
         return ordini;
     }
 
-    private void closeResources(AutoCloseable... resources) {
+    public void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {
             if (resource != null) {
                 try {
