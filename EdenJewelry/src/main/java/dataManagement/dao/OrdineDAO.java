@@ -1,7 +1,5 @@
 package main.java.dataManagement.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import main.java.dataManagement.bean.OrdineBean;
 import main.java.dataManagement.bean.ProdottoBean;
 
