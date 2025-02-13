@@ -1,4 +1,4 @@
-package test.unit.application.gestioneAccount;
+package test.integration.application.gestioneAccount;
 
 import main.java.application.gestioneAccount.GestioneRegistrazione;
 import main.java.dataManagement.bean.UtenteBean;
@@ -13,7 +13,6 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class GestioneRegistrazioneTest {

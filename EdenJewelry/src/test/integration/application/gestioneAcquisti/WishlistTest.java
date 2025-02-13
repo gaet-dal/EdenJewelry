@@ -1,4 +1,4 @@
-package test.unit.application.gestioneAcquisti;
+package test.integration.application.gestioneAcquisti;
 
 import main.java.application.gestioneAcquisti.Wishlist;
 import main.java.dataManagement.bean.ItemWishlistBean;

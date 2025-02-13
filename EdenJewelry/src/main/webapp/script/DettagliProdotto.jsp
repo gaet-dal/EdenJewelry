@@ -14,7 +14,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--qui mandiamo in stampa il nome del prodotto-->
-  <title>Dettagli del prodotto - EdenJewelry</title>
+  <title>More Info <%=nome%> - EdenJewelry</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
@@ -66,6 +66,11 @@
         <input type="hidden" name="email" value="<%= utente.getEmail() %>">
         <input type="hidden" name="prodottoId" value="<%= prodotto.getNome() %>">
         <div class="button wishlist">
+          <% if (request.getAttribute("wish-error") != null) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= request.getAttribute("wish-error") %>
+          </div>
+          <% } %>
           <div class="buttonBox">
             <button name="lista_desideri" type="submit" value="aggiungi">Aggiungi alla Wishlist</button>
           </div>

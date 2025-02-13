@@ -80,33 +80,70 @@ public class WishlistServlet extends HttpServlet {
 
                 // Recupero del prodotto da aggiungere alla wishlist
                 String nomeProdotto = request.getParameter("prodottoId");
+
+                if(utente.getEmail()==null){
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/login.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 if (nomeProdotto == null || nomeProdotto.trim().isEmpty()) {
                     response.sendRedirect("wishlist.jsp");
                     return;
                 }
-                // Chiama il metodo per aggiungere il prodotto alla wishlist
-                ris = wish.aggiungiWishlist(nomeProdotto, email, ds);
 
-                if (!ris) {
-                    System.out.println("Errore: aggiunta alla wishlist non riuscita.");
-                    request.setAttribute("wishlistadd-error", "Aggiunta non andata a buon fine.");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/wishlist.jsp");
-                    dispatcher.forward(request, response);
-                }
-
-                //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
-                prodottoDAO=new ProdottoDAO(ds);
-                ProdottoBean prodotto;
+                WishlistBean Wishlist;
                 try {
-                     prodotto=prodottoDAO.doRetrieveByNome(nomeProdotto);
+                     Wishlist=wishlistDAO.doRetrieveByEmail(email);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
-                request.setAttribute("prodotto", prodotto);
-                //settare una scritta che faccia capire che un prodotto è stato aggiunto alla wishlist;
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
-                dispatcher.forward(request, response);
+                int idWish=Wishlist.getIdWishlist();
+               boolean c= itemWishlistDAO.existsByIdWishlistAndNomeProdotto(idWish, nomeProdotto);
+
+                if(!c){
+                    // Chiama il metodo per aggiungere il prodotto alla wishlist
+                    ris = wish.aggiungiWishlist(nomeProdotto, email, ds);
+
+                    if (!ris) {
+                        System.out.println("Errore: aggiunta alla wishlist non riuscita.");
+                        request.setAttribute("wishlistadd-error", "Aggiunta non andata a buon fine.");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher(getServletContext().getContextPath()+"/wishlist.jsp");
+                        dispatcher.forward(request, response);
+                    }
+
+                    //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
+                    prodottoDAO=new ProdottoDAO(ds);
+                    ProdottoBean prodotto;
+                    try {
+                        prodotto=prodottoDAO.doRetrieveByNome(nomeProdotto);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    request.setAttribute("prodotto", prodotto);
+                    //settare una scritta che faccia capire che un prodotto è stato aggiunto alla wishlist;
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
+                    dispatcher.forward(request, response);
+                }
+                else{
+
+                    //questo lo settiamo per poter rimandare alla pagina dei dettagli prodotto dopo fatta l'aggiunta;
+                    prodottoDAO=new ProdottoDAO(ds);
+                    ProdottoBean prodotto;
+                    try {
+                        prodotto=prodottoDAO.doRetrieveByNome(nomeProdotto);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    request.setAttribute("prodotto", prodotto);
+                    request.setAttribute("wish-error", "prodotto già presente");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/script/DettagliProdotto.jsp");
+                    dispatcher.forward(request, response);
+                }
+
+
             }
 
         // Rimozione dalla wishlist

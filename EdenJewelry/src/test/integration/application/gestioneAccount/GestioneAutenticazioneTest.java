@@ -1,4 +1,4 @@
-package test.unit.application.gestioneAccount;
+package test.integration.application.gestioneAccount;
 
 import main.java.application.gestioneAccount.GestioneAutenticazione;
 import main.java.dataManagement.bean.UtenteBean;

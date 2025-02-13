@@ -196,6 +196,34 @@ public class ItemWishlistDAO {
         return result != 0;
     }
 
+    public synchronized boolean existsByIdWishlistAndNomeProdotto(int idWishlist, String nomeProdotto) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        boolean exists = false;
+
+        String selectSQL = "SELECT 1 FROM " + TABLE_NAME + " WHERE idWishlist = ? AND nomeProdotto = ? LIMIT 1";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, idWishlist);
+            preparedStatement.setString(2, nomeProdotto);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            exists = rs.next(); // Se trova un risultato, esiste
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.warning("Errore durante la verifica dell'esistenza dell'item nella wishlist: " + e.getMessage());
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+
+        return exists;
+    }
+
+
 
     private void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {
