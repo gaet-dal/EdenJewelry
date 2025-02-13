@@ -50,6 +50,9 @@ public class testRegister {
         String title = driver.getTitle();
 
         assertEquals(title, "EdenJewelry");
+
+        driver.close();
+        driver.quit();
     }
 
 }

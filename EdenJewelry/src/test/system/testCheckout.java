@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class testLogin {
+public class testCheckout {
 
     @Test
-    public void testLoginSuccess(){
+    public void testCheckoutSuccess() {
         System.setProperty("webdriver.chrome.driver" ,"C:\\Users\\Gaetano\\IdeaProjects\\EdenJewelry\\EdenJewelry\\chromedriver-win64\\chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
@@ -40,12 +40,37 @@ public class testLogin {
         WebElement logButton = driver.findElement(By.tagName("button"));
         logButton.click();
 
-        String title = driver.getTitle();
+        WebElement home = driver.findElement(By.cssSelector("body > header:nth-child(2) > a:nth-child(1) > img:nth-child(1)"));
+        home.click();
 
-        assertEquals(title, "Profilo Venditore - EdenJewelry");
+        WebElement product = driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div/a/img"));
+        product.click();
+
+        WebElement addToCart = driver.findElement(By.name("carrello"));
+        addToCart.click();
+
+        WebElement checkoutButton = driver.findElement(By.className("checkout-button"));
+        checkoutButton.click();
+
+        WebElement street = driver.findElement(By.id("via"));
+        WebElement number = driver.findElement(By.id("numero"));
+        WebElement card = driver.findElement(By.id("carta"));
+        WebElement date = driver.findElement(By.id("scadenza"));
+        WebElement cvv = driver.findElement(By.id("cvv"));
+
+        street.sendKeys("Napoli");
+        number.sendKeys("1");
+        card.sendKeys("1234567891234567");
+        date.sendKeys("10 25");
+        cvv.sendKeys("321");
+
+        WebElement purchaseButton = driver.findElement(By.className("purchase-button"));
+        purchaseButton.click();
+
+        String title = driver.getTitle();
+        assertEquals("Ordini Effettuati - Eden Jewelry", title);
 
         driver.close();
         driver.quit();
     }
-    
 }
