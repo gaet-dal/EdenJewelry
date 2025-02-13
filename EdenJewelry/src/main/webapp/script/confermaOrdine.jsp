@@ -82,7 +82,7 @@
                 for (ItemCarrello item : items) {
             %>
             <div class="item">
-                <img src="${pageContext.request.contextPath}/images/products/<%= item.getNome().replace(" ", "") %>.png" alt="<%= item.getNome() %>">
+                <img src="${pageContext.request.contextPath}/assets/images/products/collanaCuore.png" alt="<%= item.getNome() %>">
                 <div class="item-info">
                     <h4><%= item.getNome() %></h4>
                     <p>Quantità: <%= item.getQuantità() %></p>
